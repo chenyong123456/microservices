@@ -1,0 +1,14 @@
+hystrix针对不同服务的线程池数量
+hystrix针对不同服务的熔断超时时间
+
+ribbon针对不同服务的连接超时时间，以及服务处理超时时间
+ribbon针对不同服务的重试次数以及重试所导致的幂等性问题
+
+集群后session共享问题
+
+rabbitmq与zipkin在一个服务同时使用时，由于zipkin默认存在内存中，使用mq后zipkin的追踪信息将会发送到mq中，导致zipkin-ui中无法显示
+
+发现的问题
+
+在application.properties文件中配置暴露监控端点的属性时 *不需要加上"" 而yml需要
+

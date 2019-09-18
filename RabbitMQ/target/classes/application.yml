@@ -1,0 +1,41 @@
+server:
+  port: 10003
+
+
+spring:
+  application:
+    name: rabbitmqServer
+  boot:
+    admin:
+      client:
+        url: http://localhost:10001
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 30000ms
+        multiplier: 2
+    publisher-confirms: true
+#  cloud:
+#    config:
+#      discovery:
+#        enabled: true
+#        service-id: CONFIGSERVER
+#      profile: dev
+
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10080/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: configServer
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/lywhzy/Config.git
+          username: lywhzy
+          password: Lyw970926
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10080/eureka
