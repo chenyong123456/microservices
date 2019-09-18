@@ -1,0 +1,38 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: eurekaServer
+  boot:
+    admin:
+      client:
+        url: http://192.168.50.236:10001
+
+
+eureka:
+  instance:
+    prefer-ip-address: false
+    hostname: EurekaServer0
+  client:
+    service-url:
+      defaultZone: http://192.168.50.236:10082/eureka,http://192.168.50.236:10084/eureka,http://192.168.50.236:10081/eureka,http://192.168.50.236:10083/eureka
+    register-with-eureka: true
+    fetch-registry: true
+
+
+
+
+server:
+  port: 10080
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+
+
