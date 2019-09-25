@@ -14,9 +14,12 @@ public class ConfigClientApplication {
     }
     @Value("${foo}")
     String foo;
+    @Value("${pl}")
+    String pl;
     @RequestMapping("/foo")
     public String hi(){
         System.out.println(foo);
-        return foo;
+        System.out.println(pl);
+        return foo+pl;
     }
 }
