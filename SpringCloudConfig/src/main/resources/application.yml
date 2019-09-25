@@ -9,6 +9,7 @@ spring:
           search-paths: resources
           username: penglei@knowimage.cn
           password: Pl98629
+          force-pull: true
       label: master
 
 eureka:
