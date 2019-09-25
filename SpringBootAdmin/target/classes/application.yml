@@ -7,7 +7,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.50.236:10080/eureka
+      defaultZone: http://192.168.50.107:10080/eureka
 
 
 management:
