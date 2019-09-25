@@ -4,10 +4,12 @@ spring:
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/shard
-  profiles:
-    active: native
+        git:
+          uri: https://gitee.com/knowimage/GateWay.git
+          search-paths: resources
+          username: penglei@knowimage.cn
+          password: Pl98629
+      label: master
 
 eureka:
   client:
