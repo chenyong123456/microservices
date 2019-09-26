@@ -4,4 +4,4 @@ foo: foo version 111111
 pl: plhahaaha
 spring:
   application:
-    name: config-client-0.0.888
+    name: config-client-0.0.1
