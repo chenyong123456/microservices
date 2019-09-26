@@ -1,7 +1,7 @@
 server:
-  port: 8777
+  port: 8666
 foo: foo version 111111
 pl: plhahaaha
 spring:
   application:
-    name: config-client-0.0.2
+    name: config-client-0.0.5
