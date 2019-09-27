@@ -1,0 +1,7 @@
+server:
+  port: 8762
+foo: foo version 111111
+pl: plhahaaha
+spring:
+  application:
+    name: config-client-0.0.5

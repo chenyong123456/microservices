@@ -5,11 +5,16 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/lywhzy/Config.git
-          username: lywhzy
-          password: Lyw970926
+          uri: https://gitee.com/knowimage/GateWay.git
+          search-paths: resources
+          username: penglei@knowimage.cn
+          password: Pl98629
+          force-pull: true
+      label: master
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:10080/eureka
+      defaultZone: http://192.168.50.107:10080/eureka
+server:
+  port: 8769

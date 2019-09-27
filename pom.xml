@@ -18,6 +18,7 @@
         <module>ZipkinService</module>
         <module>RabbitMQ</module>
         <module>SpringCloudConfig</module>
+        <module>SpringCloudConfig-Client</module>
     </modules>
     <packaging>pom</packaging>
 

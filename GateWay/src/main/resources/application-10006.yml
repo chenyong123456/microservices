@@ -1,33 +1,36 @@
 spring:
   application:
     name: gateway
-  boot:
-    admin:
-      client:
-        url: http://192.168.50.236:10001
   zipkin:
-    base-url: http://192.168.50.236:10002
+    base-url: http://192.168.50.107:10002
     enabled: true
     sender:
       type: WEB
   sleuth:
     sampler:
       probability: 1
-#server:
-#  port: 10000
+  cloud:
+    client:
+      ip-address: 192.168.50.184
+
+server:
+  port: 10006
 
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.50.236:10080/eureka
-
+      defaultZone: http://192.168.50.107:10080/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+    ip-address: ${spring.cloud.client.ip-address}
 #路由相关配置 以key-value形式定义
 zuul:
   routes:
     smsService: /smsService/**
     userService: /userService/**
-    PCWIKI: /pcwiki/**
-    ELADMIN: /eladmin/**
+    CLOUDPORTAL: /cloudportal/**
+    BACKENDADMIN: /backendadmin/**
 
 #请求连接的超时时间
 ribbon:
