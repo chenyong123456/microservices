@@ -4,9 +4,9 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:10001
+        url: http://192.168.50.107:10001
   zipkin:
-    base-url: http://localhost:10002
+    base-url: http://192.168.50.107:10002
     enabled: true
     sender:
       type: WEB
@@ -14,11 +14,11 @@ spring:
   sleuth:
     sampler:
       probability: 1
-  rabbitmq:
-    host: localhost
-    username: guest
-    password: guest
+#  rabbitmq:
+#    host: localhost
+#    username: guest
+#    password: guest
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:10080/eureka
+      defaultZone: http://192.168.50.107:10080/eureka

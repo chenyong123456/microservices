@@ -1,16 +1,10 @@
-server:
-  port: 7000
-
 spring:
   application:
-    name: userService
-  boot:
-    admin:
-      client:
-        url: http://localhost:10001
-#链路追踪相关配置
+    name: BPMN-FRAMEWORK
+
+  #链路追踪相关配置
   zipkin:
-    base-url: http://localhost:10002
+    base-url: http://192.168.50.107:10002
     enabled: true
     sender:
       type: WEB
@@ -22,7 +16,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:10080/eureka
+      defaultZone: http://192.168.50.107:10080/eureka
 
 #打开feign的熔断机制
 feign:

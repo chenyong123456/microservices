@@ -7,12 +7,15 @@ spring:
     admin:
       client:
         url: http://192.168.50.236:10001
-
+  cloud:
+    client:
+      ip-address: 192.168.50.236
 
 eureka:
   instance:
-    prefer-ip-address: false
+    prefer-ip-address: true
     hostname: EurekaServer3
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
   client:
     service-url:
       defaultZone: http://192.168.50.236:10082/eureka,http://192.168.50.236:10084/eureka,http://192.168.50.236:10081/eureka,http://192.168.50.236:10080/eureka
