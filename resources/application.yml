@@ -5,3 +5,7 @@ pl: plhahaaha
 spring:
   application:
     name: config-client-0.0.5
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:123456@192.168.50.107:10080/eureka
