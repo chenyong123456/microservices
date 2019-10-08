@@ -13,3 +13,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://user:123456@192.168.50.107:10080/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
