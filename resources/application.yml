@@ -8,7 +8,7 @@ spring:
 eureka:
   instance:
     prefer-ip-address: true
-    instance-id: 192.168.50.184:8762
+    instance-id: 192.168.50.184:${spring.application.name}:8762
     ip-address: 192.168.50.184
   client:
     service-url:
