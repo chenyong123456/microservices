@@ -4,7 +4,7 @@ foo: foo version 111111
 pl: plhahaaha
 spring:
   application:
-    name: config-client-0.0.5
+    name: config-client-0.0.1
 eureka:
   instance:
     prefer-ip-address: true
