@@ -11,18 +11,15 @@ spring:
     client:
       ip-address: 192.168.50.154
 
-
-
-
 eureka:
   instance:
     prefer-ip-address: true
-    hostname: EurekaServer2
+    hostname: EurekaServer1
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
     ip-address: ${spring.cloud.client.ip-address}
   client:
     service-url:
-      defaultZone: http://192.168.50.107:10080/eureka,http://192.168.50.184:10084/eureka
+      defaultZone: http://192.168.50.154:10082/eureka,http://192.168.50.184:10084/eureka
     register-with-eureka: true
     fetch-registry: true
 
@@ -30,7 +27,7 @@ eureka:
 
 
 server:
-  port: 10082
+  port: 10081
 
 
 management:
@@ -41,3 +38,4 @@ management:
   endpoint:
     shutdown:
       enabled: true
+

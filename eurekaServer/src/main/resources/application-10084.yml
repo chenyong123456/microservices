@@ -3,21 +3,39 @@ spring:
     allow-bean-definition-overriding: true
   application:
     name: eurekaServer
+<<<<<<< HEAD
+  boot:
+    admin:
+      client:
+        url: http://192.168.50.107:10001
+  cloud:
+    client:
+      ip-address: 192.168.50.184
+=======
   cloud:
     client:
       ip-address: 192.168.50.184
 
 
+>>>>>>> f50ee020c5478211091c07797b4cc6147d051bd9
 
 eureka:
   instance:
     prefer-ip-address: true
+<<<<<<< HEAD
+    hostname: EurekaServer4
+=======
     hostname: EurekaServer2
+>>>>>>> f50ee020c5478211091c07797b4cc6147d051bd9
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
     ip-address: ${spring.cloud.client.ip-address}
   client:
     service-url:
+<<<<<<< HEAD
+      defaultZone: http://192.168.50.5:10080/eureka,http://192.168.50.154:10082/eureka
+=======
       defaultZone: http://192.168.50.154:10082/eureka,http://192.168.50.107:10080/eureka
+>>>>>>> f50ee020c5478211091c07797b4cc6147d051bd9
     register-with-eureka: true
     fetch-registry: true
 

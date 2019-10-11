@@ -6,23 +6,19 @@ spring:
   boot:
     admin:
       client:
-        url: http://192.168.50.107:10001
+        url: http://192.168.50.236:10001
   cloud:
     client:
-      ip-address: 192.168.50.154
-
-
-
+      ip-address: 192.168.50.236
 
 eureka:
   instance:
     prefer-ip-address: true
-    hostname: EurekaServer2
+    hostname: EurekaServer3
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
-    ip-address: ${spring.cloud.client.ip-address}
   client:
     service-url:
-      defaultZone: http://192.168.50.107:10080/eureka,http://192.168.50.184:10084/eureka
+      defaultZone: http://192.168.50.236:10082/eureka,http://192.168.50.236:10084/eureka,http://192.168.50.236:10081/eureka,http://192.168.50.236:10080/eureka
     register-with-eureka: true
     fetch-registry: true
 
@@ -30,8 +26,7 @@ eureka:
 
 
 server:
-  port: 10082
-
+  port: 10083
 
 management:
   endpoints:

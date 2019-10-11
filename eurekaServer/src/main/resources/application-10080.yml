@@ -3,6 +3,10 @@ spring:
     allow-bean-definition-overriding: true
   application:
     name: eurekaServer
+  boot:
+    admin:
+      client:
+        url: http://192.168.50.107:10001
   cloud:
     client:
       ip-address: 192.168.50.107

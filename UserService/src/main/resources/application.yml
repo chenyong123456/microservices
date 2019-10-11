@@ -1,14 +1,8 @@
-server:
-  port: 7000
-
 spring:
   application:
-    name: userService
-  boot:
-    admin:
-      client:
-        url: http://192.168.50.107:10001
-#链路追踪相关配置
+    name: BPMN-FRAMEWORK
+
+  #链路追踪相关配置
   zipkin:
     base-url: http://192.168.50.107:10002
     enabled: true

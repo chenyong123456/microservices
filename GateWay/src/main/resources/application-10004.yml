@@ -11,7 +11,7 @@ spring:
       probability: 1
   cloud:
     client:
-      ip-address: 192.168.50.107
+      ip-address: 192.168.50.111
 
 server:
   port: 10004
@@ -29,7 +29,7 @@ zuul:
   routes:
     smsService: /smsService/**
     userService: /userService/**
-    CLOUDPORTAL: /cloudportal/**
+    CLOUDPORTAL: /cloudportal1/**
     BACKENDADMIN: /backendadmin/**
 
 #请求连接的超时时间
