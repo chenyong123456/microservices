@@ -29,7 +29,7 @@ zuul:
   routes:
     smsService: /smsService/**
     userService: /userService/**
-    CLOUDPORTAL: /cloudportal/**
+    CLOUDPORTAL: /cloudportal1/**
     BACKENDADMIN: /backendadmin/**
 
 #请求连接的超时时间
