@@ -4,4 +4,20 @@ foo: foo version 111111
 pl: plhahaaha
 spring:
   application:
-    name: config-client-0.0.5
+    name: config-client-0.0.1
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: 192.168.50.184:${spring.application.name}:8762
+    ip-address: 192.168.50.184
+  client:
+    service-url:
+      defaultZone: http://user:123456@192.168.50.107:10080/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

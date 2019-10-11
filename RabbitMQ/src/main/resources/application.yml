@@ -8,7 +8,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:10001
+        url: http://192.168.50.107:10001
   rabbitmq:
     host: localhost
     username: guest
@@ -32,7 +32,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:10080/eureka
+      defaultZone: http://192.168.50.107:10080/eureka
 
 management:
   endpoints:
