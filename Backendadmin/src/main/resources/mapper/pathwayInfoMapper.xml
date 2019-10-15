@@ -1,0 +1,132 @@
+<!DOCTYPE mapper 
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.knowimage.mapper.PathwayInfoMapper">
+    <insert id="insertPathwayInfo" parameterType="cn.knowimage.pojo.PathwayInfo" flushCache="true" useGeneratedKeys="true">
+    insert into pathway_info_merge(
+    			pathway_index,
+    			first_diagnosis,
+    			pathway_name,
+    			suitable_subject_disc,
+    			diagnosis,
+				treatment_choice,
+				treatment_days,
+				treatment_entry_standard,
+				type,
+				drug_use_period,
+				prep_treatment_common,
+				prep_treatment_drug_usage,
+				prep_treatment_extension,
+				drug_usage,
+				treatment,
+				after_medical_treatment,
+				after_treatment_drug_usage,
+				discharge_criteria,
+				other_notice,
+				additional_field,
+				data_upload_moment,
+				audit_state,
+				submitter_id,
+				commit_state,
+				editor_id) value(
+				#{pathway_Info.pathway_index},
+				#{pathway_Info.first_diagnosis},
+				#{pathway_Info.pathway_name},
+				#{pathway_Info.suitable_subject_disc},
+				#{pathway_Info.diagnosis},
+				#{pathway_Info.treatment_choice},
+				#{pathway_Info.treatment_days},
+				#{pathway_Info.treatment_entry_standard},
+				#{pathway_Info.type},
+				#{pathway_Info.drug_use_period},
+				#{pathway_Info.prep_treatment_common},
+				#{pathway_Info.prep_treatment_drug_usage},
+				#{pathway_Info.prep_treatment_extension},
+				#{pathway_Info.drug_usage},
+				#{pathway_Info.treatment},
+				#{pathway_Info.after_medical_treatment},
+				#{pathway_Info.after_treatment_drug_usage},
+				#{pathway_Info.discharge_criteria},
+				#{pathway_Info.other_notice},
+				#{pathway_Info.additional_field},
+				#{pathway_Info.data_upload_moment},
+				#{pathway_Info.audit_state},
+				#{pathway_Info.submitter_id},
+				#{pathway_Info.commit_state},
+				#{pathway_Info.editor_id})
+    </insert>
+
+	<select id="findNameByIndex" parameterType="java.lang.String" resultType="java.lang.String">
+		select pathway_name from pathway_info_merge where pathway_index = #{pathway_index} limit 1
+	</select>
+
+	<update id="updatePathwayInfo" parameterType="cn.knowimage.pojo.PathwayInfo">
+		update pathway_info_merge set
+        first_diagnosis=#{pathway_Info.first_diagnosis},
+        pathway_name=#{pathway_Info.pathway_name},
+        suitable_subject_disc=#{pathway_Info.suitable_subject_disc},
+        diagnosis=#{pathway_Info.diagnosis},
+        treatment_choice=#{pathway_Info.treatment_choice},
+        treatment_days=#{pathway_Info.treatment_days},
+        treatment_entry_standard=#{pathway_Info.treatment_entry_standard},
+        type=#{pathway_Info.type},
+        drug_use_period=#{pathway_Info.drug_use_period},
+        prep_treatment_common=#{pathway_Info.prep_treatment_common},
+        prep_treatment_drug_usage=#{pathway_Info.prep_treatment_drug_usage},
+        prep_treatment_extension=#{pathway_Info.prep_treatment_extension},
+        treatment=#{pathway_Info.treatment},
+        drug_usage=#{pathway_Info.drug_usage},
+        after_medical_treatment=#{pathway_Info.after_medical_treatment},
+        after_treatment_drug_usage=#{pathway_Info.after_treatment_drug_usage},
+        discharge_criteria=#{pathway_Info.discharge_criteria},
+        other_notice=#{pathway_Info.other_notice},
+        additional_field=#{pathway_Info.additional_field}
+        where pathway_index=#{pathway_Info.pathway_index}
+	</update>
+
+	<select id="findPathwayInfoByIndex" parameterType="java.lang.String" resultType="cn.knowimage.pojo.PathwayInfo">
+		select pathway_index,first_diagnosis,pathway_name,suitable_subject_disc,diagnosis,treatment_choice,treatment_days,treatment_entry_standard,
+				type,department_code,drug_use_period,prep_treatment_common,prep_treatment_drug_usage,prep_treatment_extension,treatment,drug_usage,
+				after_medical_treatment,after_treatment_drug_usage,discharge_criteria,other_notice,additional_field,audit_state,editor_id,submitter_id
+		from pathway_info_merge
+		where pathway_index = #{pathway_index}
+		limit 1
+	</select>
+
+	<select id="findLikePathwayName" parameterType="java.lang.String" resultType="cn.knowimage.pojo.PathwayInfo">
+		SELECT pathway_name,pathway_index,audit_state FROM pathway_info_merge where pathway_name like '%${query}%'
+	</select>
+
+	<select id="findAllStateAndLikeName" parameterType="java.lang.String" resultType="int">
+        select count(pathway_id)
+        from pathway_info_merge
+		where audit_state in (${audit_state1},${audit_state2},${audit_state3})
+			  AND commit_state in (${commit_state1},${commit_state2})
+			  AND pathway_name LIKE '%${pathway_name}%'
+    </select>
+	<select id="selectPathwayByPage" parameterType="java.lang.String" resultType="cn.knowimage.pojo.PathwayInfo">
+		select pathway_id,pathway_name,submitter_id,checker_id,pathway_index,audit_state,audit_remark,audit_time,commit_state,first_diagnosis
+		from pathway_info_merge
+		where audit_state in (${audit_state1},${audit_state2},${audit_state3})
+			  AND commit_state in (${commit_state1},${commit_state2})
+			  AND pathway_name LIKE '%${pathway_name}%'
+			  limit ${(page-1)*rows},${rows}
+	</select>
+
+	<update id="updateAudit" parameterType="cn.knowimage.pojo.PathwayInfo">
+		update pathway_info_merge set
+		audit_state = #{pathwayInfo.audit_state},
+		checker_id = #{pathwayInfo.checker_id},
+		audit_remark = #{pathwayInfo.audit_remark},
+		audit_time = #{pathwayInfo.audit_time},
+		commit_state = #{pathwayInfo.commit_state},
+		editor_id = #{pathwayInfo.editor_id}
+		where pathway_index = #{pathwayInfo.pathway_index}
+	</update>
+	<delete id="deletePathwayInfoByIndex" parameterType="java.lang.String">
+		delete pathway_info_merge,exam_form,recent_work
+		from pathway_info_merge,exam_form,recent_work
+		where pathway_info_merge.pathway_index = #{pathway_index}
+		and pathway_info_merge.pathway_index = recent_work.cp_index
+		and pathway_info_merge.pathway_index = exam_form.cp_id
+	</delete>
+</mapper>

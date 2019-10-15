@@ -1,0 +1,96 @@
+package cn.knowimage.JsonPojo.MakeJson.MakePathway_Info;
+
+import cn.knowimage.pojo.ReceivePathway;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+/**
+ * 对应前端麻醉药物的使用
+ */
+public class MakeDrugUsage {
+    public static String make(ReceivePathway receivePathway){
+        String drug_usageAntibio_usage = receivePathway.getDrug_usageAntibio_usage();
+        String drug_usageAnaesthetic_usage = receivePathway.getDrug_usageAnaesthetic_usage();
+        String drug_usageOtherdrugs_usage = receivePathway.getDrug_usageOtherdrugs_usage();
+        //定义总对象
+        JSONObject drug_usage = new JSONObject();
+        //定义三个数组分别存放输入的三个字符串
+        JSONArray drug_usageAntibio_usage_s = JSONArray.fromObject(drug_usageAntibio_usage);
+        JSONArray drug_usageAnaesthetic_usage_s = JSONArray.fromObject(drug_usageAnaesthetic_usage);
+        JSONArray drug_usageOtherdrugs_usage_s = JSONArray.fromObject(drug_usageOtherdrugs_usage);
+
+        //如果drug_usageAntibio_usage_s数组为空，则创建一个标准格式的全是空值的对象
+        if ("".equals(drug_usageAntibio_usage_s.getJSONObject(0).getString("value"))){
+            JSONObject antibio_usage = new JSONObject();
+            JSONArray id_0 = new JSONArray();
+            antibio_usage.put("num",0);
+            antibio_usage.put("id_0",id_0);
+            drug_usage.put("antibio_usage", antibio_usage);
+        }else {
+            //antibio_usage
+            //定义一个对象，用来存放对应的num和id_
+            JSONObject antibio_usage = new JSONObject();
+            //定义id_数组，存放值
+            JSONArray id_ = new JSONArray();
+            //通过数组长度获取num
+            int antibio_usage_num = drug_usageAntibio_usage_s.size();
+            antibio_usage.put("num", antibio_usage_num);
+            //根据获取的num循环
+            for (int i = 0; i < antibio_usage_num; i++) {
+                //依次获取数组中的第i个对象
+                JSONObject jsonObject = drug_usageAntibio_usage_s.getJSONObject(i);
+                id_.add(jsonObject.getString("value"));
+            }
+            antibio_usage.put("id_0", id_);
+            drug_usage.put("antibio_usage", antibio_usage);
+        }
+
+        if ("".equals(drug_usageAnaesthetic_usage_s.getJSONObject(0).getString("value"))){
+            JSONObject anaesthetic_usage = new JSONObject();
+            JSONArray id_0 = new JSONArray();
+            anaesthetic_usage.put("num",0);
+            anaesthetic_usage.put("id_0",id_0);
+            drug_usage.put("anaesthetic_usage", anaesthetic_usage);
+        }else {
+            //anaesthetic_usage
+            //定义一个对象，用来存放对应的num和id_
+            JSONObject anaesthetic_usage = new JSONObject();
+            //新建id_1，分配新的id_地址，防止被前面已定义的id_覆盖
+            JSONArray id_1 = new JSONArray();
+            //通过数组长度获取num
+            int anaesthetic_usage_num = drug_usageAnaesthetic_usage_s.size();
+            anaesthetic_usage.put("num", anaesthetic_usage_num);
+            for (int i = 0; i < anaesthetic_usage_num; i++) {
+                //创建jsonObject对象获取drug_usageAnaesthetic_usage_s数组下的第i个对象，方便后面的调用
+                JSONObject jsonObject = drug_usageAnaesthetic_usage_s.getJSONObject(i);
+                id_1.add(jsonObject.getString("value"));
+            }
+            anaesthetic_usage.put("id_0", id_1);
+            drug_usage.put("anaesthetic_usage", anaesthetic_usage);
+        }
+
+        if ( "".equals(drug_usageOtherdrugs_usage_s.getJSONObject(0).getString("value"))){
+            JSONObject otherdrugs_usage = new JSONObject();
+            JSONArray id_0 = new JSONArray();
+            otherdrugs_usage.put("num",0);
+            otherdrugs_usage.put("id_0",id_0);
+            drug_usage.put("otherdrugs_usage", otherdrugs_usage);
+        }else {
+            //otherdrugs_usage
+            //定义一个对象，用来存放对应的num和id_
+            JSONObject otherdrugs_usage = new JSONObject();
+            //新建id_2，分配新的id_地址，防止被前面已定义的id_覆盖
+            JSONArray id_2 = new JSONArray();
+            //通过数组长度获取num
+            int otherdrugs_usage_num = drug_usageOtherdrugs_usage_s.size();
+            otherdrugs_usage.put("num", otherdrugs_usage_num);
+            for (int i = 0; i < otherdrugs_usage_num; i++) {
+                JSONObject jsonObject = drug_usageOtherdrugs_usage_s.getJSONObject(i);
+                id_2.add(jsonObject.getString("value"));
+            }
+            otherdrugs_usage.put("id_0", id_2);
+            drug_usage.put("otherdrugs_usage", otherdrugs_usage);
+        }
+        return drug_usage.toString();
+    }
+}
