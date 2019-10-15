@@ -1,6 +1,10 @@
 spring:
   application:
     name: zipkinService
+  security:
+    user:
+      name: user
+      password: 123456
   main:
 #    后定义的bean会覆盖之前的bean
     allow-bean-definition-overriding: true
@@ -8,7 +12,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://192.168.50.107:10080/eureka
+      defaultZone: http://user:123456@192.168.50.107:10080/eureka
 
 server:
   port: 10002

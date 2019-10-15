@@ -6,17 +6,12 @@
 
     <groupId>lyw.demo</groupId>
     <artifactId>SpringCloudDemo</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>eurekaServer</module>
-        <module>SmsService</module>
-        <module>PmsService</module>
-        <module>DmsService</module>
-        <module>UserService</module>
         <module>GateWay</module>
         <module>SpringBootAdmin</module>
         <module>ZipkinService</module>
-        <module>RabbitMQ</module>
         <module>SpringCloudConfig</module>
         <module>SpringCloudConfig-Client</module>
     </modules>

@@ -10,7 +10,10 @@ spring:
   cloud:
     client:
       ip-address: 192.168.50.154
-
+  security:
+    user:
+      name: user
+      password: 123456
 
 
 
@@ -20,11 +23,16 @@ eureka:
     hostname: EurekaServer2
     instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
     ip-address: ${spring.cloud.client.ip-address}
+    metadata-map:
+      user.name: user
+      user.password: 123456
   client:
     service-url:
-      defaultZone: http://192.168.50.107:10080/eureka,http://192.168.50.184:10084/eureka
+      defaultZone: http://user:123456@192.168.50.107:10080/eureka,http://user:123456@192.168.50.184:10084/eureka
     register-with-eureka: true
     fetch-registry: true
+  server:
+    peer-node-read-timeout-ms: 1000
 
 
 
