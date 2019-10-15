@@ -1,0 +1,226 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+a{
+	text-decoration: none;
+}
+
+body{
+	font-family: Microsoft YaHei,SimHei,Verdana;
+}
+div{
+	line-height: 25px;
+}
+/* 搜索框部分 */
+.div_search{
+	width: 1140px;
+	margin: auto;
+	position: relative;
+}
+.search{
+	margin-left: 200px;
+	width: 650px;
+	height: 60px;
+	margin-top: 10px;
+}
+.div_list_a{
+	/* border: 1px solid #C5C5C5; */
+	display: inline-block;
+	color: gray;
+	border-radius: 3px;
+	/* margin-top: 10px ; */
+	padding: 5px 5px 5px 0px;
+	font-size: 16px;
+}
+.div_list_a:hover{
+	color: #262626;
+}
+/* 列表显示部分 */
+.div_list{
+	width: 1140px;
+	margin: auto;
+	position: relative;
+	/* border: 1px solid red; */
+}
+/* 搜索按钮 */
+.search_button{
+	border: 0px;
+	height: 44px;
+	width: 102px;
+	font-size: 16px;
+	color: whitesmoke;
+	background: #b6b6b6;
+	outline: none;
+	display: block;
+	float: right;
+	margin-right:8px;
+}
+.search_text{
+	height: 40px;
+	width: 536px;
+	float: left;
+	display: block;
+}
+/* .search_text:hover{
+	border: 1px solid red;
+} */
+/* 整个内容盒子显示 */
+.content{
+	/* border: 1px solid yellow; */
+	width: 1140px;
+	margin: auto;
+	position: relative;
+}
+.arr_ol{
+	/* list-style-type:lower-roman; */
+	margin-left:40px
+}
+/* 病例名称 */
+.pathway_name{
+	/* border: 1px solid red; */
+	width: 820px;
+	margin: auto;
+	padding: 10px;
+}
+.pathway_name h1{
+	float: left;
+}
+.pathway_name .pathway_name_a{
+	/* border: 1px solid #C5C5C5; */
+	display: inline-block;
+	color: gray;
+	border-radius: 3px;
+	/* margin-top: 10px ; */
+	padding: 5px 5px 5px 0px;
+	font-size: 16px;
+}
+.pathway_name .pathway_name_a:hover{
+	background: gray;
+	color: white;
+}
+.pathway_name .pathway_name_img{
+	height: 20px;
+	width: 20px;
+	padding: 0px 5px 0px 5px;
+}
+/* 页面导航按钮 */
+.pathway_navs{
+	width: 300px;
+	position: absolute;
+	right: 0px;
+	margin-right: -320px;
+	cursor: pointer;
+	color: gray;
+	line-height: 35px;
+}
+.pathway_navs li:hover{
+	color: #000000;
+}
+.pathway_navs .active{
+	color: red;
+}
+/* 目录小导航部分 */
+.pathway_name .pathway_nav{
+	/* border: 1px solid red; */
+	width: 790px;
+	margin: auto;
+	margin-top: 10px;
+}
+.pathway_name .pathway_nav ol{
+	border-top: 1px solid lightgrey;
+	border-bottom: 1px solid lightgrey;
+	margin-left: 20px;
+	font-size: 18px;
+	padding: 10px;
+	/* min-height:160px; */
+	height:auto;
+	margin-top: 30px;
+	display: none;
+}
+.pathway_name .pathway_nav ol .pathway_cbl_li{
+	padding: 10px;
+	/* height: 20px; */
+	width: 230px;
+	display: inline-block;
+	color: gray;
+	cursor: pointer;
+}
+.pathway_name .pathway_nav ol .pathway_cbl_span{
+	display: list-item;
+}
+.pathway_name .pathway_nav ol li:hover{
+	color: #262626;
+}
+
+
+/* 标题类的设置样式 */
+.pathway_itme{
+	width: width: 840px;
+	margin: 20px auto;;
+}
+/* 二级标题样式 */
+.pathway_tl{
+	position: relative;
+	/* border: 1px solid blue; */
+	width: 790px;
+	margin: auto;
+	/* padding: 10px; */
+	/* height: 30px; */
+	word-wrap: break-word;
+	word-break: normal;
+}
+/* 存储三级目录数组循环内容专用 */
+.pathway_tl2{
+	width: 740px;
+	margin: auto;
+}
+.pathway_tl3{
+	width: 710px;
+	margin: auto;
+}
+/* 二级标题右侧编辑按钮 */
+.pathway_tl .pathway_tl_img{
+	height: 15px;
+	width: 15px;
+}
+/* 标题字体标签格式 */
+.pathway_tl h3{
+	color: #262626;
+	margin-bottom: 8px;
+
+}
+.pathway_tl .pathway_tl_a{
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	color: gray;
+	font-size: 14px;
+	font-weight: 500;
+	margin-top: 5px;
+	width: 50px;
+	overflow: hidden;
+
+}
+.pathway_tl .pathway_tl_a:hover{
+	color: #262626;
+}
+/* 三级标题样式 */
+.pathway_tls{
+	/* border: 1px solid red; */
+	width: 790px;
+	font-size: 16px;
+	margin: auto;
+	word-wrap: break-word;
+	word-break: normal;
+}
+/* 二/三级标题文字 */
+.pathway_font{
+	/* border: 1px solid red; */
+	width: 790px;
+	font-size: 16px;
+	margin: auto;
+	word-wrap: break-word;
+	word-break: normal;
+	text-indent: 1.5em;
+}

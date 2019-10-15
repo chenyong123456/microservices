@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.knowimage.mapper.AuditInfoMapper">
+
+    <insert id="insertAudit_info" parameterType="cn.knowimage.pojo.AuditInfo" flushCache="true" useGeneratedKeys="true">
+        insert into audit_info(pathway_name,submitter,data_upload_moment,checker,audit_state) value(
+			#{pathway_name},#{submitter},#{data_upload_moment},#{checker},#{audit_state})
+    </insert>
+
+  <!--  <select id="findAll" parameterType="List" resultType="cn.knowimage.pojo.Audit_Info">
+        SELECT * from audit_info
+    </select>-->
+    <select id="findByPathWay_id" parameterType="Integer" resultType="cn.knowimage.pojo.AuditInfo">
+        SELECT * from audit_info where pathway_id = #{pathWay_id}
+    </select>
+
+    <select id="selectId" parameterType="List" resultType="cn.knowimage.pojo.AuditInfo">
+        select submitter from audit_info where pathway_id = #{selectName}
+    </select>
+
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.knowimage.mapper.PathwayInfoMapper">
+    <select id="findAll" parameterType="List" resultType="cn.knowimage.pojo.PathwayInfo">
+         SELECT * from pathway_info
+    </select>
+    <insert id="insertPathway_info" parameterType="cn.knowimage.pojo.PathwayInfo" flushCache="true" useGeneratedKeys="true" >
+          insert into pathway_info(pathway_index,first_diagnosis,pathway_name,suitable_subject_disc,diagnosis,
+			treatment_choice,treatment_days,treatment_entry_standard,type,drug_use_period,prep_treatment_common,prep_treatment_drug_usage,
+			prep_treatment_extension,treatment,drug_usage,after_medical_treatment,after_treatment_drug_usage,discharge_criteria,
+			other_notice) value(
+			#{pathwayInfo.pathway_index},
+			#{pathwayInfo.first_diagnosis},
+			#{pathwayInfo.pathway_name},
+			#{pathwayInfo.suitable_subject_disc},
+			#{pathwayInfo.diagnosis},
+			#{pathwayInfo.treatment_choice},
+			#{pathwayInfo.treatment_days},
+			#{pathwayInfo.treatment_entry_standard},
+			#{pathwayInfo.type},
+			#{pathwayInfo.drug_use_period},
+			#{pathwayInfo.prep_treatment_common},
+			#{pathwayInfo.prep_treatment_drug_usage},
+			#{pathwayInfo.prep_treatment_extension},
+			#{pathwayInfo.treatment},
+			#{pathwayInfo.drug_usage},
+			#{pathwayInfo.after_medical_treatment},
+			#{pathwayInfo.after_treatment_drug_usage},
+			#{pathwayInfo.discharge_criteria},
+			#{pathwayInfo.other_notice})
+    </insert>
+    <select id="selectByPathway_name" parameterType="List" resultType="cn.knowimage.pojo.PathwayInfo">
+        select * from pathway_info where pathway_name like '%${pathwayName}%'
+    </select>
+    <!--对表pathway_info进行根据pathway_name和pathway_index进行查找-->
+    <select id="selectByPathway_nameApplet" parameterType="List" resultType="cn.knowimage.pojo.PathwayInfo">
+        select * from pathway_info where pathway_name = '${pathwayName}' and  pathway_index = '${pathwayIndex}'
+    </select>
+
+	<!--这里为小郭的代码-->
+	<insert id="ReturnString" parameterType="cn.knowimage.pojo.PathwayInfo" flushCache="true" useGeneratedKeys="true">
+        insert into pathway_info(pathway_index,first_diagnosis,pathway_name,suitable_subject_disc,diagnosis,
+        treatment_choice,treatment_days,treatment_entry_standard,type,drug_use_period,prep_treatment_common,prep_treatment_drug_usage,
+        prep_treatment_extension,treatment,drug_usage,after_medical_treatment,after_treatment_drug_usage,discharge_criteria,
+        other_notice) value(
+        #{pathway_index},
+        #{first_diagnosis},
+        #{pathway_name},
+        #{suitable_subject_disc},
+        #{diagnosis},
+        #{treatment_choice},
+        #{treatment_days},
+        #{treatment_entry_standard},
+        #{type},
+        #{drug_use_period},
+        #{prep_treatment_common},
+        #{prep_treatment_drug_usage},
+        #{prep_treatment_extension},
+        #{treatment},
+        #{drug_usage},
+        #{after_medical_treatment},
+        #{after_treatment_drug_usage},
+        #{discharge_criteria},
+        #{other_notice})
+    </insert>
+
+	<select id="findByPathWay_id" parameterType="Integer" resultType="cn.knowimage.pojo.PathwayInfo">
+        SELECT * FROM pathway_info where pathway_id = #{pathwayId}
+    </select>
+	<!--联表查询-->
+	<select id="selectByNameAndSubmitter" parameterType="List" resultType="cn.knowimage.pojo.AuditInfo">
+        SELECT * FROM pathway_info
+        INNER JOIN audit_info ON pathway_info.pathway_id=audit_info.pathway_id
+        WHERE audit_info.submitter = '${nameSub}'
+        AND pathway_info.pathway_name LIKE '%${query}%'
+    </select>
+	<select id="selectId" parameterType="Integer" resultType="cn.knowimage.pojo.PathwayInfo">
+        SELECT * FROM pathway_info where pathway_id = #{selectId}
+    </select>
+	<!--根据query模糊查询，query表示pathway_name-->
+	<select id="findAllById" parameterType="String" resultType="cn.knowimage.pojo.AuditInfo">
+        SELECT * FROM audit_info where pathway_name like '%${query}%'
+    </select>
+	<!--查询全部科室名字-->
+	<select id="findAllName" parameterType="List" resultType="cn.knowimage.pojo.Department">
+        select department_name from department
+    </select>
+	<!--根据科室表里的科室名称查询该名称下对应的所有pathway_name-->
+	<select id="selectP_nameByD_name" parameterType="List" resultType="cn.knowimage.pojo.PathwayInfo">
+        SELECT pathway_name,pathway_index
+        FROM pathway_info INNER JOIN
+        department ON pathway_info.department_code=department.department_code
+        WHERE department.department_name='${name}'
+    </select>
+
+    <select id="findAllf" parameterType="List" resultType="cn.knowimage.pojo.PathwayInfo">
+        SELECT pathway_index,pathway_id,first_diagnosis,diagnosis,treatment from pathway_info
+    </select>
+</mapper>

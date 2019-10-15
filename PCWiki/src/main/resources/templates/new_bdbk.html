@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta name=viewport content="width=device-width,initial-scale=1">
+		<title></title>
+		<link rel="stylesheet" href="/css/bdbk.css">
+		<script src="/js/jquery-1.12.4.min.js"></script>
+		<script src="/js/bdbk.js"></script>
+		<!-- 引入样式 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui@2.0.3/lib/theme-chalk/index.css">
+	</head>
+	<body>
+		<div class="page">
+			<div class="page_color">
+				<div class="page_div">
+					<div class="div_search">
+						<div class="search">
+							<input class="search_text" type="text" placeholder="">
+							<input class="search_button" type="button" value="搜索">
+						</div>
+					</div>
+					<div class="div_list"></div>
+					<!-- 整个病例显示部分 -->
+					<div class="content" id="editableDiv">
+						<!-- 临时路径名字 -->
+						<div class="pathway_name">
+							<h1 data-key="pathway_name"></h1>
+							<h2>
+								<a data-key="a" href="" class="pathway_name_a" onclick="startEdit()"><!-- <img class="pathway_name_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> 编辑--></a>
+								<a href="" class="pathway_name_a"><!-- <img class="pathway_name_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt="">讨论 --></a>
+							</h2>
+							<!-- 住院流程名称 -->
+							<div class="pathway_nav">
+								<h2 class="pathway_name_lc"></h2>
+								<!-- 目录小导航 -->
+								<ol class="pathway_cbl"></ol>
+								<!-- /目录小导航 -->
+							</div>
+						</div>
+						
+						<!-- 临时路径适用对象 -->
+						<div class="suitable_subject_disc pathway_itme">
+							<div class="suitable_subject_disc_tl pathway_tl">
+								<h3 data-key="suitable_subject_disc_name"></h3>
+								<a onclick="startEdit()" data-key="a" href="" class="pathway_tl_a"><!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+						</div>
+						<!-- 诊断依据 -->
+						<div class="diagnosis pathway_itme">
+							<div class="diagnosis_tl pathway_tl">
+								<h3 data-key="diagnosis_name"></h3>
+								<a onclick="startEdit()" data-key="a" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+						</div>
+						<!-- 第二部分 treatment_choice 治疗方案的选择 -->
+						<div class="treatment_choice pathway_itme">
+							<div class="pathway_tl">
+								<h3 data-key="treatment_choice_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+							<div class="pathway_font" data-key="treatment_choice_ref">
+							</div>
+							<div class="treatment_choice_arr pathway_tl">
+							</div>
+						</div>
+						<!-- 第三部分 treatment_days 标准住院时间 -->
+						<div class="treatment_days pathway_itme">
+							<div class="pathway_tl">
+								<h3 data-key="treatment_days_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+						</div>
+						<!-- 第四部分 treatment_entry_standard 进入路径标准 -->
+						<div class="treatment_entry_standard pathway_itme">
+							<div class="treatment_entry_standard_tl pathway_tl">
+								<h3 data-key="treatment_entry_standard_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+						</div>
+						<!-- 第五部分 prep_treatment_common 术前检查 -->
+						<div class="prep_treatment_common pathway_itme">
+							<div class="pathway_tl prep_treatment_common_tl">
+								<h3 data-key="prep_treatment_common_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+							<div class="pathway_tl prep_treatment_common_arr"></div>
+						</div>
+						<!-- 第六部分 prep_treatment_drug_usage 正式的医学处理前药物使用 药物的选择时机 -->
+						<div class="prep_treatment_drug_usage pathway_itme">
+							<div class="prep_treatment_drug_usage_tl pathway_tl">
+								<h3 data-key="prep_treatment_drug_usage_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+							<div class="prep_treatment_drug_usage_arr pathway_tl">
+								
+							</div>
+						</div>
+						<!--  第七部分 prep_treatment_extension 手术前额外准备工作 -->
+						<div class="prep_treatment_extension pathway_itme">
+							<div class="prep_treatment_extension_tl pathway_tl">
+								<h3 data-key="prep_treatment_extension_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+							<div class="prep_treatment_extension_arr pathway_tl"></div>
+						</div>
+						<!-- 第八部分 treatment 手术日/时 -->
+						<div class="treatment pathway_itme">
+							<div class="treatment_tl pathway_tl">
+								<h3 data-key="treatment_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+							<div class="treatment_ref pathway_font"></div>
+							<div class="treatment_arr pathway_tl"></div>
+						</div>
+						<!-- 第九部分 drug_usage $(type)时的药物使用 -->
+						<div class="drug_usage pathway_itme">
+							<div class="drug_usage_tl pathway_tl">
+								<h3 data-key="drug_usage_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+							<div class="drug_usage_arr pathway_tl"></div>
+						</div>
+						<!-- 第十部分 after_medical_treatment $(type)后住院恢复 -->
+						<div class="after_medical_treatment pathway_itme">
+							<div class="after_medical_treatment_tl pathway_tl">
+								<h3 data-key="after_medical_treatment_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+							<div class="after_medical_treatment_arr pathway_tl"></div>
+							
+						</div>
+						<!-- 第十一部分 after_treatment_drug_usage  $(type)后药物使用 -->
+						<div class="after_treatment_drug_usage pathway_itme">
+							<div class="after_treatment_drug_usage_tl pathway_tl">
+								<h3 data-key="after_treatment_drug_usage_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+							<div class="after_treatment_drug_usage_arr pathway_font"></div>
+						</div>
+						<!-- 第十二部份 discharge_criteria 出院标准 -->
+						<div class="discharge_criteria pathway_itme">
+							<div class="discharge_criteria_tl pathway_tl">
+								<h3 data-key="discharge_criteria_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+						</div>
+						<!-- 第十三部份 other_notice 变异及其分析 -->
+						<div class="other_notice pathway_itme">
+							<div class="other_notice_tl pathway_tl">
+								<h3 data-key="other_notice_name"></h3>
+								<a onclick="startEdit()" href="" class="pathway_tl_a"> <!-- <img class="pathway_tl_img" src="img/daf3bf993128d7f40dcb5833784492ab896d6aaebcf-3ehiNp_fw658.png" alt=""> --></a>
+							</div>
+						</div>
+						<div class="pathway_navs">
+							<ol class="pathway_cbl">
+								<!-- <a href="" onclick="stopEdit()">提交</a> -->
+							</ol>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
