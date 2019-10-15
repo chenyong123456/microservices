@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.knowimage.mapper.Pathway_InfoMapper">
+    <select id="findAll" parameterType="List" resultType="cn.knowimage.pojo.Pathway_Info">
+         SELECT * from pathway_info
+    </select>
+    <insert id="insertPathway_info" parameterType="cn.knowimage.pojo.Pathway_Info" flushCache="true" useGeneratedKeys="true" >
+          insert into pathway_info(pathway_index,first_diagnosis,pathway_name,suitable_subject_disc,diagnosis,
+			treatment_choice,treatment_days,treatment_entry_standard,type,drug_use_period,prep_treatment_common,prep_treatment_drug_usage,
+			prep_treatment_extension,treatment,drug_usage,after_medical_treatment,after_treatment_drug_usage,discharge_criteria,
+			other_notice) value(
+			#{pathway_Info.pathway_index},
+			#{pathway_Info.first_diagnosis},
+			#{pathway_Info.pathway_name},
+			#{pathway_Info.suitable_subject_disc},
+			#{pathway_Info.diagnosis},
+			#{pathway_Info.treatment_choice},
+			#{pathway_Info.treatment_days},
+			#{pathway_Info.treatment_entry_standard},
+			#{pathway_Info.type},
+			#{pathway_Info.drug_use_period},
+			#{pathway_Info.prep_treatment_common},
+			#{pathway_Info.prep_treatment_drug_usage},
+			#{pathway_Info.prep_treatment_extension},
+			#{pathway_Info.treatment},
+			#{pathway_Info.drug_usage},
+			#{pathway_Info.after_medical_treatment},
+			#{pathway_Info.after_treatment_drug_usage},
+			#{pathway_Info.discharge_criteria},
+			#{pathway_Info.other_notice})
+    </insert>
+    <select id="selectByPathway_name" parameterType="List" resultType="cn.knowimage.pojo.Pathway_Info">
+        select * from pathway_info where pathway_name like '%${pathWay_name}%'
+    </select>
+
+</mapper>

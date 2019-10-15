@@ -1,0 +1,362 @@
+{
+	"pathway_id": "",
+	"pathway_index": "012016001300",
+
+	# pathway_id, 文件前的序号
+	# pathway_index, 临时路径的版本相关信息,12位字符串
+	# 0-1, 发布者
+	# 2-5, 发布年份
+	# 6-9, 文件编号
+	# 10-11, 版本号
+
+	"pathway_name": "",
+	# pathway_name, 临时路径名字,见文档中的标题
+
+	"first_diagnose":"",
+	# first_diagnose, 第一诊断,(字符串对象)
+	# = "N", 代表第一诊断没有定义,编码解析时web页面填 "无"
+	
+	"suitable_subject_disc": "",
+	# suitable_subject_disc, 临时路径适用对象,(字符串对象)
+
+	"diagnosis": "",
+	# diagnosis, 诊断依据,一个字符串
+	
+	"treatment_choice": {
+		"ref": "",
+		"scenario": {
+		"num": 1,
+		"id_0": [""]
+		}
+		# treatment_choice，治疗方案的选择(依据)
+		# ref, 医学依据
+		# num, 场景数
+		# = 1, 单场景（默认值）
+		# = 0, 代表对该项无定义
+		# id_X, 该项为程序读取到num后动态创建的条目序号,X=(0,1,2,...num-1)
+	},
+
+	"treatment_days": {
+		"scenario": {
+			"num": 1,
+			"id_0": {
+				"tag_name":"N",
+				"time_unit": "D",
+				"min": 7,
+				"max": 10
+			}
+		}
+	},
+	# treatment_days, 标准住院时间
+	# scenario, 场景定义
+	# num, 代表场景数量,绝大多数情况值为1
+	# tag_name, 代表该场景的字符串
+	# = "N", 代表这个场景字符串无定义,编码解析时跳过它
+	# time_unit
+	# = "N", 代表对治疗时间无定义
+	# = "H", 小时
+	# = "D", 天
+	# = "W", 周
+	# = "M", 月
+	# min, 最小值
+	# max, 最大值
+	# min 等于 max 代表固定时长
+	# id_X, 该项为程序读取到num后动态创建的条目序号,X=(0,1,2,...num-1)
+
+	"treatment_entry_standard": {
+		"num": 2,
+		"id_0": "",
+		"id_1": ""
+	},
+		# treatment_entry_standard,进入路径的标准
+		# num 标准条目数
+		# 0, 代表对该项无定义
+		# id_X, 该项为程序读取到num后动态创建的条目序号,X=(0,1,2,...num-1)
+
+	"prep_treatment_common": {
+		"type": "surgical",
+		# prep_treatment_common,医学处理前的检查项目
+		# type
+		# = "N", 代表对该项无定义
+		# = "surgical", 	普通手术, 及未分类的
+		# = "chemo",		化疗
+		# = "radio",		放疗
+		# = "dental",		牙科手术
+
+		"scenario": {
+			"num": 1,
+			"id_0": {
+				"duration": {
+					"time_unit": "N",
+					"min": 0,
+					"max": 0
+				},
+			"obligatory_exam": [""],
+			"optional_exam": [""],
+			"notification":[""]
+			}
+		}
+	},
+			# scenario,用药场景
+			# num, 检查、用药场景的数目定义，如果"高血压病人"、"普通病人"
+			# = 1,（默认值）
+			# = 0, 代表对该项无定义
+			# id_X 该项为程序读取到num后动态创建的条目序号,X=(0,1,2,...num-1)
+			# duration, 时间段
+			# time_unit
+			# = "N", 代表对治疗时间无定义
+			# = "H", 小时
+			# = "D", 天
+			# = "W", 周
+			# = "M", 月
+			# min, 最小值
+			# max, 最大值
+			# min 等于 max 代表固定时长
+			# obligatory_exam, 必须的检查项目,数组的每一项代表一个检查项目,数组为空表示无该项检查
+			# optional_exam,根据病情可选的检查项目,数组的每一项代表一个检查项目,数组为空表示无该项检查
+			# notification,必要的告知信息,数组为空表示无该项告知
+
+	"prep_treatment_drug_usage": {
+		"antibio_usage": {
+			"num":0,
+			# prep_treatment_drug_usage, 正式的医学处理前药物使用
+			# antibio_usage,抗菌药使用
+			# num, 检查、用药场景的数目定义,如果"高血压病人"、"普通病人"
+			# = 1,（默认值）
+			# = 0, 代表对该项无定义
+			"id_0":[""]
+		},
+
+		"anaesthetic_usage": {
+			"num":0,
+			# anaesthetic_usage,麻醉药物的使用
+			# num, 检查、用药场景的数目定义，如"高血压病人"、"普通病人"
+			# = 1,（默认值）
+			# = 0, 代表对该项无定义
+			"id_0":[""]
+		},
+
+		"otherdrugs_usage": {
+			"num":0,
+			# otherdrugs_usage,其他药物的使用
+			# num, 检查、用药场景的数目定义,如"高血压病人"、"普通病人"
+			# = 1,（默认值）
+			# = 0, 代表对该项无定义
+			"id_0":[""]
+		}
+	},
+
+
+	"prep_treatment_extension": {
+		"num":3,
+		"id_0": {"content":"",
+		"content_item":[""]
+		},
+		"id_1": {"content":"",
+		"content_item":[""]
+		},
+		"id_2": {"content":"",
+		"content_item":[""]
+		}
+	},
+		# prep_treatment_extension 该字段代表治疗前额外准备工作
+		# num, 正式治疗前的准备工作的条目定义
+		# = 0, 代表对该项无定义
+		# id_X 该项为程序读取到num后动态创建的条目序号,X=(0,1,2,...num-1)
+		# content: 治疗方案的具体内容
+		# content_item: 该治疗方案下的子治疗方案,若数组为空 ,则表明没有子治疗方案
+
+
+	"treatment": {
+		"type": "surgical",
+		# treatment 这个key 表示正式的医学处理
+		# type
+		# = "N", 代表对该项无定义
+		# = "surgical", 	普通手术, 及未分类的
+		# = "chemo",		化疗
+		# = "radio",		放疗
+		# = "dental",		牙科手术
+
+		"duration": {
+			"time_unit": "M",
+			"min": 0,
+			"max": 0
+		},
+		# duration, 该流程进行时的时间段
+		# time_unit
+		# = "N", 	代表对治疗时间无定义
+		# = "H", 	小时
+		# = "D", 	天
+		# = "W", 	周
+		# = "M", 	月
+		# min, 最小值
+		# max, 最大值
+		# min 等于 max 代表固定时长
+		
+		"scenario": {
+			"num": 1,
+			"id_0": {
+				"treatment_plan": {
+					"ref":[""],
+					"num":2,
+					"id_0": {
+						"content":"",
+						"content_item":[""]
+					},
+					"id_1": {
+						"content":"",
+						"content_item":[""]
+					}
+				}
+			"obligatory_exam": [""],
+			"optional_exam": [""],
+			"notification":[""]
+			}
+		},
+
+			# treatment_plan,进行医学处理时的治疗方案
+			# ref, 选择此方案的医学依据
+			# num, 治疗方案的条目定义
+			# = 0, 代表对该项无定义
+			# id_X 该项为程序读取到num后动态创建的条目序号X=(0,1,2,...num-1)
+			# content: 治疗方案的具体内容
+			# content_item: 该治疗方案下的子治疗方案,若数组为空则表明没有子治疗方案
+			# scenario,场景
+			# num, 检查、用药场景的数目定义,如"高血压病人"、"普通病人"
+			# = 1, （默认值）
+			# = 0, 代表对该项无定义
+			# id_X 该项为程序读取到num后动态创建的条目序号,X=(0,1,2,...num-1)
+			# obligatory_exam, 必须的检查项目,数组的每一项代表一个检查项目,数组为空表示无该项检查
+			# optional_exam, 根据病情可选的检查项目,数组的每一项代表一个检查项目,数组为空表示无该项检查
+			# notification,必要的告知信息,数组为空表示无该项告知
+	},
+
+	"drug_usage": {
+		"antibio_usage": {
+			"num":1,
+			"id_0":[""]
+			# drug_usage,医学处理时的药物使用
+			# antibio_usage,抗菌药使用
+			# num
+			# 检查、用药场景的数目定义,如果"高血压病人"、"普通病人"
+			# = 1,（默认值）
+			# = 0, 代表对该项无定义
+			# id_X 该项为程序读取到num后动态创建的条目序号,X=(0,1,2,...num-1)
+		},
+
+		"anaesthetic_usage": {
+			"num":0,
+			"id_0":[""]
+			# anaesthetic_usage,麻醉药使用情况
+			# num
+			# 检查、用药场景的数目定义，如"高血压病人"、"普通病人"
+			# = 1,（默认值）
+			# = 0, 代表对该项无定义
+			# id_X 该项为程序读取到num后动态创建的条目序号,X=(0,1,2,...num-1)
+		},
+
+		"otherdrugs_usage": {
+			"num":0,
+			"id_0":[""]
+			# otherdrugs_usage,其他药物的使用
+			# scenario_num
+			# 检查、用药场景的数目定义,如"高血压病人"、"普通病人"
+			# = 1,（默认值）
+			# = 0, 代表对该项无定义
+			# id_X 该项为程序读取到num后动态创建的条目序号,X=(0,1,2,...num-1)
+		}
+	},
+	
+	"after_medical_treatment": {
+		"type": "surgical",
+		# after_medical_treatment,医学处理完成后的各种检查或者其他治疗项
+		# procedure_type
+		# = "N", 代表对该项无定义
+		# = "surgical", 	普通手术, 及未分类的
+		# = "chemo",		化疗
+		# = "radio",		放疗
+		# = "dental",		牙科手术
+
+		"duration": {
+			"time_unit": "H",
+			"min": 24,
+			"max": 48
+		},
+			# duration, 该流程进行时的时间段
+			# time_unit
+			# = "N", 	代表对治疗时间无定义
+			# = "H", 	小时
+			# = "D", 	天
+			# = "W", 	周
+			# = "M", 	月
+			# min, 最小值
+			# max, 最大值
+			# min 等于 max 代表固定时长
+
+		"scenario": {
+			"num": 1,
+			"id_0": {
+			"obligatory_exam": [""],
+			"optional_exam": [""],
+			"recovery_plan":[""]
+			},
+		}
+	}
+			# scenario, 用药场景
+			# num 检查、用药场景的数目定义，如果"高血压病人"、"普通病人"
+			# = 1，（默认值）
+			# = 0, 代表对该项无定义
+			# id_X 该项为程序读取到num后动态创建的条目序号X=(0,1,2,...num-1)
+			# obligatory_exam, 必须的检查项目,数组的每一项代表一个检查项目,数组为空表示无该项检查
+			# optional_exam, 根据病情可选的检查项目,数组的每一项代表一个检查项目,数组为空表示无该项检查
+			# recovery_plan, 术后恢复需要的治疗项目,数组形式列出子条目,数组为空则没有术后恢复治疗方案
+
+	"after_treatment_drug_usage": {
+		"antibio_usage": {
+			"num":0,
+			# after_treatment_drug_usage, 医学处理完成后药物使用
+			# antibio_usage,抗菌药使用
+			# num, 检查、用药场景的数目定义,如果"高血压病人"、"普通病人"
+			# = 1,（默认值）
+			# = 0, 代表对该项无定义
+			"id_0":[""]
+		},
+
+		"anaesthetic_usage": {
+			"num":0,
+			# anaesthetic_usage,麻醉药物的使用
+			# num, 检查、用药场景的数目定义，如"高血压病人"、"普通病人"
+			# = 1,（默认值）
+			# = 0, 代表对该项无定义
+			"id_0":[""]
+		},
+
+		"otherdrugs_usage": {
+			"num":0,
+			# otherdrugs_usage,其他药物的使用
+			# num, 检查、用药场景的数目定义,如"高血压病人"、"普通病人"
+			# = 1,（默认值）
+			# = 0, 代表对该项无定义
+			"id_0":[""]
+		}
+	},
+
+		"discharge_criteria": [""],
+			# discharge_criteria,出院标准
+
+		"other_notice": [""],
+			# other_notice, 变异及原因分析
+
+		"submitter": "Xu",
+		# submitter, 记录提交者名字
+
+		"checker": "Xu",
+		# checker, 审核人,默认填 ""
+
+		"is_audited": 0 ,
+		# is_audited, 是否已经审核,只有2个值(1,0),1=>已经审核通过, 0=>未审核
+
+		"pathway_priority":?
+		# pathway_priority, 该路径优先级,内部使用,一个整数值
+
+}

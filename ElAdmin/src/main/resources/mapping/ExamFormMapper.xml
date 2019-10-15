@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.knowimage.mapper.ExamFormMapper">
+
+    <!--新增执行表单-->
+    <insert id="addExamForm" parameterType="cn.knowimage.pathwayform.vo.ExamForm" >
+        insert into exam_form(cp_id,form_name,version,suitable_subject_disc,severity_level,info_in_hospital,treatment_info,form_manager,record_time)
+         value(	#{cp_id},#{form_name},#{version},#{suitable_subject_disc},#{severity_level},#{info_in_hospital},#{treatment_info},#{form_manager},#{record_time})
+    </insert>
+
+    <!--根据id查询执行表单-->
+    <select id="getExamFormById" resultType="cn.knowimage.pathwayform.vo.ExamForm" parameterType="cn.knowimage.pathwayform.vo.ExamForm" >
+          SELECT * FROM exam_form WHERE 1=1 and cp_id = #{cp_id}
+<!--        <if test="cp_id != null">
+            AND cp_id = #{cp_id}
+        </if>-->
+    </select>
+    <!--根据cpid修改执行表单信息 -->
+    <update id="updateExamFormById" parameterType="cn.knowimage.pathwayform.vo.ExamForm" >
+        update exam_form
+        set form_name = #{form_name},version = #{version},suitable_subject_disc = #{suitable_subject_disc},
+        severity_level = #{severity_level},info_in_hospital = #{info_in_hospital},
+        treatment_info = #{treatment_info},form_manager = #{form_manager},record_time=#{record_time}
+        where cp_id = #{cp_id}
+    </update>
+
+    <update id="updateTreatmentById" parameterType="cn.knowimage.pathwayform.vo.ExamForm" >
+        update exam_form
+        set treatment_info = #{treatment_info}
+        where cp_id = #{cp_id}
+    </update>
+
+
+</mapper>

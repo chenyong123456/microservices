@@ -16,6 +16,7 @@
         <module>SpringCloudConfig-Client</module>
         <module>PCWiki</module>
         <module>Backendadmin</module>
+        <module>ElAdmin</module>
     </modules>
     <packaging>pom</packaging>
 

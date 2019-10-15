@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.knowimage.mapper.Audit_InfoMapper">
+
+    <insert id="insertAudit_info" parameterType="cn.knowimage.pojo.Audit_Info" flushCache="true" useGeneratedKeys="true">
+        insert into audit_info(pathway_name,submitter,data_upload_moment,checker,audit_state) value(
+			#{pathway_name},#{submitter},#{data_upload_moment},#{checker},#{audit_state})
+    </insert>
+
+</mapper>
