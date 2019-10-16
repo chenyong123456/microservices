@@ -12,6 +12,9 @@ spring:
     timeout: 5000
   application:
     name: backendadmin
+  cloud:
+    client:
+      ip-address: 192.168.50.236
 
 
 mybatis:
@@ -33,6 +36,5 @@ eureka:
       defaultZone: http://user:123456@192.168.50.107:10080/eureka/
   instance:
     prefer-ip-address: true
-    hostname: EurekaServer1
-    instance-id: 192.168.50.5:backendadmin:9998
-    ip-address: 192.168.50.5
+    instance-id: ${spring.cloud.client.ip-address}:backendadmin:9998
+    ip-address: ${spring.cloud.client.ip-address}
