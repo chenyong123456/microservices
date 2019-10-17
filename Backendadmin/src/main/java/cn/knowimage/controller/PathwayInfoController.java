@@ -3,6 +3,7 @@ package cn.knowimage.controller;
 import cn.knowimage.JsonPojo.MakeJson.MakeJsonPathway;
 import cn.knowimage.pojo.PathwayInfo;
 import cn.knowimage.pojo.ReceivePathway;
+import cn.knowimage.pojo.RecentWork;
 import cn.knowimage.service.PathwayInfoService;
 import cn.knowimage.service.RecentWorkService;
 import cn.knowimage.service.UserService;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @author 彭雷2019.10.12
@@ -43,10 +46,10 @@ public class PathwayInfoController {
     public String insertPathwayInfo(String pathwayPojo) {
         System.out.println("|-----------开始进行添加或更新操作---------");
         //测试数据     避免前端多次测试
-//        pathwayPojo="{\"selectId\":\"012016996600\",\"publisher\":\"01\",\"publishYear\":\"2016\",\"fileNumber\":\"9966\",\"versionNumber\":\"00\",\"pathway_name\":\"放假5\",\"first_diagnose\":\"\",\"suitable_subject_disc\":\"\",\"diagnosis\":\"\",\"treatment_choice_ref\":\"\",\"treatment_choice_scenario\":\"[{\\\"treatmentChoiceId\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"treatment_days\":\"[{\\\"tag_name\\\":\\\"\\\",\\\"time_unit\\\":\\\"\\\",\\\"text\\\":\\\"\\\",\\\"min\\\":\\\"0\\\",\\\"max\\\":\\\"0\\\"}]\",\"treatment_entry_standard\":\"[{\\\"value\\\":\\\"\\\"},{\\\"value\\\":\\\"\\\"}]\",\"prep_treatment_common\":\"\",\"prep_treatmentCommon\":\"[{\\\"time_unit\\\":\\\"\\\",\\\"text\\\":\\\"\\\",\\\"min\\\":\\\"0\\\",\\\"max\\\":\\\"0\\\",\\\"obligatory_exam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"optional_exam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"item_field_name1\\\":\\\"\\\",\\\"notification\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"radio\":\"1\",\"prep_treatmentAntibio_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"prep_treatmentAnaesthetic_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"prep_treatmentOtherdrugs_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"prep_treatment_extension\":\"[{\\\"content\\\":\\\"\\\",\\\"content_item\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"treatment_days_duration\":\"\",\"duration_treatment_min\":\"0\",\"duration_treatment_max\":\"0\",\"duration_treatment_text\":\"\",\"sceneList\":\"[{\\\"treatmentPlanRef\\\":\\\"\\\",\\\"caseChildnum\\\":[{\\\"treatmentPlanContent\\\":\\\"\\\",\\\"planContentItem\\\":[{\\\"value\\\":\\\"\\\"}]}],\\\"obligatoryExam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"optionalExam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"item_field_name2\\\":\\\"\\\",\\\"notification\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"drug_usageAntibio_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"drug_usageAnaesthetic_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"drug_usageOtherdrugs_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"afterDuration\":\"\",\"afterDuration_treatment_min\":\"0\",\"afterDuration_treatment_max\":\"0\",\"afterDuration_treatment_text\":\"\",\"after_medicalScenario\":\"[{\\\"obligatory_exam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"optional_exam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"recovery_plan\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"after_treatmentAntibio_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"after_treatmentAnaesthetic_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"after_treatmentOtherdrugs_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"discharge_criteria\":\"[{\\\"value\\\":\\\"\\\"}]\",\"other_notice\":\"[{\\\"value\\\":\\\"\\\"}]\",\"submitter\":\"李俊峰\",\"indefinite_field\":\"[{\\\"field_pos\\\":3,\\\"field_name\\\":\\\"\\\",\\\"field_content\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"submitterid\":\"51\"}\n";
+//        pathwayPojo="{\"selectId\":\"\",\"publisher\":\"01\",\"publishYear\":\"2014\",\"fileNumber\":\"8899\",\"versionNumber\":\"00\",\"pathway_name\":\"道歉没用\",\"first_diagnose\":\"\",\"suitable_subject_disc\":\"\",\"diagnosis\":\"\",\"treatment_choice_ref\":\"\",\"treatment_choice_scenario\":\"[{\\\"treatmentChoiceId\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"treatment_days\":\"[{\\\"tag_name\\\":\\\"\\\",\\\"time_unit\\\":\\\"\\\",\\\"text\\\":\\\"\\\",\\\"min\\\":\\\"0\\\",\\\"max\\\":\\\"0\\\"}]\",\"treatment_entry_standard\":\"[{\\\"value\\\":\\\"\\\"},{\\\"value\\\":\\\"\\\"}]\",\"prep_treatment_common\":\"\",\"prep_treatmentCommon\":\"[{\\\"time_unit\\\":\\\"\\\",\\\"text\\\":\\\"\\\",\\\"min\\\":\\\"0\\\",\\\"max\\\":\\\"0\\\",\\\"obligatory_exam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"optional_exam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"item_field_name1\\\":\\\"\\\",\\\"notification\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"radio\":\"1\",\"prep_treatmentAntibio_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"prep_treatmentAnaesthetic_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"prep_treatmentOtherdrugs_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"prep_treatment_extension\":\"[{\\\"content\\\":\\\"\\\",\\\"content_item\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"treatment_days_duration\":\"\",\"duration_treatment_min\":\"0\",\"duration_treatment_max\":\"0\",\"duration_treatment_text\":\"\",\"sceneList\":\"[{\\\"treatmentPlanRef\\\":\\\"\\\",\\\"caseChildnum\\\":[{\\\"treatmentPlanContent\\\":\\\"\\\",\\\"planContentItem\\\":[{\\\"value\\\":\\\"\\\"}]}],\\\"obligatoryExam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"optionalExam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"item_field_name2\\\":\\\"\\\",\\\"notification\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"drug_usageAntibio_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"drug_usageAnaesthetic_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"drug_usageOtherdrugs_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"afterDuration\":\"\",\"afterDuration_treatment_min\":\"0\",\"afterDuration_treatment_max\":\"0\",\"afterDuration_treatment_text\":\"\",\"after_medicalScenario\":\"[{\\\"obligatory_exam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"optional_exam\\\":[{\\\"value\\\":\\\"\\\"}],\\\"recovery_plan\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"after_treatmentAntibio_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"after_treatmentAnaesthetic_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"after_treatmentOtherdrugs_usage\":\"[{\\\"value\\\":\\\"\\\"}]\",\"discharge_criteria\":\"[{\\\"value\\\":\\\"\\\"}]\",\"other_notice\":\"[{\\\"value\\\":\\\"\\\"}]\",\"submitter\":\"李俊峰\",\"indefinite_field\":\"[{\\\"field_pos\\\":3,\\\"field_name\\\":\\\"\\\",\\\"field_content\\\":[{\\\"value\\\":\\\"\\\"}]}]\",\"submitterid\":\"51\",\"commit\":\"0\",\"table_info\":\"[{\\\"table_name\\\":\\\"@GRID@_1\\\",\\\"row_count\\\":1,\\\"column_count\\\":3,\\\"top_title\\\":\\\"名字\\\",\\\"below_description\\\":\\\"发的\\\",\\\"content\\\":[[{\\\"value\\\":\\\"1\\\"},{\\\"value\\\":\\\"2\\\"},{\\\"value\\\":\\\"3\\\"}]]}]\"}";
         ReceivePathway receivePathway = JsonUtils.jsonToPojo(pathwayPojo, ReceivePathway.class);
         System.out.println("前端传入数据为:"+pathwayPojo);
-        System.out.println(receivePathway.getTable_info());
+//        System.out.println(receivePathway.getTable_info());
         //创建pathwayInfo字段
         PathwayInfo pathwayInfo = MakeJsonPathway.newPathwayInfo(receivePathway);
         recentWorkService.insertRecentWork(pathwayInfo);
@@ -135,7 +138,7 @@ public class PathwayInfoController {
         }
         int flag = pathwayInfoService.updateAudit(pathwayInfo);
         if (flag == 1) {//审核成功！
-            System.out.println();
+            System.out.println("审核成功");
             return 	ClincialResult.ok();
         }else{//审核失败！
             System.out.println();
@@ -150,17 +153,27 @@ public class PathwayInfoController {
      */
     @RequestMapping("deletePathwayInfo")
     @ResponseBody
-    public String deletePathwayInfo(String pathway_index,String username,String password){
+    public JSONObject deletePathwayInfo(String pathway_index,String username,String password){
+        JSONObject jsonObject = new JSONObject();
         System.out.println("|-----------开始进行删除操作---------|");
         System.out.println("删除了id为"+pathway_index+"用户名:"+username+"密码:"+password);
         int state=0;
         if (userService.checkUser(username,password)!=0) {
             state = pathwayInfoService.deletePathwayInfo(pathway_index);
+            System.out.println("state==="+state);
         }
-        if (state==1){
-            return "200";
+        if (state==3){
+            jsonObject.put("state",200);
+            return jsonObject ;
         }else {
-            return "500";
+            jsonObject.put("state",500);
+            return jsonObject;
         }
+    }
+
+    @RequestMapping("/myWork")
+    @ResponseBody
+    public List<String> findMyWork(String submitterid){
+        return pathwayInfoService.findMyWork(submitterid);
     }
 }

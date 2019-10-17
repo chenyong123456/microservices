@@ -40,4 +40,6 @@ public interface PathwayInfoMapper {
     int updateAudit (@Param("pathwayInfo") PathwayInfo pathwayInfo);
 
     int deletePathwayInfoByIndex(@Param("pathway_index") String pathwayIndex);
+
+    List<String> selectPathwayNameByEditorId(@Param("editor_id") String editor_id);
 }

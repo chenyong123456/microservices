@@ -33,4 +33,5 @@ public class PathwayInfo {
     private String checker_id;
     private Integer commit_state;
     private String editor_id;
+    private String table_info;
 }

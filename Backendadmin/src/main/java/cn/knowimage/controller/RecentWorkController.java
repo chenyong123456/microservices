@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author 彭雷2019.10.15
  * 日志，最近工作的代码
@@ -22,9 +25,27 @@ public class RecentWorkController {
     @RequestMapping("/work")
     @ResponseBody
     public JSONArray findMyRecentWork(String username){
-        System.out.println("|-----------"+username+"开始查找最近的工作记录---------");
+        System.out.println("|-----------"+username+"开始查找最近的工作记录---------|");
         System.out.println(username);
         JSONArray jsonArray = (JSONArray) recentWorkService.findMyRecentWork(username);
+        String s = "(保+存+修+改)";
+        String json = jsonArray.toString();
+        Pattern p = Pattern.compile(s);
+        Matcher m = p.matcher(json);
+        int count = 0;
+        String replaceAll = null;
+        while (m.find()){
+            count++;
+            System.out.println("匹配次数=="+count);
+            System.out.println("匹配开始=="+json.charAt(m.start()));
+            System.out.println("匹配结束=="+json.charAt(m.end()));
+            System.out.println("位置开始=="+m.start()+"位置结束=="+m.end());
+            replaceAll = m.replaceAll("111");
+            System.out.println(replaceAll);
+        }
+
         return jsonArray;
     }
+
+
 }

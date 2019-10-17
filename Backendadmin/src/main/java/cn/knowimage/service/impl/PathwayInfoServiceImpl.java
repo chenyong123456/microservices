@@ -44,13 +44,12 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         System.out.println("新增或修改是否传入了selectId:" + receivePathway.getSelectId());
         if (receivePathway.getSelectId() == null || "".equals(receivePathway.getSelectId())) {
             //判断index是否重复
-            String exist = pathwayInfoMapper.findNameByIndex(receivePathway.getSelectId());
+            String exist = pathwayInfoMapper.findNameByIndex(pathwayInfo.getPathway_index());
             if (exist!=null){
                 System.out.println("该版本号已存在");
                 return 0;
             }else {
                 System.out.println("开始新增++++++++++++++++++++++");
-
                 int statePathwayInfo = pathwayInfoMapper.insertPathwayInfo(pathwayInfo);
                 if ((statePathwayInfo == 1)) {
                     System.out.println("新增成功");
@@ -102,7 +101,8 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
             return exam_form;
         }
         PathwayInfo pathwayInfo = pathwayInfoMapper.findPathwayInfoByIndex(pathway_index);
-        JSONObject last = ReturnJsonPathway_Info.make(pathwayInfo);
+        String username = userMapper.findUserNameById(pathwayInfo.getSubmitter_id());
+        JSONObject last = ReturnJsonPathway_Info.make(pathwayInfo,username);
         returnPathwayInfoAndExamForm.put("pathway_info",last);
         returnPathwayInfoAndExamForm.put("exam_form",exam_form);
         return returnPathwayInfoAndExamForm;
@@ -169,6 +169,13 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         pathwayInfo.setEditor_id(userMapper.findIdByUserName(pathwayInfo.getEditor_id()));
         //创建审核时间
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        PathwayInfo pathwayInfo1 = pathwayInfoMapper.findPathwayInfoByIndex(pathwayInfo.getPathway_index());
+        RecentWork recentWork = new RecentWork();
+        recentWork.setMethod("审核了字段"+pathwayInfo1.getPathway_name());
+        recentWork.setUser_id(pathwayInfo.getChecker_id());
+        recentWork.setCp_index(pathwayInfo.getPathway_index());
+        recentWork.setCreate_time(formatter.format(new Date()));
+        recentWorkMapper.insertRecentWork(recentWork);
         pathwayInfo.setAudit_time(formatter.format(new Date()));
         int i = pathwayInfoMapper.updateAudit(pathwayInfo);
         return i;
@@ -177,6 +184,11 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
     @Override
     public int deletePathwayInfo(String pathwayIndex) {
         return pathwayInfoMapper.deletePathwayInfoByIndex(pathwayIndex);
+    }
+
+    @Override
+    public List<String> findMyWork(String editor_id) {
+        return pathwayInfoMapper.selectPathwayNameByEditorId(editor_id);
     }
 
 }

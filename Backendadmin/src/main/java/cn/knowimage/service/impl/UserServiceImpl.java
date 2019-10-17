@@ -15,6 +15,7 @@ public class UserServiceImpl implements UserService {
         String base = password;
         String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
         String id = userMapper.checkUser(username, md5);
+        System.out.println(id);
         if (id!=null){
             //成功
             return 1;

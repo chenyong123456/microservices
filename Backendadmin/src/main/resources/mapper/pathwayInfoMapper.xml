@@ -27,7 +27,8 @@
 				audit_state,
 				submitter_id,
 				commit_state,
-				editor_id) value(
+				editor_id,
+				table_info) value(
 				#{pathway_Info.pathway_index},
 				#{pathway_Info.first_diagnosis},
 				#{pathway_Info.pathway_name},
@@ -52,7 +53,8 @@
 				#{pathway_Info.audit_state},
 				#{pathway_Info.submitter_id},
 				#{pathway_Info.commit_state},
-				#{pathway_Info.editor_id})
+				#{pathway_Info.editor_id},
+				#{pathway_Info.table_info})
     </insert>
 
 	<select id="findNameByIndex" parameterType="java.lang.String" resultType="java.lang.String">
@@ -129,4 +131,7 @@
 		and pathway_info_merge.pathway_index = recent_work.cp_index
 		and pathway_info_merge.pathway_index = exam_form.cp_id
 	</delete>
+	<select id="selectPathwayNameByEditorId" resultType="java.lang.String" parameterType="java.lang.String">
+		select pathway_name from pathway_info_merge where editor_id = #{editor_id} and commit_state = 0
+	</select>
 </mapper>

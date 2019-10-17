@@ -49,10 +49,11 @@ public class MakeJsonPathway {
         pathwayInfo.setOther_notice(MakeOtherNotice.make(receivePathway));
         pathwayInfo.setAdditional_field(MakeAdditionalField.make(receivePathway));
         pathwayInfo.setData_upload_moment(df.format(new Date()));
-        pathwayInfo.setAudit_state(0);
+        pathwayInfo.setAudit_state(pathwayInfo.getAudit_state());
         pathwayInfo.setSubmitter_id(receivePathway.getSubmitterid());
-        pathwayInfo.setCommit_state(0);
+        pathwayInfo.setCommit_state(pathwayInfo.getCommit_state());
         pathwayInfo.setEditor_id(receivePathway.getSubmitterid());
+//        pathwayInfo.setTable_info(MakeTableInfo.make(receivePathway));
         return pathwayInfo;
     }
 }

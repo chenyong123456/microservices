@@ -6,7 +6,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class ReturnJsonPathway_Info {
-    public static JSONObject make(PathwayInfo pathwayInfo){
+    public static JSONObject make(PathwayInfo pathwayInfo,String username){
         //创建总对象
         JSONObject last = new JSONObject();
         String pathway_index = pathwayInfo.getPathway_index();
@@ -35,7 +35,7 @@ public class ReturnJsonPathway_Info {
         String other_notice = OtherNoticeReturn.other_notice(pathwayInfo.getOther_notice()).replaceAll("\t", "");
         String additional_field = AdditionalFieldReturn.additional_field(pathwayInfo.getAdditional_field()).replaceAll("\t", "");
         Integer state = pathwayInfo.getAudit_state();
-        String submitter = pathwayInfo.getSubmitter_id();
+        String submitter = username;
         last.put("publisher", publisher);
         last.put("publishYear", publishYear);
         last.put("fileNumber", fileNumber);

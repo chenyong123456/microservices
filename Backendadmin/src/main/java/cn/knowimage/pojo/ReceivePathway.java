@@ -44,8 +44,8 @@ public class ReceivePathway {
     private String other_notice;//变异及原因分析
     private String submitter; //记录提交者名字
     private String indefinite_field;//对应数据库的additional_field
-    private String submitterid;//对应数据库的additional_field
-    private String commit;
+    private String submitterid;
+    private String commit;//判断用户的提交或者保存操作，保存=0 提交=1
     private String table_info;
 
 
