@@ -7,13 +7,13 @@ import cn.knowimage.pojo.RecentWork;
 import cn.knowimage.service.RecentWorkService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -220,15 +220,47 @@ public class RecentWorkServiceImpl implements RecentWorkService {
     @Override
     public JSONArray findMyRecentWork(String username) {
         List<RecentWork> myRecentWork =recentWorkMapper.findMyRecentWork(username);
+        RecentWork recentWork;
+        List<RecentWork> list  = new ArrayList<>();
+        if (myRecentWork.size()!=0){
+            recentWork = myRecentWork.get(0);
+            String index = recentWork .getCreate_time();
+            String method = recentWork.getMethod();
+            for (int i =1 ; i<myRecentWork.size();i++){
+                RecentWork recentWorkOut = myRecentWork.get(i);
+                if (index.equals(recentWorkOut.getCreate_time())){
+                    System.out.println("if判断true");
+                    recentWork.setMethod(method+","+recentWorkOut.getMethod());
+                    method = recentWork.getMethod();
+                }else {
+                    list.add(recentWork);
+                    System.out.println("if判断false");
+                    index = recentWorkOut.getCreate_time();
+                    method = recentWorkOut.getMethod();
+                    recentWork = recentWorkOut;
+                }
+            }
+            System.out.println(list);
+        }
+
         JSONObject jsonObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-        for (int i = 0 ; i <myRecentWork.size(); i++ ){
-            jsonObject.put("name",myRecentWork.get(i).getPathway_name());
-            jsonObject.put("time",myRecentWork.get(i).getCreate_time());
-            jsonObject.put("username",myRecentWork.get(i).getUsername());
-            jsonObject.put("method",myRecentWork.get(i).getMethod());
-            jsonObject.put("id",myRecentWork.get(i).getCp_index());
-            System.out.println(jsonObject);
+        for (int i = 0 ; i <list.size(); i++ ){
+            if (jsonArray.size()==10) break;
+            String method;
+            int state=0;
+            if (list.get(i).getMethod().contains(",")) {
+                method = list.get(i).getMethod().split(",")[0] + "等内容";
+                state=1;
+            }else method =list.get(i).getMethod();
+            String more = list.get(i).getMethod();
+            jsonObject.put("name",list.get(i).getPathway_name());
+            jsonObject.put("time",list.get(i).getCreate_time());
+            jsonObject.put("username",list.get(i).getUsername());
+            jsonObject.put("method",method);
+            jsonObject.put("more",more);
+            jsonObject.put("id",list.get(i).getCp_index());
+            jsonObject.put("state",state);
             jsonArray.add(jsonObject);
             jsonObject.clear();
         }

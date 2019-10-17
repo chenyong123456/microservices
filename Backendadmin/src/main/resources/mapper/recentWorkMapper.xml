@@ -13,6 +13,7 @@
         select recent_work.cp_index,recent_work.method,recent_work.user_id,recent_work.create_time,user.username,pathway_info_merge.pathway_name
         from recent_work,user,pathway_info_merge
         where user.username = '李俊峰' and user.id=recent_work.user_id and pathway_info_merge.pathway_index = recent_work.cp_index
-        order by recent_work.id desc limit 10
+        order by recent_work.id desc
     </select>
+
 </mapper>

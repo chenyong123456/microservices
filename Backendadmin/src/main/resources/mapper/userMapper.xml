@@ -12,4 +12,7 @@
         select username,id from user
     </select>
 
+    <select id="checkUser" resultType="java.lang.String" parameterType="java.lang.String">
+        select username from user where username=#{username} and password = #{password} limit 1
+    </select>
 </mapper>

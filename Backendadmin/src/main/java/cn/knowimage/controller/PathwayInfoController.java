@@ -5,6 +5,7 @@ import cn.knowimage.pojo.PathwayInfo;
 import cn.knowimage.pojo.ReceivePathway;
 import cn.knowimage.service.PathwayInfoService;
 import cn.knowimage.service.RecentWorkService;
+import cn.knowimage.service.UserService;
 import cn.knowimage.util.ClincialResult;
 import cn.knowimage.util.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,8 @@ public class PathwayInfoController {
     PathwayInfoService pathwayInfoService;
     @Autowired
     RecentWorkService recentWorkService;
+    @Autowired
+    UserService userService;
     /**
      *
      * @param pathwayPojo 梁梁传入数据
@@ -147,10 +150,13 @@ public class PathwayInfoController {
      */
     @RequestMapping("deletePathwayInfo")
     @ResponseBody
-    public String deletePathwayInfo(String pathway_index){
+    public String deletePathwayInfo(String pathway_index,String username,String password){
         System.out.println("|-----------开始进行删除操作---------|");
-        System.out.println("删除了id为"+pathway_index);
-        int state = pathwayInfoService.deletePathwayInfo(pathway_index);
+        System.out.println("删除了id为"+pathway_index+"用户名:"+username+"密码:"+password);
+        int state=0;
+        if (userService.checkUser(username,password)!=0) {
+            state = pathwayInfoService.deletePathwayInfo(pathway_index);
+        }
         if (state==1){
             return "200";
         }else {
