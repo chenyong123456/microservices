@@ -28,24 +28,23 @@ public class RecentWorkController {
         System.out.println("|-----------"+username+"开始查找最近的工作记录---------|");
         System.out.println(username);
         JSONArray jsonArray = (JSONArray) recentWorkService.findMyRecentWork(username);
-        String s = "(保+存+修+改)";
+        return jsonArray;
+    }
+    //待删除
+    /*
+     String s = "(保存修改)";
         String json = jsonArray.toString();
         Pattern p = Pattern.compile(s);
         Matcher m = p.matcher(json);
         int count = 0;
-        String replaceAll = null;
         while (m.find()){
             count++;
             System.out.println("匹配次数=="+count);
             System.out.println("匹配开始=="+json.charAt(m.start()));
             System.out.println("匹配结束=="+json.charAt(m.end()));
-            System.out.println("位置开始=="+m.start()+"位置结束=="+m.end());
-            replaceAll = m.replaceAll("111");
-            System.out.println(replaceAll);
+            System.out.println("位置开始=="+m.start());
+            System.out.println("位置结束=="+m.end());
         }
-
-        return jsonArray;
-    }
-
-
+        System.out.println(m.replaceAll("111"));
+     */
 }

@@ -6,7 +6,7 @@ spring:
       server:
         git:
           uri: https://gitee.com/knowimage/GateWay.git
-          search-paths: resources
+          search-paths: resources/GateWay
           username: penglei@knowimage.cn
           password: Pl98629
           force-pull: true

@@ -41,7 +41,7 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             recentWork.setMethod(method+"新字段"+newPathwayInfo.getPathway_name());
             recentWorkMapper.insertRecentWork(recentWork);
         }else {
-            if (newPathwayInfo.getCommit_state()==1) {
+            if ("1".equals(newPathwayInfo.getCommit_state())) {
                 method = "提交";
             }
             System.out.println("-------------Json判断----------------");
@@ -249,12 +249,13 @@ public class RecentWorkServiceImpl implements RecentWorkService {
         for (int i = 0 ; i <list.size(); i++ ){
             if (jsonArray.size()==10) break;
             String method;
+            String more = null;
             int state=0;
             if (list.get(i).getMethod().contains(",")) {
                 method = list.get(i).getMethod().split(",")[0] + "等内容";
+                more = list.get(i).getMethod();
                 state=1;
             }else method =list.get(i).getMethod();
-            String more = list.get(i).getMethod();
             jsonObject.put("name",list.get(i).getPathway_name());
             jsonObject.put("time",list.get(i).getCreate_time());
             jsonObject.put("method",method);

@@ -35,7 +35,21 @@ public class ReturnJsonPathway_Info {
         String other_notice = OtherNoticeReturn.other_notice(pathwayInfo.getOther_notice()).replaceAll("\t", "");
         String additional_field = AdditionalFieldReturn.additional_field(pathwayInfo.getAdditional_field()).replaceAll("\t", "");
         Integer state = pathwayInfo.getAudit_state();
+        System.out.println(pathwayInfo);
+        Integer commit = Integer.parseInt(pathwayInfo.getCommit_state());
         String submitter = username;
+        String table_info = TableInfoReturn.make(pathwayInfo.getTable_info().replaceAll("\t", ""));
+        System.out.println("table_info===="+table_info);
+        if (state==0 && commit==0) {
+            state = 0;
+        } else if (state==0 && commit==1) {
+            state=1;
+        } else if (state==1 && commit==1) {
+            state=1;
+        } else if(state==2 && commit==0) {
+            state=0;
+        }
+
         last.put("publisher", publisher);
         last.put("publishYear", publishYear);
         last.put("fileNumber", fileNumber);
@@ -60,8 +74,9 @@ public class ReturnJsonPathway_Info {
         last.put("other_notice", other_notice);
         last.put("submitter", submitter);
         last.put("indefinite_field", additional_field);
-        last.put("static", state  == 1);
+        last.put("static", state);
         last.put("selectId", pathway_index);
+        last.put("table_info" , table_info);
         System.out.println("返回前端的数据为:" + last);
         return last;
     }

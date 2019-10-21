@@ -17,20 +17,21 @@ public class MakeTableInfo  {
         if ("0".equals(tableJsonArray.getJSONObject(0).getString("row_count"))&&
             "0".equals(tableJsonArray.getJSONObject(0).getString("column_count"))&&
             "".equals(tableJsonArray.getJSONObject(0).getString("top_title"))&&
-            "".equals(tableJsonArray.getJSONObject(0).getString("below_description"))&&
-            tableJsonArray.getJSONObject(0).getJSONArray("content")==null){
+            "".equals(tableJsonArray.getJSONObject(0).getString("below_description"))){
+            System.out.println("tableInfo默认格式++++++++++++++++++++");
             //开始拼数据库默认值
-            table_info.put("table_num","0");
+            table_info.put("table_num",0);
             JSONObject table_0 = new JSONObject();
             table_0.put("table_prefix","@GRID@_1");
-            table_0.put("row_count","0");
-            table_0.put("column_count","0");
+            table_0.put("row_count",0);
+            table_0.put("column_count",0);
             table_0.put("top_title","");
             table_0.put("below_description","");
             JSONArray content = new JSONArray();
             JSONArray value = new JSONArray();
             content.add(value);
             table_0.put("content",content);
+            table_info.put("table_0",table_0);
         }else {
             //获得长度
             int num = tableJsonArray.size();
@@ -53,7 +54,6 @@ public class MakeTableInfo  {
                 jsonObject.put("below_description",below_description);
                 //循环遍历前端传入的array
                 //首先判断该array长度是否为0;
-                System.out.println("array的长度为:"+array.size());
                 if (array.size()==0){
                     content.add(content_son);
                 }else {

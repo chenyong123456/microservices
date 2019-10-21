@@ -47,6 +47,8 @@ public class ReceivePathway {
     private String submitterid;
     private String commit;//判断用户的提交或者保存操作，保存=0 提交=1
     private String table_info;
+    private int fileStatic;//判断用户是新增的操作还是保存的操作
+
 
 
 }

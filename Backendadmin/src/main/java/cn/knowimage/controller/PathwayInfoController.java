@@ -3,7 +3,6 @@ package cn.knowimage.controller;
 import cn.knowimage.JsonPojo.MakeJson.MakeJsonPathway;
 import cn.knowimage.pojo.PathwayInfo;
 import cn.knowimage.pojo.ReceivePathway;
-import cn.knowimage.pojo.RecentWork;
 import cn.knowimage.service.PathwayInfoService;
 import cn.knowimage.service.RecentWorkService;
 import cn.knowimage.service.UserService;
@@ -132,9 +131,9 @@ public class PathwayInfoController {
     @ResponseBody
     public ClincialResult updateById(PathwayInfo pathwayInfo) {
         System.out.println("|-----------开始进行审核操作---------|");
-        pathwayInfo.setCommit_state(1);
+        pathwayInfo.setCommit_state("1");
         if (pathwayInfo.getAudit_state()==2){
-            pathwayInfo.setCommit_state(0);
+            pathwayInfo.setCommit_state("0");
         }
         int flag = pathwayInfoService.updateAudit(pathwayInfo);
         if (flag == 1) {//审核成功！

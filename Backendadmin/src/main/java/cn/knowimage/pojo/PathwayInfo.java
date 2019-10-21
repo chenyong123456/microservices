@@ -31,7 +31,7 @@ public class PathwayInfo {
     private String audit_remark;
     private String submitter_id;
     private String checker_id;
-    private Integer commit_state;
+    private String commit_state;
     private String editor_id;
     private String table_info;
 }

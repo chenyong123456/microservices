@@ -11,10 +11,22 @@ spring:
       probability: 0.1
   cloud:
     client:
-      ip-address: 192.168.50.184
+      ip-address: 192.168.50.154
+    config:
+      uri: http://192.168.50.5:8769
+      fail-fast: true
+    bus:
+      enabled: true
+      trace:
+        enabled: true
+  rabbitmq:
+    host: 192.168.50.184
+    port: 5672
+    username: admin
+    password: admin
 
 server:
-  port: 10006
+  port: 10005
 
 eureka:
   client:

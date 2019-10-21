@@ -81,21 +81,24 @@
         after_treatment_drug_usage=#{pathway_Info.after_treatment_drug_usage},
         discharge_criteria=#{pathway_Info.discharge_criteria},
         other_notice=#{pathway_Info.other_notice},
-        additional_field=#{pathway_Info.additional_field}
+        additional_field=#{pathway_Info.additional_field},
+        commit_state = #{pathway_Info.commit_state},
+        table_info = #{pathway_Info.table_info}
         where pathway_index=#{pathway_Info.pathway_index}
 	</update>
 
 	<select id="findPathwayInfoByIndex" parameterType="java.lang.String" resultType="cn.knowimage.pojo.PathwayInfo">
 		select pathway_index,first_diagnosis,pathway_name,suitable_subject_disc,diagnosis,treatment_choice,treatment_days,treatment_entry_standard,
 				type,department_code,drug_use_period,prep_treatment_common,prep_treatment_drug_usage,prep_treatment_extension,treatment,drug_usage,
-				after_medical_treatment,after_treatment_drug_usage,discharge_criteria,other_notice,additional_field,audit_state,editor_id,submitter_id
+				after_medical_treatment,after_treatment_drug_usage,discharge_criteria,other_notice,additional_field,audit_state,editor_id,submitter_id,
+				table_info,commit_state
 		from pathway_info_merge
 		where pathway_index = #{pathway_index}
 		limit 1
 	</select>
 
 	<select id="findLikePathwayName" parameterType="java.lang.String" resultType="cn.knowimage.pojo.PathwayInfo">
-		SELECT pathway_name,pathway_index,audit_state FROM pathway_info_merge where pathway_name like '%${query}%'
+		SELECT pathway_name,pathway_index,audit_state,commit_state FROM pathway_info_merge where pathway_name like '%${query}%'
 	</select>
 
 	<select id="findAllStateAndLikeName" parameterType="java.lang.String" resultType="int">
@@ -132,6 +135,6 @@
 		and pathway_info_merge.pathway_index = exam_form.cp_id
 	</delete>
 	<select id="selectPathwayNameByEditorId" resultType="java.lang.String" parameterType="java.lang.String">
-		select pathway_name from pathway_info_merge where editor_id = #{editor_id} and commit_state = 0
+		select pathway_name from pathway_info_merge where editor_id = #{editor_id} and commit_state = 0 order by pathway_id desc
 	</select>
 </mapper>

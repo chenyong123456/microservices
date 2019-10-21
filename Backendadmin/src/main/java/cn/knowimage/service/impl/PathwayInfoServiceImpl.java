@@ -1,6 +1,5 @@
 package cn.knowimage.service.impl;
 
-import cn.knowimage.JsonPojo.MakeJson.MakeJsonPathway;
 import cn.knowimage.JsonPojo.ReturnJson.ReturnJsonPathway_Info;
 import cn.knowimage.mapper.PathwayInfoMapper;
 import cn.knowimage.mapper.RecentWorkMapper;
@@ -17,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class PathwayInfoServiceImpl implements PathwayInfoService  {
@@ -34,15 +36,15 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
      * @return 成功或者失败
      * 实现过程:
      *          1.首先将前端传入的Json字符串转换为数据库的Json格式
-     *          2.判断前端是否传入SelectId(既PathwayIndex)
-     *              2.1   Y，则为先查找了字段再进行了提交操作，可以判断出此时此刻在修改操作
-     *              2.2   N，则为直接进行提交操作，可以判断出，此时此刻在新增操作
+     *          2.判断前端是否传入fileStatic(传入了值为1    否则值为0)
+     *              2.1   Y，新增操作，先查询是否又重复版本
+     *              2.2   N，修改操作
      */
     @Override
     public int insertPathwayInfo(ReceivePathway receivePathway,PathwayInfo pathwayInfo) {
         //判断首先判断该字段是否已存在
-        System.out.println("新增或修改是否传入了selectId:" + receivePathway.getSelectId());
-        if (receivePathway.getSelectId() == null || "".equals(receivePathway.getSelectId())) {
+        System.out.println("新增或修改是否传入了fileStatic:" + receivePathway.getFileStatic());
+        if (receivePathway.getFileStatic() == 1) {
             //判断index是否重复
             String exist = pathwayInfoMapper.findNameByIndex(pathwayInfo.getPathway_index());
             if (exist!=null){
@@ -61,8 +63,6 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
             }
         }else {
             System.out.println("传入了index开始修改++++++++++++++++++++++");
-            //首先将PathwayIndex  Set入pathwayInfo中
-            pathwayInfo.setPathway_index(receivePathway.getSelectId());
             int statePathwayInfo = pathwayInfoMapper.updatePathwayInfo(pathwayInfo);
             if ((statePathwayInfo == 1)) {
                 System.out.println("修改成功");
@@ -71,7 +71,6 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
                 System.out.println("修改失败");
                 return 0;
             }
-
         }
     }
 
@@ -91,7 +90,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         Map<String,String> map = new HashMap<>();
         map.put("cp_id",pathway_index);
         String s;
-        s= HttpClientUtil.doGet("http://192.168.50.78:8003/getExamFormDataById", map);
+        s= HttpClientUtil.doGet("http://192.168.50.102:8003/getExamFormDataById", map);
         System.out.println("exam_form的数据s==========="+s);
         JSONObject exam_form = new JSONObject();
         try {
@@ -125,6 +124,16 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
             String ID = pathwayInfos.get(i).getPathway_index();
             //获取Audit_state
             Integer state = pathwayInfos.get(i).getAudit_state();
+            Integer commit = Integer.parseInt(pathwayInfos.get(i).getCommit_state());
+            if (state==0 && commit==0) {
+                state = 0;
+            } else if (state==0 && commit==1) {
+                state=1;
+            } else if (state==1 && commit==1) {
+                state=2;
+            } else if(state==2 && commit==0) {
+                state=3;
+            }
             value.put("label", pathway_name);
             value.put("value", ID);
             value.put("static", state);
@@ -164,6 +173,11 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         return jsonObject;
     }
 
+    /**
+     * 审核操作
+     * @param pathwayInfo 被审核的字段
+     * @return 成功返回1 失败返回null
+     */
     @Override
     public int updateAudit(PathwayInfo pathwayInfo) {
         pathwayInfo.setEditor_id(userMapper.findIdByUserName(pathwayInfo.getEditor_id()));
@@ -180,6 +194,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         int i = pathwayInfoMapper.updateAudit(pathwayInfo);
         return i;
     }
+
     //删除
     @Override
     public int deletePathwayInfo(String pathwayIndex) {

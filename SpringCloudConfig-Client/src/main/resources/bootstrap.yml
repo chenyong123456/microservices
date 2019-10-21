@@ -3,7 +3,24 @@ spring:
     name: config-client
   cloud:
     config:
-      uri: http://192.168.50.63:8769
+      uri: http://192.168.50.5:8769
       fail-fast: true
-  profiles:
-    active: dev
+    bus:
+      enabled: true
+      trace:
+        enabled: true
+  rabbitmq:
+    host: 192.168.50.184
+    port: 5672
+    username: admin
+    password: admin
+management:
+  endpoint:
+    bus-refresh:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: 8762
