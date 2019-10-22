@@ -135,6 +135,18 @@
 		and pathway_info_merge.pathway_index = exam_form.cp_id
 	</delete>
 	<select id="selectPathwayNameByEditorId" resultType="java.lang.String" parameterType="java.lang.String">
-		select pathway_name from pathway_info_merge where editor_id = #{editor_id} and commit_state = 0 order by pathway_id desc
+		select pathway_name
+		from pathway_info_merge
+		where editor_id = #{editor_id}
+		and commit_state = 0
+		order by pathway_id desc
+	</select>
+
+	<select id="selectPathwayNameByUserName" resultType="java.lang.String" parameterType="java.lang.String">
+		select pathway_info_merge.pathway_name
+		from pathway_info_merge,user
+		where pathway_info_merge.submitter_id = user.id
+		and user.username = #{username}
+		and pathway_info_merge.pathway_name LIKE '%${query}%'
 	</select>
 </mapper>

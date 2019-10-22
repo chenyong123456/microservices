@@ -1,12 +1,19 @@
 package cn.knowimage.JsonPojo.MakeJson;
 
 import cn.knowimage.JsonPojo.MakeJson.MakePathway_Info.*;
+import cn.knowimage.demo.imageOut;
 import cn.knowimage.pojo.PathwayInfo;
 import cn.knowimage.pojo.ReceivePathway;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
 @Component
 public class MakeJsonPathway {
 
@@ -54,6 +61,34 @@ public class MakeJsonPathway {
         pathwayInfo.setCommit_state(receivePathway.getCommit());
         pathwayInfo.setEditor_id(receivePathway.getSubmitterid());
         pathwayInfo.setTable_info(MakeTableInfo.make(receivePathway));
+
+        List<List<List<String>>> allValue = new ArrayList<>();
+        JSONObject jsonObject  = JSONObject.fromObject(pathwayInfo.getTable_info());
+        List list = new ArrayList();
+        for (int i = 0 ; i<jsonObject.getInt("table_num");i++) {
+            JSONObject table_info = jsonObject.getJSONObject("table_"+i);
+            JSONArray content = table_info.getJSONArray("content");
+            for (int j = 0; j < table_info.getInt("row_count");j++) {
+                List<String> contents = new ArrayList<>();
+                for (int k = 0 ; k < table_info.getInt("column_count");k++) {
+                    contents.add(content.getJSONArray(j).getString(k));
+                }
+                list.add(contents);
+            }
+            allValue.add(list);
+            List<String> titles = new ArrayList<>();
+            titles.add(table_info.getString("below_description"));
+            List<String[]> headers = new ArrayList<>();
+            String[] h1 = new String[]{"名字","年龄","身高","婚姻","啊啊啊啊","asdasdas"};
+            headers.add(h1);
+            try {
+                imageOut.graphicsGeneration(allValue,titles,headers,"",2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return pathwayInfo;
     }
+
+
 }

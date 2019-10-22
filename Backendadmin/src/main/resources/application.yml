@@ -34,5 +34,5 @@ eureka:
   instance:
     prefer-ip-address: true
     hostname: EurekaServer1
-    instance-id: 192.168.50.5:backendadmin:9998
+    instance-id: 192.168.50.5:backendadmin:9999
     ip-address: 192.168.50.5

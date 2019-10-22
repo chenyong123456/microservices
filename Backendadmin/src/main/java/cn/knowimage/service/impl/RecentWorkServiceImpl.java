@@ -222,49 +222,64 @@ public class RecentWorkServiceImpl implements RecentWorkService {
 
     @Override
     public JSONArray findMyRecentWork(String username) {
+        //获得数据库全部的数据
         List<RecentWork> myRecentWork =recentWorkMapper.findMyRecentWork(username);
         RecentWork recentWork;
         List<RecentWork> list  = new ArrayList<>();
-        if (myRecentWork.size()!=0){
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        //首先判断size是否为0，
+        if (myRecentWork.size() != 0) {
+            //获得集合的第一个对象的数据，用于后期list集合归类
             recentWork = myRecentWork.get(0);
-            String index = recentWork .getCreate_time();
+            String time = recentWork.getCreate_time();
             String method = recentWork.getMethod();
-            for (int i =1 ; i<myRecentWork.size();i++){
+            //创建一个count 进行判断是否进入了count语句
+            int count = 0;
+            //开始将同一time中的method进行归类，使用","分割,前提是集合中有两条及以上数据
+            for (int i = 1; i < myRecentWork.size(); i++) {
                 RecentWork recentWorkOut = myRecentWork.get(i);
-                if (index.equals(recentWorkOut.getCreate_time())){
-                    recentWork.setMethod(method+","+recentWorkOut.getMethod());
+                if (time.equals(recentWorkOut.getCreate_time())) {
+                    recentWork.setMethod(method + "," + recentWorkOut.getMethod());
                     method = recentWork.getMethod();
-                }else {
+                } else {
+                    //未拼method字符串
+                    count++;
                     list.add(recentWork);
-                    index = recentWorkOut.getCreate_time();
+                    time = recentWorkOut.getCreate_time();
                     method = recentWorkOut.getMethod();
                     recentWork = recentWorkOut;
                 }
             }
+            //未进入for循环
+            if (count==0){
+                for (int j=0 ; j<myRecentWork.size();j++) {
+                    list.add(myRecentWork.get(j));
+                }
+            }
             System.out.println(list);
         }
-
-        JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
-        for (int i = 0 ; i <list.size(); i++ ){
-            if (jsonArray.size()==10) break;
+        for (int i = 0; i < list.size(); i++) {
+            if (jsonArray.size() == 10) break;
             String method;
             String more = null;
-            int state=0;
+            int state = 0;
             if (list.get(i).getMethod().contains(",")) {
+                //判断是否有","该字符串，有则为有其他method
                 method = list.get(i).getMethod().split(",")[0] + "等内容";
                 more = list.get(i).getMethod();
-                state=1;
-            }else method =list.get(i).getMethod();
-            jsonObject.put("name",list.get(i).getPathway_name());
-            jsonObject.put("time",list.get(i).getCreate_time());
-            jsonObject.put("method",method);
-            jsonObject.put("more",more);
-            jsonObject.put("id",list.get(i).getCp_index());
-            jsonObject.put("state",state);
+                state = 1;
+            } else method = list.get(i).getMethod();
+            jsonObject.put("name", list.get(i).getPathway_name());
+            jsonObject.put("time", list.get(i).getCreate_time());
+            jsonObject.put("method", method);
+            jsonObject.put("more", more);
+            jsonObject.put("id", list.get(i).getCp_index());
+            jsonObject.put("state", state);
             jsonArray.add(jsonObject);
             jsonObject.clear();
         }
+
         return jsonArray;
     }
 }

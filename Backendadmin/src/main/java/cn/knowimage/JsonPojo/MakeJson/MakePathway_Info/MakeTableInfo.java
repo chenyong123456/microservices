@@ -40,8 +40,8 @@ public class MakeTableInfo  {
                 JSONObject jsonObject = new JSONObject();
                 JSONObject object = tableJsonArray.getJSONObject(i);
                 String table_prefix = object.getString("table_name");
-                String row_count = object.getString("row_count");
-                String column_count = object.getString("column_count");
+                int row_count = object.getInt("row_count");
+                int column_count = object.getInt("column_count");
                 String top_title = object.getString("top_title");
                 String below_description = object.getString("below_description");
                 JSONArray array = object.getJSONArray("content");

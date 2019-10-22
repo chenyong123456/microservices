@@ -206,4 +206,12 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         return pathwayInfoMapper.selectPathwayNameByEditorId(editor_id);
     }
 
+    @Override
+    public JSONObject selectPathwayNameByUserName(String query, String username) {
+        List<String> strings = pathwayInfoMapper.selectPathwayNameByUserName(query, username);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("num",strings.size());
+        return jsonObject;
+    }
+
 }

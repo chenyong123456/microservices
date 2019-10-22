@@ -42,4 +42,6 @@ public interface PathwayInfoMapper {
     int deletePathwayInfoByIndex(@Param("pathway_index") String pathwayIndex);
 
     List<String> selectPathwayNameByEditorId(@Param("editor_id") String editor_id);
+
+    List<String> selectPathwayNameByUserName(@Param("query") String query,@Param("username") String username);
 }

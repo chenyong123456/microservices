@@ -12,7 +12,7 @@
     <select id="findMyRecentWork" resultType="cn.knowimage.pojo.RecentWork">
         select recent_work.cp_index,recent_work.method,recent_work.user_id,recent_work.create_time,pathway_info_merge.pathway_name
         from recent_work,user,pathway_info_merge
-        where user.username = #{username} and pathway_info_merge.pathway_index = recent_work.cp_index
+        where user.username = #{username} and pathway_info_merge.pathway_index = recent_work.cp_index and user.id = recent_work.user_id
         order by recent_work.id desc
     </select>
 
