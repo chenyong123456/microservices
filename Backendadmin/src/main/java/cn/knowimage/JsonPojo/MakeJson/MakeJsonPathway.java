@@ -1,18 +1,14 @@
 package cn.knowimage.JsonPojo.MakeJson;
 
 import cn.knowimage.JsonPojo.MakeJson.MakePathway_Info.*;
-import cn.knowimage.demo.imageOut;
+import cn.knowimage.demo.imageOut2;
 import cn.knowimage.pojo.PathwayInfo;
 import cn.knowimage.pojo.ReceivePathway;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class MakeJsonPathway {
@@ -62,30 +58,23 @@ public class MakeJsonPathway {
         pathwayInfo.setEditor_id(receivePathway.getSubmitterid());
         pathwayInfo.setTable_info(MakeTableInfo.make(receivePathway));
 
-        List<List<List<String>>> allValue = new ArrayList<>();
-        JSONObject jsonObject  = JSONObject.fromObject(pathwayInfo.getTable_info());
-        List list = new ArrayList();
-        for (int i = 0 ; i<jsonObject.getInt("table_num");i++) {
-            JSONObject table_info = jsonObject.getJSONObject("table_"+i);
-            JSONArray content = table_info.getJSONArray("content");
-            for (int j = 0; j < table_info.getInt("row_count");j++) {
-                List<String> contents = new ArrayList<>();
-                for (int k = 0 ; k < table_info.getInt("column_count");k++) {
-                    contents.add(content.getJSONArray(j).getString(k));
+        imageOut2 cg = new imageOut2();
+        String tableA = pathwayInfo.getTable_info();
+        JSONObject jsonObject = JSONObject.fromObject(tableA);
+        int num = jsonObject.getInt("table_num");
+        for (int i = 0 ; i<num ;i++){
+            JSONObject table_ = jsonObject.getJSONObject("table_"+i);
+            int row = table_.getInt("row_count");
+            int col = table_.getInt("column_count");
+            String[][] tableInfo = new String[row][col];
+            String title_info =table_.getString("below_description");
+            for (int m = 0 ; m<row ;m++ ) {
+                for (int n = 0; n < col; n++) {
+                    tableInfo[m][n] = (String) table_.getJSONArray("content").getJSONArray(m).get(n);
                 }
-                list.add(contents);
             }
-            allValue.add(list);
-            List<String> titles = new ArrayList<>();
-            titles.add(table_info.getString("below_description"));
-            List<String[]> headers = new ArrayList<>();
-            String[] h1 = new String[]{"名字","年龄","身高","婚姻","啊啊啊啊","asdasdas"};
-            headers.add(h1);
-            try {
-                imageOut.graphicsGeneration(allValue,titles,headers,"",2);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            String table_prefix = table_.getString("table_prefix");
+            cg.myGraphicsGeneration(tableInfo,"C:\\Users\\wh123\\Desktop\\HospitalProject\\TableImages\\"+pathway_index+"-"+table_prefix+".png",title_info);
         }
         return pathwayInfo;
     }
