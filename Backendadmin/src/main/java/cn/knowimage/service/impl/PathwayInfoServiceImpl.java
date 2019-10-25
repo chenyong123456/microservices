@@ -115,6 +115,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
     @Override
     public JSONArray findLikePathwayName(String query) {
         List<PathwayInfo> pathwayInfos = pathwayInfoMapper.findLikePathwayName(query);
+        System.out.println(pathwayInfos);
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < pathwayInfos.size(); i++) {
             JSONObject value = new JSONObject();
@@ -124,6 +125,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
             String ID = pathwayInfos.get(i).getPathway_index();
             //获取Audit_state
             Integer state = pathwayInfos.get(i).getAudit_state();
+            System.out.println(pathwayInfos.get(i).getPathway_name()+"+++"+pathwayInfos.get(i).getCommit_state());
             Integer commit = Integer.parseInt(pathwayInfos.get(i).getCommit_state());
             if (state==0 && commit==0) {
                 state = 0;
@@ -208,9 +210,34 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
 
     @Override
     public JSONObject selectPathwayNameByUserName(String query, String username) {
-        List<String> strings = pathwayInfoMapper.selectPathwayNameByUserName(query, username);
+        List<PathwayInfo> pathwayInfos = pathwayInfoMapper.selectPathwayNameByUserName(query, username);
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("num",strings.size());
+        jsonObject.put("num",pathwayInfos.size()>0?1:0);
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < pathwayInfos.size(); i++) {
+            JSONObject value = new JSONObject();
+            //获取pathway_name
+            String pathway_name = pathwayInfos.get(i).getPathway_name();
+            //获取Pathway_id
+            String ID = pathwayInfos.get(i).getPathway_index();
+            //获取Audit_state
+            Integer state = pathwayInfos.get(i).getAudit_state();
+            Integer commit = Integer.parseInt(pathwayInfos.get(i).getCommit_state());
+            if (state==0 && commit==0) {
+                state = 0;
+            } else if (state==0 && commit==1) {
+                state=1;
+            } else if (state==1 && commit==1) {
+                state=2;
+            } else if(state==2 && commit==0) {
+                state=3;
+            }
+            value.put("label", pathway_name);
+            value.put("value", ID);
+            value.put("static", state);
+            jsonArray.add(value);
+        }
+        jsonObject.put("pathwayInfo",jsonArray);
         return jsonObject;
     }
 

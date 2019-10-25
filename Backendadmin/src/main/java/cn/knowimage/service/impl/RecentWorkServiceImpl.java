@@ -276,6 +276,7 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             jsonObject.put("more", more);
             jsonObject.put("id", list.get(i).getCp_index());
             jsonObject.put("state", state);
+            jsonObject.put("stats",false);
             jsonArray.add(jsonObject);
             jsonObject.clear();
         }

@@ -2,7 +2,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.knowimage.mapper.PathwayInfoMapper">
     <insert id="insertPathwayInfo" parameterType="cn.knowimage.pojo.PathwayInfo" flushCache="true" useGeneratedKeys="true">
-    insert into pathway_info_merge(
+    insert into PATHWAY_INFO(
     			pathway_index,
     			first_diagnosis,
     			pathway_name,
@@ -58,11 +58,11 @@
     </insert>
 
 	<select id="findNameByIndex" parameterType="java.lang.String" resultType="java.lang.String">
-		select pathway_name from pathway_info_merge where pathway_index = #{pathway_index} limit 1
+		select pathway_name from PATHWAY_INFO where pathway_index = #{pathway_index} limit 1
 	</select>
 
 	<update id="updatePathwayInfo" parameterType="cn.knowimage.pojo.PathwayInfo">
-		update pathway_info_merge set
+		update PATHWAY_INFO set
         first_diagnosis=#{pathway_Info.first_diagnosis},
         pathway_name=#{pathway_Info.pathway_name},
         suitable_subject_disc=#{pathway_Info.suitable_subject_disc},
@@ -92,25 +92,27 @@
 				type,department_code,drug_use_period,prep_treatment_common,prep_treatment_drug_usage,prep_treatment_extension,treatment,drug_usage,
 				after_medical_treatment,after_treatment_drug_usage,discharge_criteria,other_notice,additional_field,audit_state,editor_id,submitter_id,
 				table_info,commit_state
-		from pathway_info_merge
+		from PATHWAY_INFO
 		where pathway_index = #{pathway_index}
 		limit 1
 	</select>
 
 	<select id="findLikePathwayName" parameterType="java.lang.String" resultType="cn.knowimage.pojo.PathwayInfo">
-		SELECT pathway_name,pathway_index,audit_state,commit_state FROM pathway_info_merge where pathway_name like '%${query}%'
+		SELECT pathway_name,pathway_index,audit_state,commit_state
+		FROM PATHWAY_INFO
+		where pathway_name like '%${query}%'
 	</select>
 
 	<select id="findAllStateAndLikeName" parameterType="java.lang.String" resultType="int">
         select count(pathway_id)
-        from pathway_info_merge
+        from PATHWAY_INFO
 		where audit_state in (${audit_state1},${audit_state2},${audit_state3})
 			  AND commit_state in (${commit_state1},${commit_state2})
 			  AND pathway_name LIKE '%${pathway_name}%'
     </select>
 	<select id="selectPathwayByPage" parameterType="java.lang.String" resultType="cn.knowimage.pojo.PathwayInfo">
 		select pathway_id,pathway_name,submitter_id,checker_id,pathway_index,audit_state,audit_remark,audit_time,commit_state,first_diagnosis
-		from pathway_info_merge
+		from PATHWAY_INFO
 		where audit_state in (${audit_state1},${audit_state2},${audit_state3})
 			  AND commit_state in (${commit_state1},${commit_state2})
 			  AND pathway_name LIKE '%${pathway_name}%'
@@ -118,7 +120,7 @@
 	</select>
 
 	<update id="updateAudit" parameterType="cn.knowimage.pojo.PathwayInfo">
-		update pathway_info_merge set
+		update PATHWAY_INFO set
 		audit_state = #{pathwayInfo.audit_state},
 		checker_id = #{pathwayInfo.checker_id},
 		audit_remark = #{pathwayInfo.audit_remark},
@@ -128,25 +130,29 @@
 		where pathway_index = #{pathwayInfo.pathway_index}
 	</update>
 	<delete id="deletePathwayInfoByIndex" parameterType="java.lang.String">
-		delete pathway_info_merge,exam_form,recent_work
-		from pathway_info_merge,exam_form,recent_work
-		where pathway_info_merge.pathway_index = #{pathway_index}
-		and pathway_info_merge.pathway_index = recent_work.cp_index
-		and pathway_info_merge.pathway_index = exam_form.cp_id
+		delete PATHWAY_INFO,EL_EXAM_FORM,EL_RECENT_WORK
+		from PATHWAY_INFO,EL_EXAM_FORM,EL_RECENT_WORK
+		where PATHWAY_INFO.pathway_index = #{pathway_index}
+		and PATHWAY_INFO.pathway_index = EL_RECENT_WORK.cp_index
+		and PATHWAY_INFO.pathway_index = EL_EXAM_FORM.cp_id
 	</delete>
 	<select id="selectPathwayNameByEditorId" resultType="java.lang.String" parameterType="java.lang.String">
 		select pathway_name
-		from pathway_info_merge
+		from PATHWAY_INFO
 		where editor_id = #{editor_id}
 		and commit_state = 0
 		order by pathway_id desc
 	</select>
 
-	<select id="selectPathwayNameByUserName" resultType="java.lang.String" parameterType="java.lang.String">
-		select pathway_info_merge.pathway_name
-		from pathway_info_merge,user
-		where pathway_info_merge.submitter_id = user.id
-		and user.username = #{username}
-		and pathway_info_merge.pathway_name LIKE '%${query}%'
+	<select id="selectPathwayNameByUserName" resultType="cn.knowimage.pojo.PathwayInfo" parameterType="java.lang.String">
+		select
+				PATHWAY_INFO.pathway_name,
+				PATHWAY_INFO.pathway_index,
+				PATHWAY_INFO.audit_state,
+				PATHWAY_INFO.commit_state
+		from PATHWAY_INFO,EL_USER
+		where PATHWAY_INFO.submitter_id = EL_USER.id
+		and EL_USER.username = #{username}
+		and PATHWAY_INFO.pathway_name LIKE '%${query}%'
 	</select>
 </mapper>

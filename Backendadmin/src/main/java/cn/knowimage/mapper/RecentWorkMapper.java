@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface RecentWorkMapper {
-    int insertRecentWork(@Param("recent_work") RecentWork recentWork);
+    int insertRecentWork(@Param("EL_RECENT_WORK") RecentWork recentWork);
 
     List<RecentWork> findMyRecentWork(@Param("username") String username);
 }

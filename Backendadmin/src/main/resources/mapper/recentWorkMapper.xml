@@ -1,19 +1,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.knowimage.mapper.RecentWorkMapper">
     <insert id="insertRecentWork" parameterType="cn.knowimage.pojo.RecentWork">
-        insert into recent_work (cp_index,method,user_id,create_time)
+        insert into EL_RECENT_WORK (cp_index,method,user_id,create_time)
         value(
-        #{recent_work.cp_index},
-        #{recent_work.method},
-        #{recent_work.user_id},
-        #{recent_work.create_time})
+        #{EL_RECENT_WORK.cp_index},
+        #{EL_RECENT_WORK.method},
+        #{EL_RECENT_WORK.user_id},
+        #{EL_RECENT_WORK.create_time})
     </insert>
 
     <select id="findMyRecentWork" resultType="cn.knowimage.pojo.RecentWork">
-        select recent_work.cp_index,recent_work.method,recent_work.user_id,recent_work.create_time,pathway_info_merge.pathway_name
-        from recent_work,user,pathway_info_merge
-        where user.username = #{username} and pathway_info_merge.pathway_index = recent_work.cp_index and user.id = recent_work.user_id
-        order by recent_work.id desc
+        select
+                EL_RECENT_WORK.cp_index,
+                EL_RECENT_WORK.method,
+                EL_RECENT_WORK.user_id,
+                EL_RECENT_WORK.create_time,
+                PATHWAY_INFO.pathway_name
+        from
+                EL_RECENT_WORK,EL_USER,PATHWAY_INFO
+        where
+                EL_USER.username = #{username}
+                and PATHWAY_INFO.pathway_index = EL_RECENT_WORK.cp_index
+                and EL_USER.id = EL_RECENT_WORK.user_id
+        order by EL_RECENT_WORK.id desc
     </select>
 
 </mapper>

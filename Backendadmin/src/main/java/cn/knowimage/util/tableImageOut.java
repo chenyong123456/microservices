@@ -1,4 +1,4 @@
-package cn.knowimage.demo;
+package cn.knowimage.util;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
@@ -9,13 +9,13 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-public class imageOut2 {
+public class tableImageOut {
     /**
        *  生成图片
        *  @param  cellsValue  以二维数组形式存放  表格里面的值
        *  @param  path  文件保存路径
        */
-    public void myGraphicsGeneration(String cellsValue[][], String path,String title_info) {
+    public void myGraphicsGeneration(String cellsValue[][], String path,String title_info,String maxStr) {
         //  字体大小
         int  fontTitileSize  =  15;
         //  横线的行数
@@ -27,16 +27,18 @@ public class imageOut2 {
         }
         //  图片宽度
         int  imageWidth  =  1024;
+        //  单元格宽度
+        int  colwidth  =  (int)((imageWidth-15)/totalcol);
+        ArrayList<String> MaxStr = stringCut(maxStr,(int)((imageWidth-15)/totalcol));
+        int maxHeight=MaxStr.size();
         //  行高
-        int  rowheight  =  100;
+        int  rowheight  =  15*maxHeight+15;
         //  图片高度
-        int  imageHeight  =  totalrow*rowheight;
+        int  imageHeight  =  totalrow*rowheight+15;
         //  起始高度
         int  startHeight  =  0;
         //  起始宽度
         int  startWidth  =  0;
-        //  单元格宽度
-        int  colwidth  =  (int)((imageWidth-20)/totalcol);
         BufferedImage image  =  new  BufferedImage(imageWidth,  imageHeight,BufferedImage.TYPE_INT_RGB);
         Graphics graphics  =  image.getGraphics();
         graphics.setColor(Color.WHITE);
@@ -82,7 +84,7 @@ public class imageOut2 {
                 arrayList = stringCut(cellsValue[n][l].toString(),colwidth);
                 for (int i = 0 ;i < arrayList.size();i++) {
                     String value = arrayList.get(i);
-                    graphics.drawString(value, startWidth + colwidth * l+15, startHeight + rowheight * (n + 2) - 80+(i*15));
+                    graphics.drawString(value, startWidth + colwidth * l+12, startHeight + rowheight * (n + 2) - rowheight+15+(i*15));
                 }
             }
         }
@@ -121,21 +123,6 @@ public class imageOut2 {
                 }
             }
         }
-        System.out.println(list);
         return list;
-    }
-    public static void main(String[] args) {
-        String str = "手术治疗，完全切除者，不推荐辅助化疗或辅助放疗";
-        int num = str.length();
-        ArrayList list = new ArrayList<>();
-        for (int i=0;i<num;i=i+10){
-            String s= str.substring(i,(i+10));
-            list.add(s);
-            if ((num-i-10)<10){
-                list.add(str.substring(i+10,num));
-                break;
-            }
-        }
-        System.out.println(list);
     }
 }
