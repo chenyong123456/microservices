@@ -17,5 +17,5 @@ public interface PathwayInfoService {
     List<String> findMyWork(String editor_id) ;
     JSONObject selectPathwayNameByUserName(String query,String username);
     List finderror();
-
+    int insertTest();
 }

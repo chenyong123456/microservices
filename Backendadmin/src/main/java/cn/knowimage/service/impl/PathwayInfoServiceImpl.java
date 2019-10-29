@@ -87,7 +87,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         Map<String,String> map = new HashMap<>();
         map.put("cp_id",pathway_index);
         String s;
-        s= HttpClientUtil.doGet("http://192.168.50.102:8003/getExamFormDataById", map);
+        s= HttpClientUtil.doGet("http://192.168.50.78:8003/getExamFormDataById", map);
         System.out.println("exam_form的数据s==========="+s);
         JSONObject exam_form = new JSONObject();
         try {
@@ -250,5 +250,17 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
             }
         }
         return list;
+    }
+
+    @Override
+    public int insertTest() {
+        PathwayInfo pathwayInfo = pathwayInfoMapper.findPathwayInfoByIndex("012016998801");
+        for (int i=28;i<40;i++){
+            pathwayInfo.setPathway_name("临时数据"+i);
+            int result = pathwayInfoMapper.insertPathwayInfo(pathwayInfo);
+            System.out.println("插入临时数据"+i);
+        }
+        System.out.println(pathwayInfo);
+        return 0;
     }
 }

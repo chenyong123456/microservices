@@ -46,4 +46,6 @@ public interface PathwayInfoMapper {
     List<PathwayInfo> selectPathwayNameByUserName(@Param("query") String query,@Param("username") String username);
 
     List<PathwayInfo> finderror();
+
+
 }

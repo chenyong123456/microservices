@@ -9,7 +9,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-public class tableImageOut {
+public class tableImageOutRow {
     /**
        *  生成图片
        *  @param  cellsValue  以二维数组形式存放  表格里面的值
@@ -19,7 +19,7 @@ public class tableImageOut {
         //  字体大小
         int  fontTitileSize  =  15;
         //  横线的行数
-        int  totalrow  =  cellsValue.length+1;
+        int  totalrow  =  cellsValue.length;
         //  竖线的行数
         int  totalcol  =  0;
         if  (cellsValue[0]    !=  null)  {
@@ -46,30 +46,36 @@ public class tableImageOut {
         graphics.setColor(Color.WHITE);
         graphics.fillRect(0,0,  imageWidth,  imageHeight);
         graphics.setColor(new  Color(220,240,240));
-        ArrayList<String> arrayList = new ArrayList();
-        //画横线
-        for(int  j=0;j<totalrow;  j++){
-            if (j==1) startHeight = -(15*maxHeight-15);
-            graphics.setColor(Color.black);
-            graphics.drawLine(startWidth+10,  startHeight+(j+1)*rowheight,  startWidth+colwidth*totalcol+10,  startHeight+(j+1)*rowheight);
-        }
-        //画竖线
-        for(int  k=0;k<totalcol+1;k++){
-            startHeight=0;
-            graphics.setColor(Color.black);
-            graphics.drawLine(startWidth+k*colwidth+10,  startHeight+rowheight,  startWidth+k*colwidth+10,  startHeight+rowheight*(totalrow-1)+30);
-        }
         //设置字体
         Font  font  =  new  Font("微软雅黑",Font.PLAIN,fontTitileSize);
         graphics.setFont(font);
+        ArrayList<String> arrayList ;
 
         //写标题
         String title  =  title_info;
-        arrayList = stringCut(title,555);
+        arrayList = stringCut(title,imageWidth-30);
         for (int i = 0 ;i < arrayList.size();i++) {
+            graphics.setColor(Color.black);
             String value = arrayList.get(i);
-            graphics.drawString(value, startWidth + 15, startHeight + rowheight - (15*(arrayList.size()-i)));
+            graphics.drawString(value, startWidth + 15, startHeight + (15*(i+1)));
         }
+        startHeight = startHeight + (15*(arrayList.size()))+10;
+        //画横线
+        for(int  j=0;j<totalrow;  j++){
+            graphics.setColor(Color.black);
+            //此时横向为标题，所以第一排的高度低，此时第二根线则低
+            if (j==1){
+                graphics.drawLine(startWidth+10,  startHeight+j*20,  startWidth+colwidth*totalcol+10,  startHeight+j*20);
+                startHeight = startHeight+20;
+            }
+            graphics.drawLine(startWidth+10,  startHeight+(j)*rowheight,  startWidth+colwidth*totalcol+10,  startHeight+(j)*rowheight);
+        }
+        //画竖线
+        for(int  k=0;k<totalcol+1;k++){
+            graphics.setColor(Color.black);
+            graphics.drawLine(startWidth+k*colwidth+10,  startHeight-20,  startWidth+k*colwidth+10,  startHeight+rowheight*(totalrow-1));
+        }
+
         //写入内容
         for(int  n=0;n<cellsValue.length;n++){
             for(int  l=0;l<cellsValue[n].length;l++){
@@ -87,19 +93,15 @@ public class tableImageOut {
                 }
                 arrayList = stringCut(cellsValue[n][l],colwidth);
                 for (int i = 0 ;i < arrayList.size();i++) {
-                    startHeight = 0;
                     String value = arrayList.get(i);
                     if (n>0) {
-                        startHeight = -40;
-                        rowheight =15 * maxHeight - 15 ;
-                        graphics.drawString(value, startWidth + colwidth * l+12, startHeight + rowheight * (n + 2) - rowheight+15+(i*15));
+                        graphics.drawString(value, startWidth + colwidth * l+12, startHeight+(n-1)*rowheight+((i+1)*15));
                     }
                     //System.out.println("value="+value+"坐标为:"+"x="+(startWidth + colwidth * l+12)+"y="+(startHeight + rowheight * (n + 2) - rowheight+15+(i*15)));
                     else {
                         System.out.println(value);
-                        graphics.drawString(value, startWidth + colwidth * l+(colwidth-value.length()*15)/2, 5+ rowheight * (n + 2) - rowheight+15+(i*15));
+                        graphics.drawString(value, startWidth + colwidth * l+(colwidth-value.length()*15)/2, startHeight+n*rowheight+(i*15)-(10/2));
                     }
-                    rowheight=15*maxHeight+15;
                 }
             }
         }

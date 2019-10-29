@@ -4,6 +4,7 @@ import cn.knowimage.JsonPojo.MakeJson.MakePathway_Info.*;
 import cn.knowimage.util.tableImageOut;
 import cn.knowimage.pojo.PathwayInfo;
 import cn.knowimage.pojo.ReceivePathway;
+import cn.knowimage.util.tableImageOutRow;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Component;
 
@@ -58,7 +59,7 @@ public class MakeJsonPathway {
         pathwayInfo.setEditor_id(receivePathway.getSubmitterid());
         pathwayInfo.setTable_info(MakeTableInfo.make(receivePathway));
 
-        tableImageOut cg = new tableImageOut();
+        tableImageOutRow cg = new tableImageOutRow();
         String tableA = pathwayInfo.getTable_info();
         JSONObject jsonObject = JSONObject.fromObject(tableA);
         int num = jsonObject.getInt("table_num");
@@ -68,6 +69,7 @@ public class MakeJsonPathway {
             int col = table_.getInt("column_count");
             String[][] tableInfo = new String[row][col];
             String title_info =table_.getString("below_description");
+            System.out.println(Arrays.toString(table_.getJSONArray("content").toArray()));
             int maxLength=0;
             String str="";
             for (int m = 0 ; m<row ;m++ ) {
@@ -80,7 +82,7 @@ public class MakeJsonPathway {
                 }
             }
             String table_prefix = table_.getString("table_prefix");
-            cg.myGraphicsGeneration(tableInfo,"C:\\Users\\wh123\\Desktop\\HospitalProject\\TableImages\\"+pathway_index+"_"+table_prefix+".png",title_info,str);
+            //cg.myGraphicsGeneration(tableInfo,"C:\\Users\\wh123\\Desktop\\HospitalProject\\TableImages\\"+pathway_index+"_"+table_prefix+"ROW"+".png",title_info,str);
         }
         return pathwayInfo;
     }
