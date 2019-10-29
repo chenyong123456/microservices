@@ -80,7 +80,7 @@ public class MakeJsonPathway {
                 }
             }
             String table_prefix = table_.getString("table_prefix");
-            cg.myGraphicsGeneration(tableInfo,"C:\\Users\\wh123\\Desktop\\HospitalProject\\TableImages\\"+pathway_index+"-"+table_prefix+".png",title_info,str);
+            cg.myGraphicsGeneration(tableInfo,"C:\\Users\\wh123\\Desktop\\HospitalProject\\TableImages\\"+pathway_index+"_"+table_prefix+".png",title_info,str);
         }
         return pathwayInfo;
     }

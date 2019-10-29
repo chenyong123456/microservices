@@ -17,7 +17,8 @@ public class MakeTableInfo  {
         if ("0".equals(tableJsonArray.getJSONObject(0).getString("row_count"))&&
             "0".equals(tableJsonArray.getJSONObject(0).getString("column_count"))&&
             "".equals(tableJsonArray.getJSONObject(0).getString("top_title"))&&
-            "".equals(tableJsonArray.getJSONObject(0).getString("below_description"))){
+            "".equals(tableJsonArray.getJSONObject(0).getString("below_description"))&&
+            "".equals(tableJsonArray.getJSONObject(0).getString("table_pos"))){
             System.out.println("tableInfo默认格式++++++++++++++++++++");
             //开始拼数据库默认值
             table_info.put("table_num",0);
@@ -27,6 +28,7 @@ public class MakeTableInfo  {
             table_0.put("column_count",0);
             table_0.put("top_title","");
             table_0.put("below_description","");
+            table_0.put("table_pos","");
             JSONArray content = new JSONArray();
             JSONArray value = new JSONArray();
             content.add(value);
@@ -42,6 +44,7 @@ public class MakeTableInfo  {
                 String table_prefix = object.getString("table_name");
                 int row_count = object.getInt("row_count");
                 int column_count = object.getInt("column_count");
+                int table_pos = object.getInt("table_pos");
                 String top_title = object.getString("top_title");
                 String below_description = object.getString("below_description");
                 JSONArray array = object.getJSONArray("content");
@@ -52,6 +55,7 @@ public class MakeTableInfo  {
                 jsonObject.put("column_count",column_count);
                 jsonObject.put("top_title",top_title);
                 jsonObject.put("below_description",below_description);
+                jsonObject.put("table_pos",table_pos);
                 //循环遍历前端传入的array
                 //首先判断该array长度是否为0;
                 if (array.size()==0){

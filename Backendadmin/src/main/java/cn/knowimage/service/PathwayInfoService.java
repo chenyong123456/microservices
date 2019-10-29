@@ -16,5 +16,6 @@ public interface PathwayInfoService {
     int deletePathwayInfo(String pathwayIndex);
     List<String> findMyWork(String editor_id) ;
     JSONObject selectPathwayNameByUserName(String query,String username);
+    List finderror();
 
 }

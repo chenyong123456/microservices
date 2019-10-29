@@ -155,4 +155,8 @@
 		and EL_USER.username = #{username}
 		and PATHWAY_INFO.pathway_name LIKE '%${query}%'
 	</select>
+
+	<select id="finderror" resultType="cn.knowimage.pojo.PathwayInfo">
+		select * from PATHWAY_INFO
+	</select>
 </mapper>

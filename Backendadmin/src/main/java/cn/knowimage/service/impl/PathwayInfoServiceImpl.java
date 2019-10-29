@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PathwayInfoServiceImpl implements PathwayInfoService  {
@@ -241,4 +238,17 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         return jsonObject;
     }
 
+    public List finderror(){
+        List<PathwayInfo> pathwayInfos = pathwayInfoMapper.finderror();
+        List<String> list = new ArrayList<>();
+        for (int i = 0 ; i<pathwayInfos.size();i++) {
+            try {
+                ReturnJsonPathway_Info.make(pathwayInfos.get(i),"123");
+            }catch (Exception e){
+                System.out.println("捕获异常，异常为"+pathwayInfos.get(i).getPathway_index());
+                list.add(pathwayInfos.get(i).getPathway_index());
+            }
+        }
+        return list;
+    }
 }

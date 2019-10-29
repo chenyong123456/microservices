@@ -15,6 +15,7 @@ public class TableInfoReturn {
             table.put("column_count","0");
             table.put("top_title","");
             table.put("below_description","");
+            table.put("table_pos","");
             JSONArray content  = new JSONArray();
             table.put("content",content);
             jsonArray.add(table);
@@ -30,6 +31,7 @@ public class TableInfoReturn {
                 table.put("column_count", jsonObject.getString("column_count"));
                 table.put("top_title", jsonObject.getString("top_title"));
                 table.put("below_description", jsonObject.getString("below_description"));
+                table.put("table_pos",jsonObject.getString("table_pos"));
                 JSONArray tableContent = jsonObject.getJSONArray("content");
                 JSONArray content = new JSONArray();
                 if (tableContent.getJSONArray(0)==null) {
@@ -37,7 +39,7 @@ public class TableInfoReturn {
                 }else {
                     JSONArray contentSon = new JSONArray();
                     for (int m =0 ; m<tableContent.size();m++) {
-                        for (int j = 0; j < tableContent.getJSONArray(i).size(); j++) {
+                        for (int j = 0; j < tableContent.getJSONArray(m).size(); j++) {
                             JSONObject value = new JSONObject();
                             value.put("value", tableContent.getJSONArray(m).get(j));
                             contentSon.add(value);

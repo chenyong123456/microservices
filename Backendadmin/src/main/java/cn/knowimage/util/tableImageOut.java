@@ -30,11 +30,13 @@ public class tableImageOut {
         //  单元格宽度
         int  colwidth  =  (int)((imageWidth-15)/totalcol);
         ArrayList<String> MaxStr = stringCut(maxStr,(int)((imageWidth-15)/totalcol));
+        //最多字符串分割后的行数
         int maxHeight=MaxStr.size();
         //  行高
         int  rowheight  =  15*maxHeight+15;
+        System.out.println("rowheight=="+rowheight);
         //  图片高度
-        int  imageHeight  =  totalrow*rowheight+15;
+        int  imageHeight  =  (totalrow-1)*rowheight+(15 * maxHeight);
         //  起始高度
         int  startHeight  =  0;
         //  起始宽度
@@ -47,13 +49,15 @@ public class tableImageOut {
         ArrayList<String> arrayList = new ArrayList();
         //画横线
         for(int  j=0;j<totalrow;  j++){
+            if (j==1) startHeight = -(15*maxHeight-15);
             graphics.setColor(Color.black);
             graphics.drawLine(startWidth+10,  startHeight+(j+1)*rowheight,  startWidth+colwidth*totalcol+10,  startHeight+(j+1)*rowheight);
         }
         //画竖线
         for(int  k=0;k<totalcol+1;k++){
+            startHeight=0;
             graphics.setColor(Color.black);
-            graphics.drawLine(startWidth+k*colwidth+10,  startHeight+rowheight,  startWidth+k*colwidth+10,  startHeight+rowheight*totalrow);
+            graphics.drawLine(startWidth+k*colwidth+10,  startHeight+rowheight,  startWidth+k*colwidth+10,  startHeight+rowheight*(totalrow-1)+30);
         }
         //设置字体
         Font  font  =  new  Font("微软雅黑",Font.PLAIN,fontTitileSize);
@@ -81,10 +85,19 @@ public class tableImageOut {
                     graphics.setFont(font);
                     graphics.setColor(Color.BLACK);
                 }
-                arrayList = stringCut(cellsValue[n][l].toString(),colwidth);
+                arrayList = stringCut(cellsValue[n][l],colwidth);
                 for (int i = 0 ;i < arrayList.size();i++) {
                     String value = arrayList.get(i);
-                    graphics.drawString(value, startWidth + colwidth * l+12, startHeight + rowheight * (n + 2) - rowheight+15+(i*15));
+                    if (n>0) {
+                        rowheight = 15 * maxHeight - 15;
+                        graphics.drawString(value, startWidth + colwidth * l+12, startHeight + rowheight * (n + 2) - rowheight+15+(i*15));
+                    }
+                    //System.out.println("value="+value+"坐标为:"+"x="+(startWidth + colwidth * l+12)+"y="+(startHeight + rowheight * (n + 2) - rowheight+15+(i*15)));
+                    else {
+                        System.out.println(value);
+                        graphics.drawString(value, startWidth + colwidth * l+(colwidth-value.length()*15)/2, 5+ rowheight * (n + 2) - rowheight+15+(i*15));
+                    }
+                    rowheight=15*maxHeight+15;
                 }
             }
         }
