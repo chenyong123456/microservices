@@ -17,7 +17,9 @@ public class MakePrepTreatmentCommon {
         JSONObject id_ = new JSONObject();
 
         //如果传入的prep_treatmentCommon_s数组为空，则需创建数据库标准格式
-        if ("".equals(prep_treatmentCommon_s.getJSONObject(0).getJSONArray("obligatory_exam").getJSONObject(0).getString("value"))){
+        if ("".equals(prep_treatmentCommon_s.getJSONObject(0).getJSONArray("obligatory_exam").getJSONObject(0).getString("value"))&&
+            "".equals(prep_treatmentCommon_s.getJSONObject(0).getString("time_unit"))&&
+            "".equals(prep_treatmentCommon_s.getJSONObject(0).getString("text"))){
             JSONObject id_0 = new JSONObject();
             duration.put("time_unit","");
             duration.put("time_text","");
@@ -42,7 +44,7 @@ public class MakePrepTreatmentCommon {
                 scenario.put("num", num);
                 //text字段获取前台填入的其他描述字段
                 String text = jsonObject.getString("text");
-                duration.put("time_unit", "时");
+                duration.put("time_unit", "小时");
                 duration.put("time_text", text);
 
                 if ("".equals(jsonObject.getString("time_unit"))) {
@@ -91,34 +93,30 @@ public class MakePrepTreatmentCommon {
                 id_.put("optional_exam", optional_exam);
 
                 //创建notification数组存放值
-                try {
-                    JSONArray notification_s = jsonObject.getJSONArray("notification");
-                    JSONArray item_content = new JSONArray();
-                    //先判断是否为空
-                    if (notification_s != null) {
-                        //赋值给item_text_name
-                        id_.put("item_text_name", jsonObject.getString("item_field_name1").toString());
-                        for (int j = 0; j < notification_s.size(); j++) {
-                            item_content.add(notification_s.getJSONObject(j).getString("value"));
-                            //获取notification_s数组下的第i个json对象的value值，通过键值对形式获取字符串
-                        }
-                        id_.put("item_content", item_content);
-                    }else {
-                        id_.put("item_text_name", "");
-                        id_.put("item_content", "");
-                    }
-                }catch(Exception e){
-
+                JSONArray notification_s = jsonObject.getJSONArray("notification");
+                JSONArray item_content = new JSONArray();
+                //先判断是否为空
+                //赋值给item_text_name
+                String item_text_name = jsonObject.getString("item_field_name1");
+                if (!"".equals(item_text_name)){
+                    id_.put("item_text_name",item_text_name);
+                }else {
+                    id_.put("item_text_name", "");
                 }
-
+                if (!"".equals(notification_s.getJSONObject(0).getString("value"))) {
+                    for (int j = 0; j < notification_s.size(); j++) {
+                        item_content.add(notification_s.getJSONObject(j).getString("value"));
+                        //获取notification_s数组下的第i个json对象的value值，通过键值对形式获取字符串
+                    }
+                    id_.put("item_content", item_content);
+                }else {
+                    id_.put("item_content", item_content);
+                }
                 scenario.put(String.format("id_%d", i), id_);
 
                 Treatment_CommonJson.put("scenario", scenario);
             }
         }
-
-
         return Treatment_CommonJson.toString();
-
     }
     }

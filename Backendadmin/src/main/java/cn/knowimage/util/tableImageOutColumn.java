@@ -9,9 +9,9 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-public class tableImageOutRow {
+public class tableImageOutColumn {
     /**
-       *  生成横向表格图片
+       *  生成纵向表格图片
        *  @param  cellsValue  以二维数组形式存放  表格里面的值
        *  @param  path  文件保存路径
        */
@@ -63,16 +63,12 @@ public class tableImageOutRow {
         //画横线
         for(int  j=0;j<totalrow;  j++){
             graphics.setColor(Color.black);
-            //此时横向为标题，所以第一排的高度低，此时第二根线则低
-            if (j==1){
-                graphics.drawLine(startWidth+10,  startHeight+j*20,  startWidth+colwidth*totalcol+10,  startHeight+j*20);
-                startHeight = startHeight+20;
-            }
             graphics.drawLine(startWidth+10,  startHeight+(j)*rowheight,  startWidth+colwidth*totalcol+10,  startHeight+(j)*rowheight);
         }
         //画竖线
         for(int  k=0;k<totalcol+1;k++){
             graphics.setColor(Color.black);
+            //此时纵向为标题，所以第一列的高度窄，此时第二根线则窄
             graphics.drawLine(startWidth+k*colwidth+10,  startHeight-20,  startWidth+k*colwidth+10,  startHeight+rowheight*(totalrow-1));
         }
 

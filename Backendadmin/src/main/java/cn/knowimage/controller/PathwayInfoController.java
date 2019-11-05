@@ -187,6 +187,7 @@ public class PathwayInfoController {
     @RequestMapping("/errorDate")
     @ResponseBody
     public List findError(){
+        System.out.println("开始查找错误数据");
         return pathwayInfoService.finderror();
     }
 

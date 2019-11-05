@@ -19,7 +19,7 @@ public class MakeTreatment {
 
         duration = new JSONObject();
         //将输入数据库中的时间单位强制为时
-        duration.put("time_unit", "时");
+        duration.put("time_unit", "小时");
         //直接获取输入的text，放入对象duration
         duration.put("time_text", duration_treatment_text);
         //如果treatment_days_duration为空，则无时间定义

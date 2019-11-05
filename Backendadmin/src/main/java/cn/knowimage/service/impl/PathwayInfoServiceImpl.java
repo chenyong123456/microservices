@@ -33,7 +33,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
      * @return 成功或者失败
      * 实现过程:
      *          1.首先将前端传入的Json字符串转换为数据库的Json格式
-     *          2.判断前端是否传入fileStatic(传入了值为1    否则值为0)
+     *          2.判断前端是否传入fileStatic(传入了值为9999    否则值为0)
      *              2.1   Y，新增操作，先查询是否又重复版本
      *              2.2   N，修改操作
      */
@@ -41,11 +41,12 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
     public int insertPathwayInfo(ReceivePathway receivePathway,PathwayInfo pathwayInfo) {
         //判断首先判断该字段是否已存在
         System.out.println("新增或修改是否传入了fileStatic:" + receivePathway.getFileStatic());
-        if (receivePathway.getFileStatic() == 1) {
+        if (receivePathway.getFileStatic() == 9999) {
+            System.out.println("输出pathwayIndex===================================="+pathwayInfo.getPathway_index());
             //判断index是否重复
             String exist = pathwayInfoMapper.findNameByIndex(pathwayInfo.getPathway_index());
             if (exist!=null){
-                System.out.println("该版本号已存在");
+                System.out.println("BackedAdmin该版本号已存在");
                 return 0;
             }else {
                 System.out.println("开始新增++++++++++++++++++++++");
@@ -87,7 +88,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         Map<String,String> map = new HashMap<>();
         map.put("cp_id",pathway_index);
         String s;
-        s= HttpClientUtil.doGet("http://192.168.50.78:8003/getExamFormDataById", map);
+        s= HttpClientUtil.doGet("http://192.168.50.102:8003/getExamFormDataById", map);
         System.out.println("exam_form的数据s==========="+s);
         JSONObject exam_form = new JSONObject();
         try {
@@ -115,6 +116,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         System.out.println(pathwayInfos);
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < pathwayInfos.size(); i++) {
+            String publishYear = pathwayInfos.get(i).getPathway_index().substring(2, 6).replaceAll("\t", "");
             JSONObject value = new JSONObject();
             //获取pathway_name
             String pathway_name = pathwayInfos.get(i).getPathway_name();
@@ -122,7 +124,6 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
             String ID = pathwayInfos.get(i).getPathway_index();
             //获取Audit_state
             Integer state = pathwayInfos.get(i).getAudit_state();
-            System.out.println(pathwayInfos.get(i).getPathway_name()+"+++"+pathwayInfos.get(i).getCommit_state());
             Integer commit = Integer.parseInt(pathwayInfos.get(i).getCommit_state());
             if (state==0 && commit==0) {
                 state = 0;
@@ -133,7 +134,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
             } else if(state==2 && commit==0) {
                 state=3;
             }
-            value.put("label", pathway_name);
+            value.put("label", pathway_name+"("+publishYear+"年)");
             value.put("value", ID);
             value.put("static", state);
             jsonArray.add(value);
@@ -212,6 +213,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
         jsonObject.put("num",pathwayInfos.size()>0?1:0);
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < pathwayInfos.size(); i++) {
+            String publishYear = pathwayInfos.get(i).getPathway_index().substring(2, 6).replaceAll("\t", "");
             JSONObject value = new JSONObject();
             //获取pathway_name
             String pathway_name = pathwayInfos.get(i).getPathway_name();
@@ -229,7 +231,7 @@ public class PathwayInfoServiceImpl implements PathwayInfoService  {
             } else if(state==2 && commit==0) {
                 state=3;
             }
-            value.put("label", pathway_name);
+            value.put("label", pathway_name+"("+publishYear+"年)");
             value.put("value", ID);
             value.put("static", state);
             jsonArray.add(value);
