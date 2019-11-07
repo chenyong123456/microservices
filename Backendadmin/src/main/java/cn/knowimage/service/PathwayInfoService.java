@@ -18,4 +18,5 @@ public interface PathwayInfoService {
     JSONObject selectPathwayNameByUserName(String query,String username);
     List finderror();
     int insertTest();
+    PathwayInfo selectOneByIndex(String pathway_index);
 }

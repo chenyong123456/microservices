@@ -1,10 +1,16 @@
 package cn.knowimage.controller;
 
+import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,8 +18,14 @@ import java.io.IOException;
 @CrossOrigin
 public class FileController {
     @RequestMapping(value = "uploadFile")
-    public String uploadFile(String formData){
-        System.out.println(formData);
+    public String uploadFile(String first_title,String image_prefix,String below_description,MultipartFile file[]){
+        System.out.println(first_title);
+        System.out.println(image_prefix);
+        System.out.println(below_description);
+        int size = file.length;
+        for (int i = 0 ; i<size;i++) {
+            System.out.println(file[i].getOriginalFilename());
+        }
 //        System.out.println("image_prefix="+image_prefix);
 //        System.out.println("first_title="+first_title);
 //        System.out.println("below_description="+below_description);

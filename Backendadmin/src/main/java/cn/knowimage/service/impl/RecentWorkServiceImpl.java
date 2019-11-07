@@ -26,10 +26,8 @@ public class RecentWorkServiceImpl implements RecentWorkService {
     PathwayInfoMapper pathwayInfoMapper;
     @Async
     @Override
-    public void insertRecentWork(PathwayInfo newPathwayInfo) {
+    public void insertRecentWork(PathwayInfo newPathwayInfo,PathwayInfo oldPathwayInfo) {
         System.out.println("|-----------开始进行添加新的日志在RecentWork表中---------");
-        //首先判断oldPathwayInfo存在否
-        PathwayInfo oldPathwayInfo =pathwayInfoMapper.findPathwayInfoByIndex(newPathwayInfo.getPathway_index());
         //创建时间
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         RecentWork recentWork = new RecentWork();

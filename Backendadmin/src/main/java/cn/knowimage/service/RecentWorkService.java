@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface RecentWorkService {
-    void insertRecentWork(PathwayInfo pathwayInfo);
+    void insertRecentWork(PathwayInfo pathwayInfo,PathwayInfo oldPathwayInfo);
 
     List<RecentWork> findMyRecentWork(String username);
 }

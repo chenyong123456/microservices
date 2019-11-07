@@ -50,11 +50,14 @@ public class PathwayInfoController {
         ReceivePathway receivePathway = JsonUtils.jsonToPojo(pathwayPojo, ReceivePathway.class);
         //创建pathwayInfo字段
         PathwayInfo pathwayInfo = MakeJsonPathway.newPathwayInfo(receivePathway);
-        //添加日志，部分待优化
-        recentWorkService.insertRecentWork(pathwayInfo);
+        //记录oldPathwayInfo
+        PathwayInfo oldPathwayInfo = pathwayInfoService.selectOneByIndex(pathwayInfo.getPathway_index());
         int statePathwayInfo = pathwayInfoService.insertPathwayInfo(receivePathway,pathwayInfo);
         System.out.println();
         if (statePathwayInfo==1){
+            System.out.println("statePathwayInfo===="+statePathwayInfo);
+            //通过与old比较,记录操作日志
+            recentWorkService.insertRecentWork(pathwayInfo,oldPathwayInfo);
             return "ok";
         }else return "false";
     }

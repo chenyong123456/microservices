@@ -70,13 +70,22 @@ public class PrepTreatmentCommonReturn {
                 JSONArray obligatory_exam_s = jsonObject.getJSONArray("obligatory_exam");
                 //该数组用于存放输出的json对象
                 JSONArray obligatory_exam = new JSONArray();
-                for (int j = 0; j < obligatory_exam_s.size(); j++) {
+                if (obligatory_exam_s.size()==0){
                     JSONObject value = new JSONObject();
-                    //获取obligatory_exam数组中的第j个字符串，赋值给value对象
-                    value.put("value", obligatory_exam_s.getString(j));
+                    //获取optional_exam数组中的第j个字符串，赋值给value对象
+                    value.put("value", "");
                     //将每次获取的value值放入数组
                     obligatory_exam.add(value);
                     object.put("obligatory_exam", obligatory_exam);
+                }else {
+                    for (int j = 0; j < obligatory_exam_s.size(); j++) {
+                        JSONObject value = new JSONObject();
+                        //获取obligatory_exam数组中的第j个字符串，赋值给value对象
+                        value.put("value", obligatory_exam_s.getString(j));
+                        //将每次获取的value值放入数组
+                        obligatory_exam.add(value);
+                        object.put("obligatory_exam", obligatory_exam);
+                    }
                 }
 
                 JSONArray optional_exam_s = jsonObject.getJSONArray("optional_exam");
@@ -125,6 +134,7 @@ public class PrepTreatmentCommonReturn {
                     object.put("item_field_name1", jsonObject.getString("item_text_name"));
                 }else object.put("item_field_name1","");
                 array.add(object);
+                object.clear();
             }
             return array.toString();
         }

@@ -71,39 +71,53 @@ public class TreatmentReturn {
 
                 //将ref值赋值给treatmentPlanRef，放入json对象
                 json.put("treatmentPlanRef", treatment_plan.getString("ref"));
-                for (int j = 0; j < treatment_plan.getInt("num"); j++) {
-                    //定义id_对象，依次获取id_x的对象值
-                    JSONObject id_ = treatment_plan.getJSONObject(String.format("id_%d", j));
-                    //获取数组caseChildnum中的子对象
-                    JSONObject child = new JSONObject();
-                    child.put("treatmentPlanContent", id_.getString("content"));
-                    //获取id_0下content_item数组中的值
-                    JSONArray content_item_s = id_.getJSONArray("content_item");
-                    //如果该字段为空
-                    if (content_item_s.size() == 0) {
-                        JSONObject value = new JSONObject();
-                        //将content_item_s数组中的string值依次赋给value，键值对形式
-                        value.put("value", "");
-                        //将获取的value放入数组planContentItem
-                        planContentItem.add(value);
-                    } else {
-                        //根据content_item数组长度循环
-                        for (int k = 0; k < content_item_s.size(); k++) {
+                JSONObject child = new JSONObject();
+                if ( treatment_plan.getInt("num")==0){
+                    JSONObject value = new JSONObject();
+                    //将content_item_s数组中的string值依次赋给value，键值对形式
+                    value.put("value", "");
+                    child.put("treatmentPlanContent","");
+                    //将获取的value放入数组planContentItem
+                    planContentItem.add(value);
+                    caseChildnum.add(child);
+                    json.put("caseChildnum", caseChildnum);
+                }else {
+                    for (int j = 0; j < treatment_plan.getInt("num"); j++) {
+                        //定义id_对象，依次获取id_x的对象值
+                        JSONObject id_ = treatment_plan.getJSONObject(String.format("id_%d", j));
+                        //获取数组caseChildnum中的子对象
+                        child.put("treatmentPlanContent", id_.getString("content"));
+                        //获取id_0下content_item数组中的值
+                        JSONArray content_item_s = id_.getJSONArray("content_item");
+                        //如果该字段为空
+                        if (content_item_s.size() == 0) {
                             JSONObject value = new JSONObject();
                             //将content_item_s数组中的string值依次赋给value，键值对形式
-                            value.put("value", content_item_s.getString(k));
+                            value.put("value", "");
                             //将获取的value放入数组planContentItem
                             planContentItem.add(value);
+                        } else {
+                            //根据content_item数组长度循环
+                            for (int k = 0; k < content_item_s.size(); k++) {
+                                JSONObject value = new JSONObject();
+                                //将content_item_s数组中的string值依次赋给value，键值对形式
+                                value.put("value", content_item_s.getString(k));
+                                //将获取的value放入数组planContentItem
+                                planContentItem.add(value);
+                            }
                         }
+
+                        //将数组planContentItem放入对象child中
+                        child.put("planContentItem", planContentItem);
+                        planContentItem.clear();
+                        //将对象child依次放入数组caseChildnum
+                        caseChildnum.add(child);
+                        //将数组caseChildnum放入对象json
+                        json.put("caseChildnum", caseChildnum);
                     }
-                    //将数组planContentItem放入对象child中
-                    child.put("planContentItem", planContentItem);
-                    planContentItem.clear();
-                    //将对象child依次放入数组caseChildnum
-                    caseChildnum.add(child);
-                    //将数组caseChildnum放入对象json
-                    json.put("caseChildnum", caseChildnum);
                 }
+
+
                 //定义三个数组，分别获取scenario_id_对象下的obligatory_exam，optional_exam，notification三个对象
                 JSONArray obligatory_exam_s = scenario_id_.getJSONArray("obligatory_exam");
                 JSONArray optional_exam_s = scenario_id_.getJSONArray("optional_exam");
