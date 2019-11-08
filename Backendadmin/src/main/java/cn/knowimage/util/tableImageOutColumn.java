@@ -17,7 +17,7 @@ public class tableImageOutColumn {
        */
     public void myGraphicsGeneration(String cellsValue[][], String path,String title_info,String maxStr) {
         //  字体大小
-        int  fontTitileSize  =  15;
+        int  fontTitileSize  =  8;
         //  横线的行数
         int  totalrow  =  cellsValue.length;
         //  竖线的行数
@@ -50,7 +50,6 @@ public class tableImageOutColumn {
         Font  font  =  new  Font("微软雅黑",Font.PLAIN,fontTitileSize);
         graphics.setFont(font);
         ArrayList<String> arrayList ;
-
         //写标题
         String title  =  title_info;
         arrayList = stringCut(title,imageWidth-30);
@@ -63,7 +62,7 @@ public class tableImageOutColumn {
         //画横线
         for(int  j=0;j<totalrow;  j++){
             graphics.setColor(Color.black);
-            graphics.drawLine(startWidth+10,  startHeight+(j)*rowheight,  startWidth+colwidth*totalcol+10,  startHeight+(j)*rowheight);
+            graphics.drawLine(startWidth+10,  startHeight+(j+1)*rowheight,  startWidth+colwidth*totalcol+10,  startHeight+(j+1)*rowheight);
         }
         //画竖线
         for(int  k=0;k<totalcol+1;k++){
@@ -71,7 +70,6 @@ public class tableImageOutColumn {
             //此时纵向为标题，所以第一列的高度窄，此时第二根线则窄
             graphics.drawLine(startWidth+k*colwidth+10,  startHeight-20,  startWidth+k*colwidth+10,  startHeight+rowheight*(totalrow-1));
         }
-
         //写入内容
         for(int  n=0;n<cellsValue.length;n++){
             for(int  l=0;l<cellsValue[n].length;l++){

@@ -4,6 +4,7 @@ import cn.knowimage.JsonPojo.MakeJson.MakePathway_Info.*;
 import cn.knowimage.util.tableImageOut;
 import cn.knowimage.pojo.PathwayInfo;
 import cn.knowimage.pojo.ReceivePathway;
+import cn.knowimage.util.tableImageOutColumn;
 import cn.knowimage.util.tableImageOutRow;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -82,7 +83,7 @@ public class MakeJsonPathway {
                 }
             }
             String table_prefix = table_.getString("table_prefix");
-            //cg.myGraphicsGeneration(tableInfo,"C:\\Users\\wh123\\Desktop\\HospitalProject\\TableImages\\"+pathway_index+"_"+table_prefix+"ROW"+".png",title_info,str);
+            cg.myGraphicsGeneration(tableInfo,"C:\\Users\\wh123\\Desktop\\HospitalProject\\TableImages\\"+pathway_index+"_"+table_prefix+"ROW"+".png",title_info,str);
         }
         return pathwayInfo;
     }

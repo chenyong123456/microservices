@@ -16,9 +16,10 @@ spring:
     static-path-pattern: /tableImage/**
   resources:
     static-locations: file:C://Users//wh123//Desktop//HospitalProject/TableImages
-#  servlet:
-#    multipart:
-#      max-file-size: 500KB
+  servlet:
+    multipart:
+      max-file-size: 500KB
+      max-request-size: 8MB
 
 
 mybatis:

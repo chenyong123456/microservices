@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class tableImageOutRow {
     /**
@@ -34,7 +36,6 @@ public class tableImageOutRow {
         int maxHeight=MaxStr.size();
         //  行高
         int  rowheight  =  15*maxHeight+15;
-        System.out.println("rowheight=="+rowheight);
         //  图片高度
         int  imageHeight  =  (totalrow-1)*rowheight+(15 * maxHeight);
         //  起始高度
@@ -99,7 +100,6 @@ public class tableImageOutRow {
                     }
                     //System.out.println("value="+value+"坐标为:"+"x="+(startWidth + colwidth * l+12)+"y="+(startHeight + rowheight * (n + 2) - rowheight+15+(i*15)));
                     else {
-                        System.out.println(value);
                         graphics.drawString(value, startWidth + colwidth * l+(colwidth-value.length()*15)/2, startHeight+n*rowheight+(i*15)-(10/2));
                     }
                 }
@@ -126,20 +126,38 @@ public class tableImageOutRow {
         }
     }
     public ArrayList<String> stringCut(String str , int colwidth ){
+        str = str.replaceAll("，",",");
+        str = str.replaceAll("（","(");
+        str = str.replaceAll("）",")");
+        str = str.replaceAll("。",".");
+        int maxL = 15;
+        int minL = 8;
         int num = str.length();
+        int sum = 0;
+        int maxWidth = (int) (colwidth*0.8);
+        int index = 0;
         ArrayList list = new ArrayList<>();
-        if (str.length()*15<colwidth){
-            list.add(str);
-        }else {
-            for (int i = 0; i < num; i = i + colwidth/15) {
-                String s = str.substring(i, (i + colwidth/15));
+        char ch[] = str.toCharArray();
+        for (int i = 0 ; i < num; i++) {
+
+            boolean zw = String.valueOf(ch[i]).matches("[\u4e00-\u9fa5]");
+            if (zw){
+                sum = sum + maxL;
+            }else{
+                sum = sum + minL;
+            }
+            if (sum>=maxWidth) {
+                String s = str.substring(index, i);
                 list.add(s);
-                if ((num - i - colwidth/15) < colwidth/15) {
-                    list.add(str.substring(i + colwidth/15, num));
-                    break;
-                }
+                sum = 0;
+                index=i;
+            }
+            if (i == num-1 && sum<maxWidth) {
+                list.add(str.substring(index, num));
+                break;
             }
         }
         return list;
     }
+
 }
