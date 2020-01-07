@@ -22,6 +22,34 @@
     </properties>
 
     <dependencies>
+        <!-- 通过html生成图片 -->
+        <dependency>
+            <groupId>com.github.xuwei-k</groupId>
+            <artifactId>html2image</artifactId>
+            <version>0.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.51</version>
+        </dependency>
+        <!-- jsch 所依赖的jar包  -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jzlib</artifactId>
+            <version>1.0.7</version>
+        </dependency>
+        <!-- 文件上传组件 -->
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.3</version>
+        </dependency>
         <!--commons-io&ndash,jar包的到入-->
         <dependency>
             <groupId>commons-io</groupId>

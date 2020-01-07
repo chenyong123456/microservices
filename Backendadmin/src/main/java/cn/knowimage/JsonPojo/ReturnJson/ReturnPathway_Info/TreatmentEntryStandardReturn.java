@@ -21,7 +21,7 @@ public class TreatmentEntryStandardReturn {
         if (Integer.parseInt(treatment_entry_standard_s.getString("num"))==0){
             jsonObject.put("value", "");
             jsonArray.add(jsonObject);
-            jsonArray.add(jsonObject);
+            //jsonArray.add(jsonObject);
         }else {
             //获得对象中的num值，进行循环判断，由于输入值为string型，需转换为int
             for (int i = 0; i < Integer.parseInt(treatment_entry_standard_s.getString("num")); i++) {

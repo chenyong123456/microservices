@@ -33,7 +33,7 @@ public class NewAfterMedicalTreatment {
             duration.put("min", 0);
             duration.put("max", 0);
         } else {
-            duration.put("time_unit", "时");
+            duration.put("time_unit", "小时");
             //如果未填min和max，表示min和max默认为0，否则进行时间转换
             //stringToFloat(时间类型,时间数字)，默认全部转换为小时制，下同
             if (afterDuration_treatment_min == null || "".equals(afterDuration_treatment_min)) {

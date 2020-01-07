@@ -37,16 +37,21 @@ public class AfterMedicalTreatmentReturn {
             JSONArray obligatory_exam = new JSONArray();
             JSONArray optional_exam = new JSONArray();
             JSONArray recovery_plan = new JSONArray();
-            obligatory_exam.add(value);
-            optional_exam.add(value);
-            recovery_plan.add(value);
+            //obligatory_exam.add(value);
+            //optional_exam.add(value);
+            //recovery_plan.add(value);
             //将三个空数组放入对象after
+            after.put("ulShow5", false);
+            after.put("openShhouBixu", false);
             after.put("obligatory_exam",obligatory_exam);
+            after.put("openShhouKexuan", false);
             after.put("optional_exam",optional_exam);
+            after.put("openShhouHuifu", false);
             after.put("recovery_plan",recovery_plan);
             //将after对象放入after_medicalScenario数组
             after_medicalScenario.add(after);
         }else {
+            after.put("ulShow5", false);
             //获取scenario对象下的num值进行循环
             if (scenario.getInt("num")==0){
 
@@ -61,17 +66,18 @@ public class AfterMedicalTreatmentReturn {
                 if(obligatory_exam_s.size()==0){
                     JSONObject value = new JSONObject();
                     value.put("value", "");
-                    obligatory_exam.add(value);
+                    //obligatory_exam.add(value);
+                    after.put("openShhouBixu", false);
                     after.put("obligatory_exam", obligatory_exam);
                 }
                 else {
                     //根据数组obligatory_exam_s长度进行循环
                     for (int j = 0; j < obligatory_exam_s.size(); j++) {
                         JSONObject value = new JSONObject();
-
                         //将数组obligatory_exam_s中的值依次放入value中
                         value.put("value", obligatory_exam_s.getString(j));
                         obligatory_exam.add(value);
+                        after.put("openShhouBixu", true);
                         after.put("obligatory_exam", obligatory_exam);
                     }
                 }
@@ -82,7 +88,8 @@ public class AfterMedicalTreatmentReturn {
                 if(optional_exam_s.size()==0){
                     JSONObject value = new JSONObject();
                     value.put("value", "");
-                    optional_exam.add(value);
+                    //optional_exam.add(value);
+                    after.put("openShhouKexuan", false);
                     after.put("optional_exam", optional_exam);
                 }
                 else {
@@ -92,6 +99,7 @@ public class AfterMedicalTreatmentReturn {
                         //将数组obligatory_exam_s中的值依次放入value中
                         value.put("value", optional_exam_s.getString(j));
                         optional_exam.add(value);
+                        after.put("openShhouKexuan", true);
                         after.put("optional_exam", optional_exam);
 
                     }
@@ -103,7 +111,8 @@ public class AfterMedicalTreatmentReturn {
                 if(recovery_plan_s.size()==0){
                     JSONObject value = new JSONObject();
                     value.put("value", "");
-                    recovery_plan.add(value);
+                    //recovery_plan.add(value);
+                    after.put("openShhouHuifu", false);
                     after.put("recovery_plan", recovery_plan);
                 }
                 //根据数组recovery_plan_s长度进行循环
@@ -112,6 +121,7 @@ public class AfterMedicalTreatmentReturn {
                     //将数组recovery_plan_s中的值依次放入value中
                     value.put("value", recovery_plan_s.getString(j));
                     recovery_plan.add(value);
+                    after.put("openShhouHuifu", true);
                     after.put("recovery_plan", recovery_plan);
                 }
                 after_medicalScenario.add(after);

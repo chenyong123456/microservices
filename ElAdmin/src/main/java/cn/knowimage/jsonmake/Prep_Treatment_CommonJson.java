@@ -49,7 +49,7 @@ public class Prep_Treatment_CommonJson {
 			id_ = new JSONObject();
 			//这里处理id_0,id_1,id_2...中的相应的value
 			duration = new JSONObject();
-			duration.put("time_unit","小时");
+			duration.put("time_unit","时");
 			if(prep_treatment_common_time_unit_s.getString(i).equals("")){
 				duration.put("time_unit", "");
 				duration.put("min", 0);

@@ -30,7 +30,7 @@ public class TreatmentJson {
 
 
 		duration = new JSONObject();
-		duration.put("time_unit", "小时");
+		duration.put("time_unit", "时");
 		if("".equals(treatment_days_duration)){
 			duration.put("time_unit", "");
 			duration.put("min",0);

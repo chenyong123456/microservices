@@ -39,7 +39,7 @@ public class TreatmentReturn {
         JSONArray notification = new JSONArray();
 
         JSONArray caseChildnum = new JSONArray();
-
+        json.put("ulShow",false);
         //首先判断scenario字段是否为默认值，如果是，则给前端默认格式
         if ("0".equals(scenario.getString("scenario_num"))){
             JSONObject jsonObject = new JSONObject();
@@ -48,17 +48,23 @@ public class TreatmentReturn {
             value.put("value","");
             //将获取的value放入数组planContentItem
             planContentItem.add(value);
-            obligatoryExam.add(value);
-            optionalExam.add(value);
-            notification.add(value);
+            //各个数组中不能含value
+            //obligatoryExam.add(value);
+            //optionalExam.add(value);
+            //notification.add(value);
             jsonObject.put("treatmentPlanContent","");
             jsonObject.put("planContentItem",planContentItem);
-            caseChildnum.add(jsonObject);
+            //caseChildnum中为空的话,传给前台为空数组即可
+            //caseChildnum.add(jsonObject);
             json.put("treatmentPlanRef","");
+            json.put("openYixueBijian", false);
             json.put("obligatoryExam",obligatoryExam);
+            json.put("openYixueKejian", false);
             json.put("optionalExam", optionalExam);
+            json.put("openYixueQita", false);
             json.put("notification", notification);
             json.put("item_field_name2","");
+            json.put("YiliaoShow",false);
             json.put("caseChildnum",caseChildnum);
             sceneList.add(json);
         }else {
@@ -79,9 +85,12 @@ public class TreatmentReturn {
                     child.put("treatmentPlanContent","");
                     //将获取的value放入数组planContentItem
                     planContentItem.add(value);
-                    caseChildnum.add(child);
+                    child.put("planContentItem",planContentItem);
+                    //caseChildnum.add(child);
+                    json.put("YiliaoShow",false);
                     json.put("caseChildnum", caseChildnum);
                 }else {
+                    json.put("YiliaoShow",true);
                     for (int j = 0; j < treatment_plan.getInt("num"); j++) {
                         //定义id_对象，依次获取id_x的对象值
                         JSONObject id_ = treatment_plan.getJSONObject(String.format("id_%d", j));
@@ -128,8 +137,10 @@ public class TreatmentReturn {
                     JSONObject value = new JSONObject();
                     //依次获取数组中的第j1个string值
                     value.put("value", "");
-                    obligatoryExam.add(value);
+                    json.put("openYixueBijian",false);
+                   // obligatoryExam.add(value);
                 } else {
+                    json.put("openYixueBijian",true);
                     //根据obligatory_exam_s数组长度循环
                     for (int j1 = 0; j1 < obligatory_exam_s.size(); j1++) {
                         JSONObject value = new JSONObject();
@@ -139,14 +150,16 @@ public class TreatmentReturn {
                     }
                 }
                 //将obligatoryExam对象放入sceneList数组下的子对象json
-                json.put("obligatoryExam", obligatoryExam);
+                    json.put("obligatoryExam", obligatoryExam);
                 //如果该字段为空
                 if (optional_exam_s.size() == 0) {
                     JSONObject value = new JSONObject();
                     //依次获取数组中的第j2个string值
                     value.put("value", "");
-                    optionalExam.add(value);
+                    json.put("openYixueKejian",false);
+                    //optionalExam.add(value);
                 } else {
+                    json.put("openYixueKejian",true);
                     //根据optional_exam_s数组长度循环
                     for (int j2 = 0; j2 < optional_exam_s.size(); j2++) {
                         JSONObject value = new JSONObject();
@@ -165,9 +178,11 @@ public class TreatmentReturn {
                 if (notification_a.size() == 0) {
                     JSONObject value = new JSONObject();
                     value.put("value", "");
-                    notification.add(value);
+                    //notification.add(value);
+                    json.put("openYixueQita", false);
                     json.put("notification", notification);
                 } else {
+                    json.put("openYixueQita",true);
                     //根据notification_s数组长度循环
                     for (int j3 = 0; j3 < notification_a.size(); j3++) {
                         JSONObject value = new JSONObject();
@@ -179,7 +194,9 @@ public class TreatmentReturn {
                 //将notification对象放入sceneList数组下的子对象json
                 if (!"".equals(scenario_id_.getString("item_text_name"))) {
                     json.put("item_field_name2", scenario_id_.getString("item_text_name"));
-                } else json.put("item_field_name2", "");
+                } else{
+                    json.put("item_field_name2", "");
+                }
                 sceneList.add(json);
             }
         }

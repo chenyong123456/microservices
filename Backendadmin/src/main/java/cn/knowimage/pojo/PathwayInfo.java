@@ -14,6 +14,9 @@ public class PathwayInfo {
     private String treatment_days;
     private String treatment_entry_standard;
     private String type;
+
+    private Integer department_code;
+
     private Integer drug_use_period;
     private String prep_treatment_common;
     private String prep_treatment_drug_usage;

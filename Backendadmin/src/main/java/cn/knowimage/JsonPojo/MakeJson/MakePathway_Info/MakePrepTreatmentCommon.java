@@ -17,7 +17,7 @@ public class MakePrepTreatmentCommon {
         JSONObject id_ = new JSONObject();
 
         //如果传入的prep_treatmentCommon_s数组为空，则需创建数据库标准格式
-        if ("".equals(prep_treatmentCommon_s.getJSONObject(0).getJSONArray("obligatory_exam").getJSONObject(0).getString("value"))&&
+        if ((prep_treatmentCommon_s.getJSONObject(0).getJSONArray("obligatory_exam").size()==0)&&
             "".equals(prep_treatmentCommon_s.getJSONObject(0).getString("time_unit"))&&
             "".equals(prep_treatmentCommon_s.getJSONObject(0).getString("text"))){
             JSONObject id_0 = new JSONObject();
@@ -79,7 +79,9 @@ public class MakePrepTreatmentCommon {
                 JSONArray obligatory_exam = new JSONArray();
                 for (int j = 0; j < obligatory_exam_s.size(); j++) {
                     //获取obligatory_exam_s数组下的第i个json对象的value值，通过键值对形式获取字符串
-                    obligatory_exam.add(obligatory_exam_s.getJSONObject(j).getString("value"));
+                    if(obligatory_exam_s.size()!=0){
+                        obligatory_exam.add(obligatory_exam_s.getJSONObject(j).getString("value"));
+                    }
                 }
                 id_.put("obligatory_exam", obligatory_exam);
 
@@ -103,7 +105,7 @@ public class MakePrepTreatmentCommon {
                 }else {
                     id_.put("item_text_name", "");
                 }
-                if (!"".equals(notification_s.getJSONObject(0).getString("value"))) {
+                if ((notification_s.size() != 0)) {
                     for (int j = 0; j < notification_s.size(); j++) {
                         item_content.add(notification_s.getJSONObject(j).getString("value"));
                         //获取notification_s数组下的第i个json对象的value值，通过键值对形式获取字符串

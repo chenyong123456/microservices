@@ -37,7 +37,9 @@
     <select id="selectByPathway_nameApplet" parameterType="List" resultType="cn.knowimage.pojo.PathwayInfo">
         select * from pathway_info where pathway_name = '${pathwayName}' and  pathway_index = '${pathwayIndex}'
     </select>
-
+    <select id="selectTableByApplet" parameterType="java.lang.String" resultType="java.lang.String">
+        select table_info from pathway_info_merge where pathway_name = '${pathwayName}' and  pathway_index = '${pathwayIndex}'
+    </select>
 	<!--这里为小郭的代码-->
 	<insert id="ReturnString" parameterType="cn.knowimage.pojo.PathwayInfo" flushCache="true" useGeneratedKeys="true">
         insert into pathway_info(pathway_index,first_diagnosis,pathway_name,suitable_subject_disc,diagnosis,

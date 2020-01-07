@@ -2,7 +2,16 @@ package cn.knowimage.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.net.PrintCommandListener;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.SocketException;
 import java.util.List;
 
 /**
@@ -86,9 +95,9 @@ public class ClincialResult {
 
     /**
      * 将json结果集转化为ClincialResult对象
-     * 
+     *
      * @param jsonData json数据
-     * @param clazz ClincialResult中的object类型
+     * @param clazz    ClincialResult中的object类型
      * @return
      */
     public static ClincialResult formatToPojo(String jsonData, Class<?> clazz) {
@@ -114,6 +123,7 @@ public class ClincialResult {
 
     /**
      * 没有object对象的转化
+     *
      * @param json
      * @return
      */
@@ -128,9 +138,9 @@ public class ClincialResult {
 
     /**
      * Object是集合转化
-     * 
+     *
      * @param jsonData json数据
-     * @param clazz 集合中的类型
+     * @param clazz    集合中的类型
      * @return
      */
     public static ClincialResult formatToList(String jsonData, Class<?> clazz) {
@@ -148,4 +158,36 @@ public class ClincialResult {
         }
     }
 
+    public static void main(String[] args) {
+        boolean result = false;
+        FTPClient ftp = new FTPClient();
+        try {
+            int reply;
+            ftp.connect("192.168.50.4", 21);// 连接FTP服务器
+            ftp.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out)));
+            //ftp.connect(host);
+            // 如果采用默认端口，可以使用ftp.connect(host)的方式直接连接FTP服务器
+            ftp.login("ftpuser", "ftpuser");// 登录
+
+            reply = ftp.getReplyCode();
+            System.out.println("连接图片服务器服务器响应编号:--->" + reply);
+             System.out.println("查看连接服务器的状态:--->" + FTPReply.isPositiveCompletion(reply));
+            if (!FTPReply.isPositiveCompletion(reply)) {
+                ftp.disconnect();
+            }
+            //在这里进行图片的上传
+            FileInputStream inputStream = new FileInputStream(new File("C:\\Users\\wh123\\Desktop\\QQ截图20191114164247.png"));
+           // ftp.changeWorkingDirectory("/usr/local/nginx/html/image");
+            ftp.changeWorkingDirectory("/usr/local/nginx/html/image");
+            ftp.setFileType(FTP.BINARY_FILE_TYPE);
+            ftp.storeFile("hello1.png", inputStream);
+            inputStream.close();
+            ftp.logout();
+
+        } catch (SocketException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

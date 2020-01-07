@@ -47,7 +47,7 @@ public class NewPrepTreatmentCommon {
                 scenario.put("num", num);
                 //text字段获取前台填入的其他描述字段
                 String text = jsonObject.getString("text");
-                duration.put("time_unit", "时");
+                duration.put("time_unit", "小时");
                 duration.put("time_text", text);
 
                 if ("".equals(jsonObject.getString("time_unit"))) {

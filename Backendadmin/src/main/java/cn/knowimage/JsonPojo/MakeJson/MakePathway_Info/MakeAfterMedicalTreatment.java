@@ -53,9 +53,9 @@ public class MakeAfterMedicalTreatment {
         JSONArray after_medicalScenario_s = JSONArray.fromObject(after_medicalScenario);
 
         //如果after_medicalScenario为空，则创建数据库标准格式数据，内含的所有值为空
-        if (    "".equals(after_medicalScenario_s.getJSONObject(0).getJSONArray("obligatory_exam").getJSONObject(0).getString("value"))&&
-                "".equals(after_medicalScenario_s.getJSONObject(0).getJSONArray("optional_exam").getJSONObject(0).getString("value"))&&
-                "".equals(after_medicalScenario_s.getJSONObject(0).getJSONArray("recovery_plan").getJSONObject(0).getString("value"))){
+        if (    (after_medicalScenario_s.getJSONObject(0).getJSONArray("obligatory_exam").size() == 0)&&
+                  (after_medicalScenario_s.getJSONObject(0).getJSONArray("optional_exam").size() == 0)&&
+                 (after_medicalScenario_s.getJSONObject(0).getJSONArray("recovery_plan").size() == 0)){
             JSONObject id_0 = new JSONObject();
             JSONArray obligatory_exam = new JSONArray();
             JSONArray optional_exam = new JSONArray();

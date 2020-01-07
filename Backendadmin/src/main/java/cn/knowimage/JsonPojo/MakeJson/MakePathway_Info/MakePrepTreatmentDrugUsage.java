@@ -17,7 +17,7 @@ public class MakePrepTreatmentDrugUsage {
         JSONArray prep_treatmentOtherdrugs_usage_s = JSONArray.fromObject(prep_treatmentOtherdrugs_usage);
 
         //如果prep_treatmentAntibio_usage_s数组为空，则仍需创建数据库标准格式数据，值为空
-        if (    "".equals(prep_treatmentAntibio_usage_s.getJSONObject(0).getString("value"))){
+        if (    prep_treatmentAntibio_usage_s.size() == 0){
             JSONObject antibio_usage = new JSONObject();
             JSONArray id_0 = new JSONArray();
 //            id_0.add("");
@@ -41,7 +41,7 @@ public class MakePrepTreatmentDrugUsage {
             Treatment_Drug_Usage.put("antibio_usage", antibio_usage);
         }
 
-        if("".equals(prep_treatmentAnaesthetic_usage_s.getJSONObject(0).getString("value"))){
+        if(prep_treatmentAnaesthetic_usage_s.size() == 0){
             JSONObject anaesthetic_usage = new JSONObject();
             JSONArray id_0 = new JSONArray();
 //            id_0.add("");
@@ -65,7 +65,7 @@ public class MakePrepTreatmentDrugUsage {
             Treatment_Drug_Usage.put("anaesthetic_usage", anaesthetic_usage);
         }
 
-        if ( "".equals(prep_treatmentOtherdrugs_usage_s.getJSONObject(0).getString("value"))){
+        if ( prep_treatmentOtherdrugs_usage_s.size() == 0){
             JSONObject otherdrugs_usage = new JSONObject();
             JSONArray id_0 = new JSONArray();
 //            id_0.add("");

@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @Slf4j
 public class RecentWorkController {
+
     @Autowired
     RecentWorkService recentWorkService;
+
     @RequestMapping("/work")
     @ResponseBody
     public JSONArray findMyRecentWork(String username){

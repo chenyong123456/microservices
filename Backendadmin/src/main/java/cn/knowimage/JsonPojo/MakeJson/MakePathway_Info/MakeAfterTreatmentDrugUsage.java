@@ -16,7 +16,7 @@ public class MakeAfterTreatmentDrugUsage {
         JSONArray after_treatmentAnaesthetic_usage_s = JSONArray.fromObject(after_treatmentAnaesthetic_usage);
         JSONArray after_treatmentOtherdrugs_usage_s = JSONArray.fromObject(after_treatmentOtherdrugs_usage);
 
-        if ("".equals(after_treatmentAntibio_usage_s.getJSONObject(0).getString("value"))){
+        if ((after_treatmentAntibio_usage_s.size() == 0)){
             JSONObject antibio_usage = new JSONObject();
             JSONArray id_0 = new JSONArray();
             antibio_usage.put("num",0);
@@ -41,7 +41,7 @@ public class MakeAfterTreatmentDrugUsage {
         }
 
 
-        if ("".equals(after_treatmentAnaesthetic_usage_s.getJSONObject(0).getString("value"))){
+        if ((after_treatmentAnaesthetic_usage_s.size() == 0)){
             JSONObject anaesthetic_usage = new JSONObject();
             JSONArray id_0 = new JSONArray();
             anaesthetic_usage.put("num",0);
@@ -65,7 +65,7 @@ public class MakeAfterTreatmentDrugUsage {
             after_treatment_drug_usageJson.put("anaesthetic_usage", anaesthetic_usage);
         }
 
-        if ("".equals(after_treatmentOtherdrugs_usage_s.getJSONObject(0).getString("value"))){
+        if ((after_treatmentOtherdrugs_usage_s.size() == 0)){
             JSONObject otherdrugs_usage = new JSONObject();
             JSONArray id_0 = new JSONArray();
             otherdrugs_usage.put("num",0);

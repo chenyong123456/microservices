@@ -81,4 +81,5 @@ public interface PathwayInfoMapper {
 	public List<PathwayInfo> selectP_nameByD_name(String name);
 
 
+    String selectTableByApplet(@Param("pathwayName") String pathwayName, @Param("pathwayIndex") String pathwayIndex);
 }

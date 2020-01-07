@@ -1,8 +1,7 @@
 package cn.knowimage.mapper;
 
 import cn.knowimage.pojo.PathwayInfo;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -39,13 +38,21 @@ public interface PathwayInfoMapper {
     //审核界面审核，既更新后面有关审核的字段
     int updateAudit (@Param("pathwayInfo") PathwayInfo pathwayInfo);
 
-    int deletePathwayInfoByIndex(@Param("pathway_index") String pathwayIndex);
+    @Delete("DELETE from PATHWAY_INFO where PATHWAY_INFO.pathway_index = '${pathwayIndex}'")
+    int deletePathwayInfoByIndex(String pathwayIndex);
+
+    @Delete("delete from EL_RECENT_WORK where EL_RECENT_WORK.cp_index='${pathway_index}'")
+    int deleteElRecentWork(String pathwayIndex);
 
     List<String> selectPathwayNameByEditorId(@Param("editor_id") String editor_id);
 
     List<PathwayInfo> selectPathwayNameByUserName(@Param("query") String query,@Param("username") String username);
 
     List<PathwayInfo> finderror();
+
+    @Update("UPDATE PATHWAY_INFO SET audit_state=${audit_state} WHERE pathway_index = '${pathway_index}'")
+    int updateAuditState(int audit_state,String pathway_index);
+
 
 
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE mapper 
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.knowimage.mapper.PathwayInfoMapper">
-    <insert id="insertPathwayInfo" parameterType="cn.knowimage.pojo.PathwayInfo" flushCache="true" useGeneratedKeys="true">
+    <insert id="insertPathwayInfo" parameterType="cn.knowimage.pojo.PathwayInfo" flushCache="true" useGeneratedKeys="true" keyProperty="pathway_id">
     insert into PATHWAY_INFO(
     			pathway_index,
     			first_diagnosis,
@@ -12,6 +12,7 @@
 				treatment_days,
 				treatment_entry_standard,
 				type,
+				department_code,
 				drug_use_period,
 				prep_treatment_common,
 				prep_treatment_drug_usage,
@@ -38,6 +39,7 @@
 				#{pathway_Info.treatment_days},
 				#{pathway_Info.treatment_entry_standard},
 				#{pathway_Info.type},
+				#{pathway_Info.department_code},
 				#{pathway_Info.drug_use_period},
 				#{pathway_Info.prep_treatment_common},
 				#{pathway_Info.prep_treatment_drug_usage},
@@ -71,6 +73,7 @@
         treatment_days=#{pathway_Info.treatment_days},
         treatment_entry_standard=#{pathway_Info.treatment_entry_standard},
         type=#{pathway_Info.type},
+        department_code=#{pathway_Info.department_code},
         drug_use_period=#{pathway_Info.drug_use_period},
         prep_treatment_common=#{pathway_Info.prep_treatment_common},
         prep_treatment_drug_usage=#{pathway_Info.prep_treatment_drug_usage},
@@ -98,7 +101,7 @@
 	</select>
 
 	<select id="findLikePathwayName" parameterType="java.lang.String" resultType="cn.knowimage.pojo.PathwayInfo">
-		SELECT pathway_name,pathway_index,audit_state,commit_state
+		SELECT pathway_name,pathway_index,audit_state,commit_state,department_code
 		FROM PATHWAY_INFO
 		where pathway_name like '%${query}%'
 	</select>
@@ -110,6 +113,7 @@
 			  AND commit_state in (${commit_state1},${commit_state2})
 			  AND pathway_name LIKE '%${pathway_name}%'
     </select>
+
 	<select id="selectPathwayByPage" parameterType="java.lang.String" resultType="cn.knowimage.pojo.PathwayInfo">
 		select pathway_id,pathway_name,submitter_id,checker_id,pathway_index,audit_state,audit_remark,audit_time,commit_state,first_diagnosis
 		from PATHWAY_INFO
@@ -129,13 +133,23 @@
 		editor_id = #{pathwayInfo.editor_id}
 		where pathway_index = #{pathwayInfo.pathway_index}
 	</update>
-	<delete id="deletePathwayInfoByIndex" parameterType="java.lang.String">
-		delete PATHWAY_INFO,EL_EXAM_FORM,EL_RECENT_WORK
+	<!--<delete id="deletePathwayInfoByIndex" parameterType="java.lang.String">
+		delete from PATHWAY_INFO where PATHWAY_INFO.pathway_index='#{pathway_index}'
+		/*delete PATHWAY_INFO,EL_EXAM_FORM,EL_RECENT_WORK
 		from PATHWAY_INFO,EL_EXAM_FORM,EL_RECENT_WORK
 		where PATHWAY_INFO.pathway_index = #{pathway_index}
 		and PATHWAY_INFO.pathway_index = EL_RECENT_WORK.cp_index
-		and PATHWAY_INFO.pathway_index = EL_EXAM_FORM.cp_id
-	</delete>
+		and PATHWAY_INFO.pathway_index = EL_EXAM_FORM.cp_id*/
+	</delete>-->
+
+	<!--<delete id="deleteElRecentWork" parameterType="java.lang.String">
+		delete from EL_RECENT_WORK where EL_RECENT_WORK.cp_index='#{pathway_index}'
+		/*delete PATHWAY_INFO,EL_EXAM_FORM,EL_RECENT_WORK
+		from PATHWAY_INFO,EL_EXAM_FORM,EL_RECENT_WORK
+		where PATHWAY_INFO.pathway_index = #{pathway_index}
+		and PATHWAY_INFO.pathway_index = EL_RECENT_WORK.cp_index
+		and PATHWAY_INFO.pathway_index = EL_EXAM_FORM.cp_id*/
+	</delete>-->
 	<select id="selectPathwayNameByEditorId" resultType="java.lang.String" parameterType="java.lang.String">
 		select pathway_name
 		from PATHWAY_INFO
@@ -149,7 +163,8 @@
 				PATHWAY_INFO.pathway_name,
 				PATHWAY_INFO.pathway_index,
 				PATHWAY_INFO.audit_state,
-				PATHWAY_INFO.commit_state
+				PATHWAY_INFO.commit_state,
+				PATHWAY_INFO.department_code
 		from PATHWAY_INFO,EL_USER
 		where PATHWAY_INFO.submitter_id = EL_USER.id
 		and EL_USER.username = #{username}

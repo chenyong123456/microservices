@@ -20,7 +20,7 @@ public class MakeJsonPathway {
         PathwayInfo pathwayInfo = new PathwayInfo();
         //创建pathwayInfo的Pathway_index
         String fileNumber = receivePathway.getFileNumber();
-        if (receivePathway.getFileNumber().equals("")) {
+        if ("".equals(receivePathway.getFileNumber())) {
             fileNumber = "0000" + fileNumber;
         } else if (fileNumber.length() == 1) {
             fileNumber = "000" + fileNumber;
@@ -32,15 +32,23 @@ public class MakeJsonPathway {
         //设置时间格式，方便构造时使用
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //构造pathway_index
-        String pathway_index = receivePathway.getPublisher() + receivePathway.getPublishYear() + fileNumber + receivePathway.getVersionNumber();
+        String pathway_index = receivePathway.getPublisher().substring(0,2) + receivePathway.getPublishYear() + fileNumber + receivePathway.getVersionNumber();
         pathwayInfo.setPathway_index(pathway_index);
         pathwayInfo.setFirst_diagnosis(receivePathway.getFirst_diagnose());
         pathwayInfo.setPathway_name(receivePathway.getPathway_name());
         pathwayInfo.setSuitable_subject_disc(receivePathway.getSuitable_subject_disc());
-        pathwayInfo.setDiagnosis(receivePathway.getDiagnosis());
+        //在这里处理diagnosis的值    [{"ref":"根据：","content":[]}]  [{"ref":"根据：诊断依据是电风扇电风扇大","content":[{"contentRef":"诊断依据1","conte":[{"value":"111"},{"value":"111111111"}]},{"contentRef":"诊断依据2","conte":[{"value":"2222"},{"value":"22222"}]}]}]
+        JSONObject Diagnosi = JSONObject.fromObject(receivePathway.getDiagnosis().toString());
+
+        pathwayInfo.setDiagnosis(receivePathway.getDiagnosis().toString());
+
+
         pathwayInfo.setTreatment_choice(MakeTreatmentChoice.make(receivePathway));
         pathwayInfo.setTreatment_entry_standard(MakeTreatmentEntryStandard.make(receivePathway));
         pathwayInfo.setType(receivePathway.getPrep_treatment_common());
+
+        pathwayInfo.setDepartment_code( Integer.parseInt(receivePathway.getDepartment_code()));
+
         pathwayInfo.setDrug_use_period(Integer.parseInt(receivePathway.getRadio()));
         pathwayInfo.setPrep_treatment_common(MakePrepTreatmentCommon.make(receivePathway));
         pathwayInfo.setPrep_treatment_drug_usage(MakePrepTreatmentDrugUsage.make(receivePathway));
@@ -83,7 +91,7 @@ public class MakeJsonPathway {
                 }
             }
             String table_prefix = table_.getString("table_prefix");
-            cg.myGraphicsGeneration(tableInfo,"C:\\Users\\wh123\\Desktop\\HospitalProject\\TableImages\\"+pathway_index+"_"+table_prefix+"ROW"+".png",title_info,str);
+           // cg.myGraphicsGeneration(tableInfo,"C:\\Users\\wh123\\Desktop\\HospitalProject\\TableImages\\"+pathway_index+"_"+table_prefix+"ROW"+".png",title_info,str);
         }
         return pathwayInfo;
     }

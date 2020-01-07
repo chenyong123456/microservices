@@ -59,10 +59,10 @@ public class MakeTreatment {
         //创建输入的总数组           既将前端的sceneList转换为可遍历的数组
         JSONArray scenario = JSONArray.fromObject(sceneList);
         //如果scenario为空，说明前端传来的sceneList为空数组，需将空数组转换成数据库标准格式，所有值为空
-        if (    "".equals(scenario.getJSONObject(0).getJSONArray("caseChildnum").getJSONObject(0).getString("treatmentPlanContent"))&&
-                "".equals(scenario.getJSONObject(0).getJSONArray("obligatoryExam").getJSONObject(0).getString("value"))&&
-                "".equals(scenario.getJSONObject(0).getJSONArray("optionalExam").getJSONObject(0).getString("value"))&&
-                "".equals(scenario.getJSONObject(0).getJSONArray("notification").getJSONObject(0).getString("value"))){
+        if (    (scenario.getJSONObject(0).getJSONArray("caseChildnum").size()==0)&&
+                (scenario.getJSONObject(0).getJSONArray("obligatoryExam").size() == 0)&&
+                (scenario.getJSONObject(0).getJSONArray("optionalExam").size() == 0)&&
+                (scenario.getJSONObject(0).getJSONArray("notification").size() == 0)){
             JSONObject scenario_id_0 = new JSONObject();
             JSONObject treatment_plan = new JSONObject();
             JSONObject id_0 = new JSONObject();

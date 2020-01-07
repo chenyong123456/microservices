@@ -30,7 +30,7 @@ public class PrepTreatmentDrugUsageReturn {
             //定义该对象，依次获取数组id_0中的value值
             jsonObject.put("value","");
             //将每个jsonObject对象依次放入prep_treatmentAntibio_usage数组中
-            prep_treatmentAntibio_usage.add(jsonObject);
+          //  prep_treatmentAntibio_usage.add(jsonObject);
         }else {
             //prep_treatmentAntibio_usage
             for (int i = 0; i < antibio_usage_s.getInt("num"); i++) {
@@ -50,7 +50,7 @@ public class PrepTreatmentDrugUsageReturn {
             //定义该对象，依次获取数组id_0中的value值
             jsonObject.put("value","");
             //将每个jsonObject对象依次放入prep_treatmentAnaesthetic_usage数组中
-            prep_treatmentAnaesthetic_usage.add(jsonObject);
+            //prep_treatmentAnaesthetic_usage.add(jsonObject);
         }else {
             //prep_treatmentAnaesthetic_usage
             for (int i = 0; i < anaesthetic_usage_s.getInt("num"); i++) {
@@ -70,7 +70,7 @@ public class PrepTreatmentDrugUsageReturn {
             //定义该对象，依次获取数组id_0中的value值
             jsonObject.put("value","");
             //将每个jsonObject对象依次放入prep_treatmentAnaesthetic_usage数组中
-            prep_treatmentOtherdrugs_usage.add(jsonObject);
+           // prep_treatmentOtherdrugs_usage.add(jsonObject);
         }else {
             //prep_treatmentOtherdrugs_usage
             for (int i = 0; i < otherdrugs_usage_s.getInt("num"); i++) {

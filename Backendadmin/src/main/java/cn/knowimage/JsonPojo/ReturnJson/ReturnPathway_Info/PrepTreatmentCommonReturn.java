@@ -25,20 +25,24 @@ public class PrepTreatmentCommonReturn {
             object.put("text","");
             object.put("min","0");
             object.put("max","0");
+            object.put("ulShow2", false);
+            object.put("openPrepBijian", false);
+            object.put("openPrepKejian", false);
+            object.put("openPrepQita", false);
             //返回前端需要的三个数组，且数组为空
             JSONObject value = new JSONObject();
             value.put("value","");
             JSONArray optional_exam = new JSONArray();
             JSONArray obligatory_exam = new JSONArray();
             JSONArray notification = new JSONArray();
-            optional_exam.add(value);
+          /*  optional_exam.add(value);
             obligatory_exam.add(value);
-            notification.add(value);
+            notification.add(value);*/
             //接收三个空数组，放入对象
             object.put("obligatory_exam",obligatory_exam);
             object.put("optional_exam",optional_exam);
             object.put("notification",notification);
-            object.put("item_text_name1","");
+            object.put("item_field_name1","");
             array.add(object);
             return array.toString();
 
@@ -66,18 +70,22 @@ public class PrepTreatmentCommonReturn {
                     object.put("min", "");
                     object.put("max", "");
                 }
+                object.put("ulShow2", false);
                 //获取jsonObject对象中的数组
                 JSONArray obligatory_exam_s = jsonObject.getJSONArray("obligatory_exam");
                 //该数组用于存放输出的json对象
                 JSONArray obligatory_exam = new JSONArray();
+                //判断数据的大小
                 if (obligatory_exam_s.size()==0){
                     JSONObject value = new JSONObject();
                     //获取optional_exam数组中的第j个字符串，赋值给value对象
-                    value.put("value", "");
+                   // value.put("value", "");
                     //将每次获取的value值放入数组
-                    obligatory_exam.add(value);
+                   // obligatory_exam.add(value);
+                    object.put("openPrepBijian",false);
                     object.put("obligatory_exam", obligatory_exam);
                 }else {
+                    object.put("openPrepBijian",true);
                     for (int j = 0; j < obligatory_exam_s.size(); j++) {
                         JSONObject value = new JSONObject();
                         //获取obligatory_exam数组中的第j个字符串，赋值给value对象
@@ -93,13 +101,16 @@ public class PrepTreatmentCommonReturn {
                 JSONArray optional_exam = new JSONArray();
                 //如果该字段为空
                 if (optional_exam_s.size()==0){
+                    System.out.println("进入了optional_exam了吗?");
                     JSONObject value = new JSONObject();
                     //获取optional_exam数组中的第j个字符串，赋值给value对象
-                    value.put("value", "");
+                    //value.put("value", "");
                     //将每次获取的value值放入数组
-                    optional_exam.add(value);
+                    //optional_exam.add(value);
+                    object.put("openPrepKejian",false);
                     object.put("optional_exam", optional_exam);
                 }else {
+                    object.put("openPrepKejian",true);
                     for (int j = 0; j < optional_exam_s.size(); j++) {
                         JSONObject value = new JSONObject();
                         //获取optional_exam数组中的第j个字符串，赋值给value对象
@@ -117,10 +128,12 @@ public class PrepTreatmentCommonReturn {
                 if (notification_a.size()==0){
                     JSONObject value = new JSONObject();
                     //获取notification_s数组中的第j个字符串，赋值给value对象
-                    value.put("value","");
-                    notification.add(value);
+                    //alue.put("value","");
+                   // notification.add(value);
+                    object.put("openPrepQita",false);
                     object.put("notification", notification);
                 }else {
+                    object.put("openPrepQita",true);
                     for (int j = 0; j < notification_a.size(); j++) {
                         JSONObject value = new JSONObject();
                         //获取notification_s数组中的第j个字符串，赋值给value对象

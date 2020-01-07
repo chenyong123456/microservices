@@ -84,6 +84,7 @@ public class tableImageOutRow {
                     font  =  new  Font("微软雅黑",Font.PLAIN,fontTitileSize);
                     graphics.setFont(font);
                 }else  if  (n  >  0  &&  l  >0)  {
+                    //设置字体的样式
                     font  =  new  Font("微软雅黑",Font.PLAIN,fontTitileSize);
                     graphics.setFont(font);
                     graphics.setColor(Color.black);
@@ -108,7 +109,6 @@ public class tableImageOutRow {
         //  保存图片
         createImage(image,  path);
     }
-
 /**
    *  将图片保存到指定位置
    *  @param  image  缓冲文件类
@@ -117,6 +117,7 @@ public class tableImageOutRow {
     public  void  createImage(BufferedImage  image,  String  fileLocation)  {
         try  {
             FileOutputStream fos  =  new  FileOutputStream(fileLocation);
+            //加入了一个文件stream的缓存
             BufferedOutputStream bos  =  new  BufferedOutputStream(fos);
             JPEGImageEncoder encoder  =  JPEGCodec.createJPEGEncoder(bos);
             encoder.encode(image);
@@ -139,7 +140,6 @@ public class tableImageOutRow {
         ArrayList list = new ArrayList<>();
         char ch[] = str.toCharArray();
         for (int i = 0 ; i < num; i++) {
-
             boolean zw = String.valueOf(ch[i]).matches("[\u4e00-\u9fa5]");
             if (zw){
                 sum = sum + maxL;

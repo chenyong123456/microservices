@@ -2,7 +2,6 @@ package cn.knowimage.util;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
@@ -114,6 +113,7 @@ public class tableImageOut {
    */
     public  void  createImage(BufferedImage  image,  String  fileLocation)  {
         try  {
+            //运用的文件输出stream
             FileOutputStream fos  =  new  FileOutputStream(fileLocation);
             BufferedOutputStream bos  =  new  BufferedOutputStream(fos);
             JPEGImageEncoder encoder  =  JPEGCodec.createJPEGEncoder(bos);
@@ -123,6 +123,7 @@ public class tableImageOut {
             e.printStackTrace();
         }
     }
+
     public ArrayList<String> stringCut(String str , int colwidth ){
         int num = str.length();
         ArrayList list = new ArrayList<>();

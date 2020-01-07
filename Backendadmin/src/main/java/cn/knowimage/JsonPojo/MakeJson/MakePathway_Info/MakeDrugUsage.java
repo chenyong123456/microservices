@@ -20,7 +20,7 @@ public class MakeDrugUsage {
         JSONArray drug_usageOtherdrugs_usage_s = JSONArray.fromObject(drug_usageOtherdrugs_usage);
 
         //如果drug_usageAntibio_usage_s数组为空，则创建一个标准格式的全是空值的对象
-        if ("".equals(drug_usageAntibio_usage_s.getJSONObject(0).getString("value"))){
+        if ((drug_usageAntibio_usage_s.size() == 0)){
             JSONObject antibio_usage = new JSONObject();
             JSONArray id_0 = new JSONArray();
             antibio_usage.put("num",0);
@@ -45,7 +45,7 @@ public class MakeDrugUsage {
             drug_usage.put("antibio_usage", antibio_usage);
         }
 
-        if ("".equals(drug_usageAnaesthetic_usage_s.getJSONObject(0).getString("value"))){
+        if ((drug_usageAnaesthetic_usage_s.size() == 0)){
             JSONObject anaesthetic_usage = new JSONObject();
             JSONArray id_0 = new JSONArray();
             anaesthetic_usage.put("num",0);
@@ -69,7 +69,7 @@ public class MakeDrugUsage {
             drug_usage.put("anaesthetic_usage", anaesthetic_usage);
         }
 
-        if ( "".equals(drug_usageOtherdrugs_usage_s.getJSONObject(0).getString("value"))){
+        if (drug_usageOtherdrugs_usage_s.size() == 0){
             JSONObject otherdrugs_usage = new JSONObject();
             JSONArray id_0 = new JSONArray();
             otherdrugs_usage.put("num",0);

@@ -90,6 +90,12 @@ public class PathwayInfoServiceImpl implements PathwayInfoService {
     public List<PathwayInfo> selectP_nameByD_name(String name){
         return pathway_InfoMapper.selectP_nameByD_name(name);
     }
+
+    @Override
+    public String selectTableByApplet(String p_name, String p_index) {
+        return pathway_InfoMapper.selectTableByApplet(p_name,p_index);
+    }
+
     //查询Pathway_Info表中的所有数据
     @Override
     public List<PathwayInfo> findAllf() {

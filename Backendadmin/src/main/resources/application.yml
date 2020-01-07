@@ -14,8 +14,8 @@ spring:
     name: backendadmin
   mvc:
     static-path-pattern: /tableImage/**
-  resources:
-    static-locations: file:C://Users//wh123//Desktop//HospitalProject/TableImages
+ # resources:
+ #   static-locations: file:C://Users//wh123//Desktop//HospitalProject/TableImages
   servlet:
     multipart:
       max-file-size: 500KB
@@ -44,3 +44,9 @@ eureka:
     hostname: EurekaServer1
     instance-id: 192.168.50.5:backendadmin:9999
     ip-address: 192.168.50.5
+
+FTP.PORT: 21
+FTP.USERNAME: ftpuser
+FTP.PASSWORD: ftpuser
+
+

@@ -2,7 +2,6 @@ package cn.knowimage.util;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
@@ -17,7 +16,7 @@ public class tableImageOutColumn {
        */
     public void myGraphicsGeneration(String cellsValue[][], String path,String title_info,String maxStr) {
         //  字体大小
-        int  fontTitileSize  =  8;
+        int  fontTitileSize  = 15;
         //  横线的行数
         int  totalrow  =  cellsValue.length;
         //  竖线的行数
@@ -50,7 +49,7 @@ public class tableImageOutColumn {
         Font  font  =  new  Font("微软雅黑",Font.PLAIN,fontTitileSize);
         graphics.setFont(font);
         ArrayList<String> arrayList ;
-        //写标题
+        //写标题  需要更改
         String title  =  title_info;
         arrayList = stringCut(title,imageWidth-30);
         for (int i = 0 ;i < arrayList.size();i++) {

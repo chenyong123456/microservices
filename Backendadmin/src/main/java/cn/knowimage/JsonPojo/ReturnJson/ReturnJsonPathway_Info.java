@@ -4,9 +4,32 @@ import cn.knowimage.JsonPojo.ReturnJson.ReturnPathway_Info.*;
 import cn.knowimage.pojo.PathwayInfo;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.springframework.ui.Model;
 
 public class ReturnJsonPathway_Info {
     public static JSONObject make(PathwayInfo pathwayInfo,String username){
+
+        //在这里进行table_info和image_info中的数据截取
+        String tableFlag = pathwayInfo.getTable_info();
+        JSONObject tables = JSONObject.fromObject(tableFlag);
+        //从这里获取table_info的相关信息  
+        System.out.println("从数据库中获取的数据:"+tables.toString());
+        int table_num = tables.getInt("table_num");
+        System.out.println("***************获取table_num"+table_num);
+        String GRID = "";
+        if(table_num == 0) {
+            System.out.println(".loil,iu,iu,kkui");
+            JSONObject table_ = tables.getJSONObject("table_"+table_num );
+            System.out.println("csdcsc****" + table_.toString());
+             GRID = (String)table_.get("table_prefix");
+            System.out.println("获取table_prefix的数据:" + GRID);
+        }else {
+            System.out.println("csdcscscs");
+            JSONObject table_ = tables.getJSONObject("table_"+(table_num - 1));
+            System.out.println("csacsdcs"+table_.toString());
+            GRID = table_.getString("table_prefix");
+        }
+
         //创建总对象
         JSONObject last = new JSONObject();
         String pathway_index = pathwayInfo.getPathway_index();
@@ -38,6 +61,7 @@ public class ReturnJsonPathway_Info {
         Integer commit = Integer.parseInt(pathwayInfo.getCommit_state());
         String submitter = username;
         String table_info = TableInfoReturn.make(pathwayInfo.getTable_info().replaceAll("\t", ""));
+        String image_info = ImageInfoReturn.imageInfo("");
         if (state==0 && commit==0) {
             state = 0;
         } else if (state==0 && commit==1) {
@@ -75,6 +99,12 @@ public class ReturnJsonPathway_Info {
         last.put("static", state);
         last.put("selectId", pathway_index);
         last.put("table_info" , table_info);
+        last.put("image_info" , image_info);
+        //在这里拼接table_info表格信息
+        last.put("listIndex",  Integer.parseInt(GRID.split("_")[1]));
+        //在这里拼接image_info表格信息
+        last.put("fileDataIndex",  1);
+        GRID = "";
         System.out.println("返回前端的数据为:" + last);
         return last;
     }

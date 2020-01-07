@@ -20,7 +20,7 @@ public class StringConvertNumber {
 			//System.out.println(time);
 		}
 		//判断时间类型进行换算
-		if("小时".equals(timeType)){
+		if("时".equals(timeType)){
 			
 		}else if("日".equals(timeType)){
 			time = time * 24;

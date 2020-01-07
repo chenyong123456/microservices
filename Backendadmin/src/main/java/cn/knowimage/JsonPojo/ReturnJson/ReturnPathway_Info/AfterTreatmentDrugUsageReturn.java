@@ -24,7 +24,7 @@ public class AfterTreatmentDrugUsageReturn {
         if ("0".equals(antibio_usage_s.getString("num"))){
             JSONObject value = new JSONObject();
             value.put("value","");
-            after_treatmentAntibio_usage.add(value);
+            //after_treatmentAntibio_usage.add(value);
         }else {
             //获取antibio_usage_s对象下的num值，进行循环
             for (int i = 0; i < antibio_usage_s.getInt("num"); i++) {
@@ -43,7 +43,7 @@ public class AfterTreatmentDrugUsageReturn {
         if ("0".equals(anaesthetic_usage_s.getString("num"))){
             JSONObject value = new JSONObject();
             value.put("value","");
-            after_treatmentAnaesthetic_usage.add(value);
+            //after_treatmentAnaesthetic_usage.add(value);
         }else {
             //获取antibio_usage_s对象下的num值，进行循环
             for (int i = 0; i < anaesthetic_usage_s.getInt("num"); i++) {
@@ -63,7 +63,7 @@ public class AfterTreatmentDrugUsageReturn {
         if ("0".equals(otherdrugs_usage_s.getString("num"))){
             JSONObject value = new JSONObject();
             value.put("value","");
-            after_treatmentOtherdrugs_usage.add(value);
+            //after_treatmentOtherdrugs_usage.add(value);
         }else {
             //获取otherdrugs_usage_s对象下的num值，进行循环
             for (int i = 0; i < otherdrugs_usage_s.getInt("num"); i++) {

@@ -11,7 +11,6 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,10 +19,13 @@ import java.util.List;
 
 @Service
 public class RecentWorkServiceImpl implements RecentWorkService {
+
     @Autowired
     RecentWorkMapper recentWorkMapper;
+
     @Autowired
     PathwayInfoMapper pathwayInfoMapper;
+
     @Async
     @Override
     public void insertRecentWork(PathwayInfo newPathwayInfo,PathwayInfo oldPathwayInfo) {
@@ -32,13 +34,13 @@ public class RecentWorkServiceImpl implements RecentWorkService {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         RecentWork recentWork = new RecentWork();
         String method = "保存";
-        if (oldPathwayInfo==null){
+        if (oldPathwayInfo==null){ //oldPathwayInfo就为保存操作
             recentWork.setCreate_time(formatter.format(new Date()));
             recentWork.setCp_index(newPathwayInfo.getPathway_index());
             recentWork.setUser_id(newPathwayInfo.getSubmitter_id());
             recentWork.setMethod(method+"新字段"+newPathwayInfo.getPathway_name());
             recentWorkMapper.insertRecentWork(recentWork);
-        }else {
+        }else { //提交操作
             if ("1".equals(newPathwayInfo.getCommit_state())) {
                 method = "提交";
             }
@@ -47,8 +49,22 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             recentWork.setCreate_time(formatter.format(new Date()));
             recentWork.setCp_index(newPathwayInfo.getPathway_index());
             recentWork.setUser_id(newPathwayInfo.getSubmitter_id());
+            if(!oldPathwayInfo.getSuitable_subject_disc().equals(newPathwayInfo.getSuitable_subject_disc())){
+                System.out.println("|-----------临时路径适用对象---------");
+                System.out.println("old="+oldPathwayInfo.getTreatment_choice());
+                System.out.println("new="+newPathwayInfo.getTreatment_choice());
+                recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"临时路径适用对象");
+                recentWorkMapper.insertRecentWork(recentWork);
+            }
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getTreatment_choice(),newPathwayInfo.getTreatment_choice(),false);
+                //JSONAssert.assertEquals(oldPathwayInfo.getTreatment_choice(),newPathwayInfo.getTreatment_choice(),false);
+                if(!oldPathwayInfo.getTreatment_choice().equals(newPathwayInfo.getTreatment_choice())){
+                    System.out.println("|-----------修改治疗方案的选择---------");
+                    System.out.println("old="+oldPathwayInfo.getTreatment_choice());
+                    System.out.println("new="+newPathwayInfo.getTreatment_choice());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段治疗方案的选择");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
             } catch (Throwable e) {
                 System.out.println("|-----------修改治疗方案的选择---------");
                 System.out.println("old="+oldPathwayInfo.getTreatment_choice());
@@ -58,7 +74,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getTreatment_days(),newPathwayInfo.getTreatment_days(),false);
+                //JSONAssert.assertEquals(oldPathwayInfo.getTreatment_days(),newPathwayInfo.getTreatment_days(),false);
+                if(!oldPathwayInfo.getTreatment_days().equals(newPathwayInfo.getTreatment_days())){
+                    System.out.println("|-----------修改标准住院日---------");
+                    System.out.println("old="+oldPathwayInfo.getTreatment_days());
+                    System.out.println("new="+newPathwayInfo.getTreatment_days());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段标准住院日");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
             }catch (Throwable e) {
                 System.out.println("|-----------修改标准住院日---------");
                 System.out.println("old="+oldPathwayInfo.getTreatment_days());
@@ -68,7 +91,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getTreatment_days(),newPathwayInfo.getTreatment_days(),false);
+                if(!oldPathwayInfo.getTreatment_days().equals(newPathwayInfo.getTreatment_days())){
+                    System.out.println("|-----------修改进入路径标准---------");
+                    System.out.println("old="+oldPathwayInfo.getTreatment_entry_standard());
+                    System.out.println("new="+newPathwayInfo.getTreatment_entry_standard());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段进入路径标准");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+                //JSONAssert.assertEquals(oldPathwayInfo.getTreatment_days(),newPathwayInfo.getTreatment_days(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改进入路径标准---------");
                 System.out.println("old="+oldPathwayInfo.getTreatment_entry_standard());
@@ -78,7 +108,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getPrep_treatment_common(),newPathwayInfo.getPrep_treatment_common(),false);
+                if(!oldPathwayInfo.getPrep_treatment_common().equals(newPathwayInfo.getPrep_treatment_common())){
+                    System.out.println("|-----------修改手术前的检查项目---------");
+                    System.out.println("old="+oldPathwayInfo.getFirst_diagnosis());
+                    System.out.println("new="+newPathwayInfo.getFirst_diagnosis());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段手术前的检查项目");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+               // JSONAssert.assertEquals(oldPathwayInfo.getPrep_treatment_common(),newPathwayInfo.getPrep_treatment_common(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改手术前的检查项目---------");
                 System.out.println("old="+oldPathwayInfo.getFirst_diagnosis());
@@ -88,7 +125,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getPrep_treatment_drug_usage(),newPathwayInfo.getPrep_treatment_drug_usage(),false);
+                if(!oldPathwayInfo.getPrep_treatment_drug_usage().equals(newPathwayInfo.getPrep_treatment_drug_usage())){
+                    System.out.println("|-----------修改手术前用药情况---------");
+                    System.out.println("old="+oldPathwayInfo.getPrep_treatment_drug_usage());
+                    System.out.println("new="+newPathwayInfo.getPrep_treatment_drug_usage());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段手术前用药情况");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+                //JSONAssert.assertEquals(oldPathwayInfo.getPrep_treatment_drug_usage(),newPathwayInfo.getPrep_treatment_drug_usage(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改手术前用药情况---------");
                 System.out.println("old="+oldPathwayInfo.getPrep_treatment_drug_usage());
@@ -98,7 +142,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getPrep_treatment_extension(),newPathwayInfo.getPrep_treatment_extension(),false);
+                if(!oldPathwayInfo.getPrep_treatment_extension().equals(newPathwayInfo.getPrep_treatment_extension())){
+                    System.out.println("|-----------修改手术前准备工作---------");
+                    System.out.println("old="+oldPathwayInfo.getPrep_treatment_extension());
+                    System.out.println("new="+newPathwayInfo.getPrep_treatment_extension());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段手术前准备工作");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+                //JSONAssert.assertEquals(oldPathwayInfo.getPrep_treatment_extension(),newPathwayInfo.getPrep_treatment_extension(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改手术前准备工作---------");
                 System.out.println("old="+oldPathwayInfo.getPrep_treatment_extension());
@@ -108,7 +159,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getTreatment(),newPathwayInfo.getTreatment(),false);
+                if(!oldPathwayInfo.getTreatment().equals(newPathwayInfo.getTreatment())){
+                    System.out.println("|-----------修改手术日内容---------");
+                    System.out.println("old="+oldPathwayInfo.getTreatment());
+                    System.out.println("new="+newPathwayInfo.getTreatment());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段手术日内容");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+               // JSONAssert.assertEquals(oldPathwayInfo.getTreatment(),newPathwayInfo.getTreatment(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改手术日内容---------");
                 System.out.println("old="+oldPathwayInfo.getTreatment());
@@ -118,7 +176,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getDrug_usage(),newPathwayInfo.getDrug_usage(),false);
+                if(!oldPathwayInfo.getDrug_usage().equals(newPathwayInfo.getDrug_usage())){
+                    System.out.println("|-----------修改手术过程中用药情况---------");
+                    System.out.println("old="+oldPathwayInfo.getDrug_usage());
+                    System.out.println("new="+newPathwayInfo.getDrug_usage());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段手术过程中用药情况");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+                //JSONAssert.assertEquals(oldPathwayInfo.getDrug_usage(),newPathwayInfo.getDrug_usage(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改手术过程中用药情况---------");
                 System.out.println("old="+oldPathwayInfo.getDrug_usage());
@@ -128,7 +193,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getAfter_medical_treatment(),newPathwayInfo.getAfter_medical_treatment(),false);
+                if(!oldPathwayInfo.getAfter_medical_treatment().equals(newPathwayInfo.getAfter_medical_treatment())){
+                    System.out.println("|-----------修改术后的复查和恢复性治疗内容---------");
+                    System.out.println("old="+oldPathwayInfo.getAfter_medical_treatment());
+                    System.out.println("new="+newPathwayInfo.getAfter_medical_treatment());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段术后的复查和恢复性治疗内容");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+                //JSONAssert.assertEquals(oldPathwayInfo.getAfter_medical_treatment(),newPathwayInfo.getAfter_medical_treatment(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改术后的复查和恢复性治疗内容---------");
                 System.out.println("old="+oldPathwayInfo.getAfter_medical_treatment());
@@ -138,7 +210,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getAfter_treatment_drug_usage(),newPathwayInfo.getAfter_treatment_drug_usage(),false);
+                if(!oldPathwayInfo.getAfter_treatment_drug_usage().equals(newPathwayInfo.getAfter_treatment_drug_usage())){
+                    System.out.println("|-----------修改手术完成后的用药情况---------");
+                    System.out.println("old="+oldPathwayInfo.getAfter_treatment_drug_usage());
+                    System.out.println("new="+newPathwayInfo.getAfter_treatment_drug_usage());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段手术完成后的用药情况");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+                //JSONAssert.assertEquals(oldPathwayInfo.getAfter_treatment_drug_usage(),newPathwayInfo.getAfter_treatment_drug_usage(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改手术完成后的用药情况---------");
                 System.out.println("old="+oldPathwayInfo.getAfter_treatment_drug_usage());
@@ -148,7 +227,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getDischarge_criteria(),newPathwayInfo.getDischarge_criteria(),false);
+                if(!oldPathwayInfo.getDischarge_criteria().equals(newPathwayInfo.getDischarge_criteria())){
+                    System.out.println("|-----------修改出院标准---------");
+                    System.out.println("old="+oldPathwayInfo.getDischarge_criteria());
+                    System.out.println("new="+newPathwayInfo.getDischarge_criteria());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段出院标准");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+                //JSONAssert.assertEquals(oldPathwayInfo.getDischarge_criteria(),newPathwayInfo.getDischarge_criteria(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改出院标准---------");
                 System.out.println("old="+oldPathwayInfo.getDischarge_criteria());
@@ -158,7 +244,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getOther_notice(),newPathwayInfo.getOther_notice(),false);
+                if(!oldPathwayInfo.getOther_notice().equals(newPathwayInfo.getOther_notice())){
+                    System.out.println("|-----------修改变异及原因分析---------");
+                    System.out.println("old="+oldPathwayInfo.getOther_notice());
+                    System.out.println("new="+newPathwayInfo.getOther_notice());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段变异及原因分析");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+                //JSONAssert.assertEquals(oldPathwayInfo.getOther_notice(),newPathwayInfo.getOther_notice(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改变异及原因分析---------");
                 System.out.println("old="+oldPathwayInfo.getOther_notice());
@@ -168,7 +261,14 @@ public class RecentWorkServiceImpl implements RecentWorkService {
             }
 
             try {
-                JSONAssert.assertEquals(oldPathwayInfo.getAdditional_field(),newPathwayInfo.getAdditional_field(),false);
+                if(!oldPathwayInfo.getAdditional_field().equals(newPathwayInfo.getAdditional_field())){
+                    System.out.println("|-----------修改额外字段---------");
+                    System.out.println("old="+oldPathwayInfo.getAdditional_field());
+                    System.out.println("new="+newPathwayInfo.getAdditional_field());
+                    recentWork.setMethod(method+"修改了"+newPathwayInfo.getPathway_name()+"字段额外字段");
+                    recentWorkMapper.insertRecentWork(recentWork);
+                }
+                //JSONAssert.assertEquals(oldPathwayInfo.getAdditional_field(),newPathwayInfo.getAdditional_field(),false);
             }catch (Throwable e) {
                 System.out.println("|-----------修改额外字段---------");
                 System.out.println("old="+oldPathwayInfo.getAdditional_field());
@@ -201,6 +301,7 @@ public class RecentWorkServiceImpl implements RecentWorkService {
 
 
             if (!oldPathwayInfo.getType().equals(newPathwayInfo.getType())){
+
                 System.out.println("|-----------修改临时路径类型---------");
                 System.out.println("old="+oldPathwayInfo.getType());
                 System.out.println("new="+newPathwayInfo.getType());

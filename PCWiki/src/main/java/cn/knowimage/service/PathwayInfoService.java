@@ -36,4 +36,5 @@ public interface PathwayInfoService {
 
 	public List<PathwayInfo> selectP_nameByD_name(String name);
 
+	String selectTableByApplet(String p_name, String p_index);
 }

@@ -153,9 +153,16 @@ public class WechatAppletController {
 //        }
 
         System.out.println(p_name);
-        if (!redisService.exists(WechatApplet + ":" + "wechatApp:" + p_name+p_index)) {//redis中不存在数据,去mysql中查询
+        //原数据为WechatApplet + ":"     其中:被修改
+        if (!redisService.exists(WechatApplet + "" + "wechatApp:" + p_name+p_index)) {//redis中不存在数据,去mysql中查询
             //从数据库中查询出来的数据
             List<PathwayInfo> list = pathway_InfoService.selectByPathway_nameApplet(p_name,p_index);
+            String url = "http://192.168.50.5:9999/tableImage/";
+            //获得表格table数据
+            String table = pathway_InfoService.selectTableByApplet(p_name,p_index);
+            System.out.println(table);
+            JSONObject table_info = JSONObject.fromObject(table);
+            System.out.println("table===="+table);
             if(list == null || list.size() == 0){
                 JSONObject last = new JSONObject();
                 last.put("status",500);
@@ -164,6 +171,7 @@ public class WechatAppletController {
             }else {
                 //在这里进行的数据的处理微信小程序取去除带num的数据字段
                 //model.addAttribute("pathway_Info", list);
+//                lastJson.put("table",table);
                 lastJson.put("pathway_id", list.get(0).getPathway_id());
                 lastJson.put("pathway_index", list.get(0).getPathway_index());
                 lastJson.put("pathway_name", list.get(0).getPathway_name());
@@ -175,7 +183,16 @@ public class WechatAppletController {
                 //处理treatment_choice字段中num数据
                 JSONObject dealJson = JSONObject.fromObject(list.get(0).getTreatment_choice());
                 dealJson.getJSONObject("scenario").remove("num");
-                lastJson.put("treatment_choice", dealJson.toString());
+                JSONObject jsonObject = JSONObject.fromObject(dealJson.toString());
+                for (int i=0;i<table_info.getInt("table_num");i++) {
+                    int table_num = 0;
+                    if (dealJson.toString().contains(table_info.getJSONObject("table_"+i).getString("table_prefix"))){
+                        lastJson.put("table",url+"012011078901_@GRID@_1.png");
+
+                    }
+                }
+                lastJson.put("table",url+"012011078901_@GRID@_1.png");
+                lastJson.put("treatment_choice",jsonObject);
 
                 //处理treatment_days字段的数据
 
@@ -200,7 +217,6 @@ public class WechatAppletController {
                 lastJson.put("treatment_entry_standard", dealJson.toString());
 
                 lastJson.put("type", list.get(0).getType());
-                System.out.println(list.get(0).getType());
 
                 lastJson.put("drug_use_period", list.get(0).getDrug_use_period());
 
